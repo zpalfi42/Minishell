@@ -34,7 +34,7 @@ OBJ				= $(addprefix $(OBJS_DIR)/,$(SRC:.c=.o))
 #--------------- COMPILATION ---------------#
 
 CC			= gcc
-CFLAGS		= -Wall -Wextra -Werror -g $(INC) -I ../../../.brew/opt/readline/include
+CFLAGS		= -Wall -Wextra -Werror -g $(INC) -I ~/.brew/opt/readline/include
 
 #--------------- RULES ---------------#
 
@@ -46,7 +46,7 @@ objs/%.o:src/%.c
 all:	$(NAME)
 
 $(NAME): $(OBJ) $(LIBS)
-	@$(CC) $(OBJ) -lreadline -L ../../../.brew/opt/readline/lib $(LIBS) -o $(NAME)
+	@$(CC) $(OBJ) -lreadline -L ~/.brew/opt/readline/lib $(LIBS) -o $(NAME)
 	@echo "Built $(NAME)"
 
 $(LIBS_DIR)/Libft/libft.a:
