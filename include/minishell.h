@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/05/30 16:05:18 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/05/30 16:26:41 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,12 @@ typedef struct s_data
 {
 	int		n_dc;
 	int		n_sc;
+	int		n_dc_2;
+	int		n_sc_2;
 	char 	**tokens;
 	char 	*line;
 	int		count;
+	int		word;
 }	t_data	;
 
 void	print_miniconcha(void);

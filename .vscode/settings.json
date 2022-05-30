@@ -3,6 +3,11 @@
 	"files.associations": {
 		"minishell.h": "c",
 		"readline.h": "c",
-		"errno.h": "c"
+		"errno.h": "c",
+		"array": "c",
+		"iterator": "c",
+		"string": "c",
+		"string_view": "c",
+		"vector": "c"
 	}
 }
