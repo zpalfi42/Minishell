@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:15:54 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/05/30 17:09:20 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/05/30 18:00:43 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ int main(int argc, char **argv, char **envp)
 		data->count = 0;
 		data->word = 0;
 		data->line = readline("miniconcha>$ ");
-		if (data->line)
+		if (data->line && ft_strlen(data->line) != 0)
 			parser(data);
 		else
 		{
