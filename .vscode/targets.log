@@ -6,8 +6,10 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
+ 
 
-# Make data base, printed on Mon May 30 15:15:51 2022
+# Make data base, printed on Mon May 30 16:05:17 2022
+ 
 
 # Variables
 
@@ -15,10 +17,10 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 <D = $(patsubst %/,%,$(dir $<))
 # automatic
 ?F = $(notdir $?)
-# makefile (from `Makefile', line 33)
+# makefile (from `Makefile', line 34)
 OBJ = $(addprefix $(OBJS_DIR)/,$(SRC:.c=.o))
 # makefile (from `Makefile', line 30)
-SRC = main.c print_miniconcha.c 
+SRC = main.c print_miniconcha.c count_words.c 
 # environment
 VSCODE_LOG_NATIVE = false
 # automatic
@@ -37,7 +39,7 @@ SHELL = /bin/sh
 VSCODE_NLS_CONFIG = {"locale":"en-us","availableLanguages":{},"_languagePackSupport":true}
 # environment
 _ = /usr/bin/make
-# makefile (from `Makefile', line 38)
+# makefile (from `Makefile', line 39)
 CFLAGS = -Wall -Wextra -Werror -g $(INC) -I ~/.brew/opt/readline/include
 # makefile (from `Makefile', line 1)
 MAKEFILE_LIST :=  Makefile
@@ -97,7 +99,7 @@ MAKE = $(MAKE_COMMAND)
 MAKECMDGOALS := all
 # environment
 SHLVL = 1
-# makefile (from `Makefile', line 37)
+# makefile (from `Makefile', line 38)
 CC = gcc
 # default
 MAKE_VERSION := 3.81
@@ -163,6 +165,7 @@ SUFFIXES :=
 .INCLUDE_DIRS = /usr/local/include
 # environment
 MAKELEVEL := 0
+ 
 # environment
 FZF_DEFAULT_OPTS = --height=40% --preview='cat {}' --preview-window=right:60%:wrap
 # environment
@@ -179,14 +182,14 @@ VSCODE_PID = 10975
 # Directories
 
 # . (device 16777228, inode 1161356): 12 files, no impossibilities.
-# src (device 16777228, inode 1163911): 3 files, no impossibilities so far.
+# src (device 16777228, inode 1163911): 4 files, no impossibilities so far.
 
-# 15 files, no impossibilities in 2 directories.
+# 16 files, no impossibilities in 2 directories.
 
 # Implicit Rules
 
 objs/%.o: src/%.c
-#  commands to execute (from `Makefile', line 43):
+#  commands to execute (from `Makefile', line 44):
 	@mkdir -p $(dir $@)
 	@$(CC) -c $(CFLAGS) -o $@ $^
 	@echo "Compiling $^"
@@ -199,7 +202,7 @@ objs/%.o: src/%.c
 objs/main.o: src/main.c
 #  Implicit rule search has been done.
 #  Implicit/static pattern stem: `main'
-#  Last modified 2022-05-30 14:56:40
+#  Last modified 2022-05-30 16:03:52
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # automatic
@@ -220,7 +223,7 @@ objs/main.o: src/main.c
 # ? := src/main.c
 # variable set hash-table stats:
 # Load=8/32=25%, Rehash=0, Collisions=2/20=10%
-#  commands to execute (from `Makefile', line 43):
+#  commands to execute (from `Makefile', line 44):
 	@mkdir -p $(dir $@)
 	@$(CC) -c $(CFLAGS) -o $@ $^
 	@echo "Compiling $^"
@@ -250,20 +253,20 @@ all: minishell
 # Not a target:
 Makefile:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-30 14:56:34
+#  Last modified 2022-05-30 16:05:17
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/0=0%
 
-minishell: objs/main.o objs/print_miniconcha.o libs/Libft/libft.a
+minishell: objs/main.o objs/print_miniconcha.o objs/count_words.o libs/Libft/libft.a
 #  Implicit rule search has not been done.
-#  Last modified 2022-05-30 14:56:43
+#  Last modified 2022-05-30 16:03:52
 #  File has been updated.
 #  Needs to be updated (-q is set).
 # variable set hash-table stats:
 # Load=0/32=0%, Rehash=0, Collisions=0/8=0%
-#  commands to execute (from `Makefile', line 50):
+#  commands to execute (from `Makefile', line 51):
 	@$(CC) $(OBJ) -lreadline -L ~/.brew/opt/readline/lib $(LIBS) -o $(NAME)
 	@echo "Built $(NAME)"
 	
@@ -273,7 +276,7 @@ fclean:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 60):
+#  commands to execute (from `Makefile', line 61):
 	@make fclean -C $(LIBS_DIR)/Libft
 	@rm -f $(NAME)
 	
@@ -281,7 +284,7 @@ fclean:
 # Not a target:
 src/main.c:
 #  Implicit rule search has been done.
-#  Last modified 2022-05-30 15:15:51
+#  Last modified 2022-05-30 16:05:17
 #  File has been updated.
 #  Successfully updated.
 # variable set hash-table stats:
@@ -297,7 +300,7 @@ libs/Libft/libft.a:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 54):
+#  commands to execute (from `Makefile', line 55):
 	@make -C $(LIBS_DIR)/Libft
 	
 
@@ -312,7 +315,7 @@ clean:
 #  Implicit rule search has not been done.
 #  File does not exist.
 #  File has not been updated.
-#  commands to execute (from `Makefile', line 57):
+#  commands to execute (from `Makefile', line 58):
 	@rm -rf $(OBJS_DIR)
 	
 
@@ -320,11 +323,16 @@ clean:
 objs/print_miniconcha.o:
 #  Implicit rule search has not been done.
 #  Modification time never checked.
- 
+#  File has not been updated.
+
+# Not a target:
+objs/count_words.o:
+#  Implicit rule search has not been done.
+#  Modification time never checked.
 #  File has not been updated.
 
 # files hash-table stats:
-# Load=13/1024=1%, Rehash=0, Collisions=0/39=0%
+# Load=14/1024=1%, Rehash=0, Collisions=0/41=0%
 # VPATH Search Paths
 
 # No `vpath' search paths.
@@ -336,6 +344,6 @@ objs/print_miniconcha.o:
 # strcache size: total = 4096 / max = 4096 / min = 4096 / avg = 4096
 # strcache free: total = 4087 / max = 4087 / min = 4087 / avg = 4087
 
-# Finished Make data base on Mon May 30 15:15:51 2022
+# Finished Make data base on Mon May 30 16:05:17 2022
 
  

@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:15:54 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/05/30 15:27:55 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/05/30 16:06:45 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,38 +25,8 @@ void handler(int signum)
 
 void	init_data(t_data *data)
 {
-	data->n_c = 0;
-}
-
-void	count_words(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	while (data->line[i] != '\0')
-	{
-		if (data->line[i] == ' ')
-			i++;
-		else if (data->line[i] == '"')
-		{
-			i++;
-			if (data->line[i] == '"')
-				i++;
-			else
-			{
-				data->count++;
-				while (data->line[i] && data->line[i] != '"')
-					i++;
-				i++;
-			}
-		}
-		else
-		{
-			data->count++;
-			while (data->line[i] && data->line[i] != ' ')
-				i++;
-		}
-	}
+	data->n_dc = 0;
+	data->n_sc = 0;
 }
 
 void	parser(t_data *data)
@@ -67,12 +37,12 @@ void	parser(t_data *data)
 	while (data->line[i] != '\0')
 	{
 		if (data->line[i] == '"')
-			data->n_c++;
+			data->n_dc++;
+		else if (data->line[i] == 39)
+			data->n_sc++;
 		i++;
 	}
-	//printf("%d\n", data->n_c);
 	count_words(data);
-	printf("%d\n", data->count);
 }
 
 int main(int argc, char **argv, char **envp)
@@ -90,7 +60,8 @@ int main(int argc, char **argv, char **envp)
 	init_data(data);
 	while (42)
 	{
-		data->n_c = 0;
+		data->n_dc = 0;
+		data->n_sc = 0;
 		data->count = 0;
 		data->line = readline("miniconcha>$ ");
 		if (data->line)
