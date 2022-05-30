@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/05/30 15:15:54 by zpalfi            #+#    #+#             */
+/*   Updated: 2022/05/30 15:27:55 by zpalfi           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 void handler(int signum)
@@ -16,63 +28,61 @@ void	init_data(t_data *data)
 	data->n_c = 0;
 }
 
-void	parser(t_data *data, char *line)
+void	count_words(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->line[i] != '\0')
+	{
+		if (data->line[i] == ' ')
+			i++;
+		else if (data->line[i] == '"')
+		{
+			i++;
+			if (data->line[i] == '"')
+				i++;
+			else
+			{
+				data->count++;
+				while (data->line[i] && data->line[i] != '"')
+					i++;
+				i++;
+			}
+		}
+		else
+		{
+			data->count++;
+			while (data->line[i] && data->line[i] != ' ')
+				i++;
+		}
+	}
+}
+
+void	parser(t_data *data)
 {
 	int i;
 
 	i = 0;
-	while (line[i] != '\0')
+	while (data->line[i] != '\0')
 	{
-		if (line[i] == '"')
+		if (data->line[i] == '"')
 			data->n_c++;
 		i++;
 	}
-	printf("%d\n", data->n_c);
+	//printf("%d\n", data->n_c);
+	count_words(data);
+	printf("%d\n", data->count);
 }
 
 int main(int argc, char **argv, char **envp)
 {
-    char *line;
 	t_data  *data;
 
 	argc = 0;
 	argv = NULL;
 	envp = NULL;
-	printf("   _____  .__       .__                           .__                                     _\n");
-	printf("  /     \\ |__| ____ |__| ____  ____   ____   ____ |  |__ _____                         ,\"  \'\n");
-	printf(" /  \\ /  \\|  |/    \\|  |/ ___\\/  _ \\ /    \\_/ ___\\|  |  \\__   \\                      ,\'   /\n");
-	printf("/    Y    \\  |   |  \\  \\  \\__(  <_> )   |  \\  \\___|   Y  \\/ __ \\_                   /    /\n");
-	printf("\\____|__  /__|___|  /__|\\___  >____/|___|  /\\___  >___|  (____  /                 ,\'    /\n");
-	printf("        \\/        \\/        \\/           \\/     \\/     \\/     \\./              ,\'     .\n");
-	printf("				                                     _...      /       \'\n");
-	printf("				                                  ,\'\"\'\"\".`.   |_..    /\n");
-	printf("				                        ,-\"\'\".   /       \\\\  ,\'   `.\"\'\n");
-	printf("				                       .\"\"\"\'. |,\'         .`\".    /.\n");
-	printf("				                      /     | |           `...`\".\',___\n");
-	printf("				                     /      | `.            _.-\' /.___`\".\n");
-	printf("				                   .\'       `-._`-.._____,-\'    /     \\ |\n");
-	printf("				             ,..    \\           `. . ,\'.\'      /       .|\n");
-	printf("				           .\'   `.   \\   /        .||.\'       \'.`.._   ||--.\n");
-	printf(" 				          \\      `...`-\'         ||||      .\'  `-.._`.||_ |\n");
-	printf("				       _,.--`\"\'-..\"\'              ||``. ,-\"\"\"\"`\'\"--._`\"-._`-.\n");
-	printf("				  _,-\"\'           `.              \' .\\`\'             `.   `. \\......\n");
-	printf("				,\'                 \'               || .|              |`.   \\ \\   .\'\n");
-	printf("				`.._____________ ,\'\"`+-\"\"\'\'\'       || ||              |  \\  `. .-'\n");
-	printf("				               |    .    _..-\'    j | ||              |  |    ||\n");
-	printf("				               |    |   .         |. j |              |_\'|.   ||\n");
-	printf(" 				              |    '    `-.._    || | |  .........      | |  ||\n");
-	printf(" 				              |     `._          || ' '   \\  __.-\"  _,\' \'.. , \'\n");
-	printf(" 				              `._      `..       \' . `..   \"\"_,..-\"\'  .\'  \\/.\'\n");
-	printf("				                  ``.    /         \\`.  ``-._`-....\"_,\'   .,\'|`._\n");
-	printf(" 				                    `..\'           `.`._  `.`--\"\'      .,\'\\ :   `.\n");
-	printf(" 				                     /     _.-   .    `-.:-._ ` \'._    :   . `--..\'\n");
-	printf(" 				                   ,\'  _,-\' `.   :    __  `-.` `.._`. /,  ,\',\'\n");
-	printf(" 				                 .\'  .\'       `-. `-\'\"       \\`.   ` \',  \',\'\n");
-	printf("  				                `--\' `--..     | `-._____   `._:---.| .\'/\n");
-	printf("  				                          \\    |     .\'  \"-.____`\". |-\"\'\n");
-	printf("  				                           `.__|    /           `\"\'\"\n");
-	printf("				                                 |   /\n");
-	printf(" 				                                \'._\'\n");
+	print_miniconcha();
     data = (t_data *)malloc(sizeof(t_data));
 	signal(SIGQUIT, SIG_IGN);
     signal(SIGINT, SIG_IGN);
@@ -81,9 +91,10 @@ int main(int argc, char **argv, char **envp)
 	while (42)
 	{
 		data->n_c = 0;
-		line = readline("miniconcha>$ ");
-		if (line)
-			parser(data, line);
+		data->count = 0;
+		data->line = readline("miniconcha>$ ");
+		if (data->line)
+			parser(data);
 		else
 			exit (1);
 	}

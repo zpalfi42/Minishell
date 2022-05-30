@@ -28,6 +28,7 @@ LIBS_HEADERS	= -I $(LIBS_DIR)/Libft/include/ \
 INC				= -I $(INCLUDE_DIR) $(LIBS_HEADERS)
 
 SRC				= main.c \
+				  print_miniconcha.c \
 
 OBJ				= $(addprefix $(OBJS_DIR)/,$(SRC:.c=.o))
 

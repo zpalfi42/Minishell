@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hola.h                                             :+:      :+:    :+:   */
+/*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zpalfi <zpalfi@student.42barcelon>         +#+  +:+       +#+        */
+/*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/03/14 14:24:56 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/05/30 15:15:51 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,12 @@
 
 typedef struct s_data
 {
-	int	n_c;
-	char **tokens;
+	int		n_c;
+	char 	**tokens;
+	char 	*line;
+	int		count;
 }	t_data	;
 
+void	print_miniconcha(void);
 
 #endif

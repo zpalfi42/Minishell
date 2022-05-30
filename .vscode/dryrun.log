@@ -1,0 +1,13 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/zpalfi/42/42Cursus/Minishell'
+mkdir -p objs/
+gcc -c -Wall -Wextra -Werror -g -I include -I libs/Libft/include/  -I ~/.brew/opt/readline/include -o objs/main.o src/main.c
+echo "Compiling src/main.c"
+mkdir -p objs/
+gcc -c -Wall -Wextra -Werror -g -I include -I libs/Libft/include/  -I ~/.brew/opt/readline/include -o objs/print_miniconcha.o src/print_miniconcha.c
+echo "Compiling src/print_miniconcha.c"
+make -C libs/Libft
+gcc objs/main.o objs/print_miniconcha.o -lreadline -L ~/.brew/opt/readline/lib libs/Libft/libft.a  -o minishell
+echo "Built minishell"
+make: Leaving directory `/Users/zpalfi/42/42Cursus/Minishell'
+ 
