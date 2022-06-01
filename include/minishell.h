@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/05/30 16:26:41 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/01 15:32:07 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,6 @@ typedef struct s_data
 
 void	print_miniconcha(void);
 void	count_words(t_data *data);
+void	save_tokens(t_data *data);
 
 #endif

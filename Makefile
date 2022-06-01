@@ -6,7 +6,7 @@
 #    By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 12:16:53 by zpalfi            #+#    #+#              #
-#    Updated: 2022/05/30 16:05:17 by zpalfi           ###   ########.fr        #
+#    Updated: 2022/06/01 15:33:00 by zpalfi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,8 +28,9 @@ LIBS_HEADERS	= -I $(LIBS_DIR)/Libft/include/ \
 INC				= -I $(INCLUDE_DIR) $(LIBS_HEADERS)
 
 SRC				= main.c \
-				  print_miniconcha.c \
 				  count_words.c \
+				  save_tokens.c \
+				  print_miniconcha.c \
 
 OBJ				= $(addprefix $(OBJS_DIR)/,$(SRC:.c=.o))
 
@@ -57,7 +58,7 @@ $(LIBS_DIR)/Libft/libft.a:
 clean:
 	@rm -rf $(OBJS_DIR)
 
-fclean:
+fclean:	clean
 	@make fclean -C $(LIBS_DIR)/Libft
 	@rm -f $(NAME)
 
