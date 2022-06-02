@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 16:04:32 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/01 15:56:43 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/02 15:34:57 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	count_words(t_data *data)
 	{
 		if (data->line[i] == ' ')
 			i++;
-		else if (data->line[i] == '"')
+		else if (data->line[i] == 34)
 		{
 			i = dc_case(data, i);
 		}
@@ -73,7 +73,17 @@ void	count_words(t_data *data)
 		{
 			data->count++;
 			while (data->line[i] && data->line[i] != ' ')
-				i++;
+			{
+				if (data->line[i] == 34 && data->dc > 1)
+				{
+					data->dc--;
+					i++;
+					while (data->line[i] != 34)
+						i++;
+				}
+				else
+					i++;
+			}
 		}
 	}
 }
