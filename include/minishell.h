@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/01 16:29:28 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/02 16:50:44 by ealonso-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_data
 int		sig_handler(void);
 
 void	print_miniconcha(void);
-void	count_words(t_data *data);
-void	save_tokens(t_data *data);
+// void	count_words(t_data *data);
+// void	save_tokens(t_data *data);
 
 #endif

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+         #
+#    By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 12:16:53 by zpalfi            #+#    #+#              #
-#    Updated: 2022/06/01 16:28:36 by zpalfi           ###   ########.fr        #
+#    Updated: 2022/06/02 16:50:58 by ealonso-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,6 @@ INC				= -I $(INCLUDE_DIR) $(LIBS_HEADERS)
 
 SRC				= main.c \
 				  signal.c \
-				  count_words.c \
-				  save_tokens.c \
 				  print_miniconcha.c \
 
 OBJ				= $(addprefix $(OBJS_DIR)/,$(SRC:.c=.o))

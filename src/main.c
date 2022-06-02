@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:15:54 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/01 16:54:10 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/02 17:13:04 by ealonso-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	free_all(t_data *data)
 	free(data->tokens);
 }
 
-void	parser(t_data *data)
+void	countq(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (data->line[i] != '\0')
@@ -41,24 +41,67 @@ void	parser(t_data *data)
 			data->sc++;
 		i++;
 	}
-	data->dc_2 = data->dc;
-	data->sc_2 = data->sc;
-	count_words(data);
-	data->tokens = (char **)malloc(sizeof(char *) * (data->count + 1));
-	if (!data->tokens)
-	{
-		printf("MALLOC ERROR\n");
-		exit(1);
-	}
-	data->tokens[data->count] = 0;
-	save_tokens(data);
+}
+
+void	count_tokens(t_data *data)
+{
+	int	i;
+
 	i = 0;
-	while (data->tokens[i])
+	while (data->line[i] != '\0')
 	{
-		printf("%s\n", data->tokens[i]);
-		i++;
+		while (data->line[i] != ' ' && data->line[i] != '\0')
+		{
+			if (data->line[i] == 34 && data->dc > 1)
+			{
+				i++;
+				data->dc--;
+				while (data->line[i] != 34 && data->line[i] != '\0')
+					i++;
+				if (data->line[i] == 34)
+				{
+					data->dc--;
+					i++;
+				}
+			}
+			else if (data->line[i] == 39 && data->sc > 1)
+			{
+				i++;
+				data->sc--;
+				while (data->line[i] != 39 && data->line[i] != '\0')
+					i++;
+				if (data->line[i] == 39)
+				{
+					data->sc--;
+					i++;
+				}
+			}
+			else
+				i++;
+		}
+		if (data->line[i] == ' ')
+			i++;
+		printf("%c\n", data->line[i]);
+		data->count++;
 	}
-	free_all(data);
+}
+
+void	parser(t_data *data)
+{
+	// int	i;
+
+	countq(data);
+	count_tokens(data);
+	printf("%d\n", data->count);
+	// if (save_tokens(data))
+	// 	return (0);
+	// i = 0;
+	// while (data->tokens[i])
+	// {
+	// 	printf("%s\n", data->tokens[i]);
+	// 	i++;
+	// }
+	// free_all(data);
 }
 
 int main(int argc, char **argv, char **envp)
