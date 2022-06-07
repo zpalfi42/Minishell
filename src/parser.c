@@ -1,28 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/01/24 12:52:33 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/07 17:30:04 by zpalfi           ###   ########.fr       */
+/*   Created: 2022/06/07 17:51:08 by zpalfi            #+#    #+#             */
+/*   Updated: 2022/06/07 18:11:42 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#include "minishell.h"
 
-# include <stdlib.h>
-# include <unistd.h>
+static void	countq(t_data *data)
+{
+	int	i;
 
-# ifndef BUFFERSIZE
-#  define BUFFER_SIZE 1
-# endif
+	i = 0;
+	data->dc = 0;
+	data->sc = 0;
+	while (data->line[i] != '\0')
+	{
+		if (data->line[i] == 34)
+			data->dc++;
+		else if (data->line[i] == 39)
+			data->sc++;
+		i++;
+	}
+	data->dc_2 = data->dc;
+	data->sc_2 = data->sc;
+}
 
-char	*get_next_line(int fd);
-size_t	ft_strlen(const char *s);
-char	*ft_strjoin(char *s1, char *s2);
-char	*ft_strchr(const char *s, int c);
-
-#endif
+void	parser(t_data *data)
+{
+	data->i = 0;
+	countq(data);
+	count_tokens(data);
+	save_tokens(data);
+}

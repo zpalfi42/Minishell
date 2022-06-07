@@ -6,53 +6,16 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:15:54 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/07 17:06:12 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/07 18:11:55 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_all(t_data *data)
+void	minishell(t_data *data)
 {
-	int	i;
-
-	i = 0;
-	while (i < data->count)
-	{
-		if (data->tokens[i])
-			free(data->tokens[i]);
-		i++;
-	}
-	if (data->tokens[i])
-		free(data->tokens[i]);
-	free(data->tokens);
-}
-
-void	countq(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	data->dc = 0;
-	data->sc = 0;
-	while (data->line[i] != '\0')
-	{
-		if (data->line[i] == 34)
-			data->dc++;
-		else if (data->line[i] == 39)
-			data->sc++;
-		i++;
-	}
-	data->dc_2 = data->dc;
-	data->sc_2 = data->sc;
-}
-
-void	parser(t_data *data)
-{
-	data->i = 0;
-	countq(data);
-	count_tokens(data);
-	save_tokens(data);
+	parser(data);
+	ast(data);
 	free_all(data);
 }
 
@@ -79,7 +42,7 @@ int	main(int argc, char **argv, char **envp)
 			exit (1);
 		}
 		if (*data->line != '\0')
-			parser(data);
+			minishell(data);
 		free(data->line);
 	}
 }

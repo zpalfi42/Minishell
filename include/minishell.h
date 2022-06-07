@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/07 17:19:20 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/07 18:03:25 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,25 @@ typedef struct s_data
 	int		i;
 }	t_data;
 
+typedef struct s_ast
+{
+	char	*cmd;
+	int		nr;
+	int		np;
+	char	*opt;
+	char	*arg;
+}	t_ast;
+
+
 int		sig_handler(void);
 int		token_len(t_data *data, int i);
 
+void	ast(t_data *data);
+void	parser(t_data *data);
+void	free_all(t_data *data);
 void	save_tokens(t_data *data);
 void	print_miniconcha(void);
 void	count_tokens(t_data *data);
-// void	count_words(t_data *data);
-// void	save_tokens(t_data *data);
+void	ft_error(t_data *data, char *error);
 
 #endif

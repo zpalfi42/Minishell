@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:31:14 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/07 17:04:45 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/07 17:34:48 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	malloc_tokens(t_data *data)
 	{
 		data->tokens[data->word] = malloc(sizeof(char) * data->len);
 		if (!data->tokens[data->word])
-			exit(1);
+			ft_error(data, "Failed tokens malloc :(");
 		data->word++;
 		i = token_len(data, i);
 	}
@@ -88,7 +88,7 @@ void	save_tokens(t_data *data)
 
 	data->tokens = (char **)malloc(sizeof(char *) * (data->count + 1));
 	if (!data->tokens)
-		exit(1);
+		ft_error(data, "Failed token malloc :(");
 	data->tokens[data->count] = 0;
 	malloc_tokens(data);
 	while (data->line[data->i] != '\0')

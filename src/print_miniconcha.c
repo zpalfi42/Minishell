@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:09:23 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/07 17:21:10 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/07 17:34:48 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	print_miniconcha(void)
 
 	fd = open("./assets/miniconcha.txt", O_RDONLY);
 	i = 0;
-	while (i < 36)
+	while (i < 35)
 	{
 		line = get_next_line(fd);
-		printf("\033[1;32m %s", line);
+		printf("\033[1;34m %s", line);
 		i++;
 	}
 	close(fd);

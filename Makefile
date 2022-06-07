@@ -6,7 +6,7 @@
 #    By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 12:16:53 by zpalfi            #+#    #+#              #
-#    Updated: 2022/06/07 17:18:39 by zpalfi           ###   ########.fr        #
+#    Updated: 2022/06/07 18:01:44 by zpalfi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,11 @@ LIBS_HEADERS	= -I $(LIBS_DIR)/Libft/include/ \
 
 INC				= -I $(INCLUDE_DIR) $(LIBS_HEADERS)
 
-SRC				= main.c \
+SRC				= ast.c \
+				  main.c \
+				  free.c \
+				  error.c \
+				  parser.c \
 				  signal.c \
 				  token_len.c \
 				  save_tokens.c \
