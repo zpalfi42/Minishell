@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/02 16:50:44 by ealonso-         ###   ########.fr       */
+/*   Updated: 2022/06/07 17:19:20 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HOLA_H
-# define HOLA_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 # include "libft.h"
+# include "get_next_line.h"
 # include <signal.h>
 # include <stdio.h>
 # include <unistd.h>
@@ -37,15 +38,20 @@ typedef struct s_data
 	int		sc;
 	int		dc_2;
 	int		sc_2;
-	char 	**tokens;
-	char 	*line;
+	char	**tokens;
+	char	*line;
 	int		count;
 	int		word;
-}	t_data	;
+	int		len;
+	int		i;
+}	t_data;
 
 int		sig_handler(void);
+int		token_len(t_data *data, int i);
 
+void	save_tokens(t_data *data);
 void	print_miniconcha(void);
+void	count_tokens(t_data *data);
 // void	count_words(t_data *data);
 // void	save_tokens(t_data *data);
 

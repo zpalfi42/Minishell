@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_miniconcha.c                                 :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/07 17:09:23 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/07 17:21:10 by zpalfi           ###   ########.fr       */
+/*   Created: 2022/01/24 12:52:33 by zpalfi            #+#    #+#             */
+/*   Updated: 2022/03/14 13:27:20 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
-void	print_miniconcha(void)
-{
-	int		fd;
-	int		i;
-	char	*line;
+# include <stdlib.h>
+# include <unistd.h>
 
-	fd = open("./assets/miniconcha.txt", O_RDONLY);
-	i = 0;
-	while (i < 36)
-	{
-		line = get_next_line(fd);
-		printf("\033[1;32m %s", line);
-		i++;
-	}
-	close(fd);
-}
+# ifndef BUFFERSIZE
+#  define BUFFER_SIZE 1
+# endif
+
+char	*get_next_line(int fd);
+size_t  ft_strlen(const char *s);
+char    *ft_strjoin(char *s1, char *s2);
+char    *ft_strchr(const char *s, int c);
+
+#endif
