@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+         #
+#    By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 12:16:53 by zpalfi            #+#    #+#              #
-#    Updated: 2022/06/08 15:35:52 by zpalfi           ###   ########.fr        #
+#    Updated: 2022/06/08 16:41:54 by ealonso-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,8 @@ LIBS_HEADERS	= -I $(LIBS_DIR)/Libft/include/ \
 INC				= -I $(INCLUDE_DIR) $(LIBS_HEADERS)
 
 SRC				= ast.c \
+				  env.c \
+				  exit.c \
 				  main.c \
 				  free.c \
 				  echo.c \

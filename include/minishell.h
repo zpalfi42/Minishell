@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/08 15:35:43 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/08 16:42:54 by ealonso-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int		token_len(t_data *data, int i);
 
 void	ast(t_data *data);
 void	do_echo(t_data *data, t_ast *ast);
+void	do_exit(t_data *data, t_ast *ast);
+void	do_env(t_data *data, t_ast *ast);
 void	parser(t_data *data);
 void	free_all(t_data *data);
 void	save_tokens(t_data *data);
