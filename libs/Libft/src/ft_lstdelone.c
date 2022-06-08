@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstdelone.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zpalfi <zpalfi@student.42barcelon>         +#+  +:+       +#+        */
+/*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/19 17:36:49 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/01/19 17:51:10 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/08 17:20:16 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,6 @@ void	ft_lstdelone(t_list *lst, void (*del)(void*))
 	if (!lst)
 		return ;
 	if (del)
-		del(lst->content);
+		del(lst->name);
 	free (lst);
 }
