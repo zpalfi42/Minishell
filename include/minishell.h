@@ -6,7 +6,7 @@
 /*   By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/08 16:42:54 by ealonso-         ###   ########.fr       */
+/*   Updated: 2022/06/08 16:54:50 by ealonso-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ typedef struct s_ast
 	int		np;
 	char	*opt;
 	char	*arg;
+	char	*home;
+	char	*dir;
 }	t_ast;
 
 
