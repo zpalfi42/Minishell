@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:15:54 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/07 18:11:55 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/08 15:01:02 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,10 @@ int	main(int argc, char **argv, char **envp)
 			exit (1);
 		}
 		if (*data->line != '\0')
+		{
+			add_history(data->line);
 			minishell(data);
+		}
 		free(data->line);
 	}
 }
