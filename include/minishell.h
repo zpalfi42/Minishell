@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/07 18:03:25 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/08 15:35:43 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ int		sig_handler(void);
 int		token_len(t_data *data, int i);
 
 void	ast(t_data *data);
+void	do_echo(t_data *data, t_ast *ast);
 void	parser(t_data *data);
 void	free_all(t_data *data);
 void	save_tokens(t_data *data);

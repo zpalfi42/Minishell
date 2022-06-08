@@ -6,7 +6,7 @@
 #    By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 12:16:53 by zpalfi            #+#    #+#              #
-#    Updated: 2022/06/07 18:01:44 by zpalfi           ###   ########.fr        #
+#    Updated: 2022/06/08 15:35:52 by zpalfi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ INC				= -I $(INCLUDE_DIR) $(LIBS_HEADERS)
 SRC				= ast.c \
 				  main.c \
 				  free.c \
+				  echo.c \
 				  error.c \
 				  parser.c \
 				  signal.c \
