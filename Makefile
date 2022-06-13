@@ -6,7 +6,7 @@
 #    By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 12:16:53 by zpalfi            #+#    #+#              #
-#    Updated: 2022/06/13 15:32:43 by zpalfi           ###   ########.fr        #
+#    Updated: 2022/06/13 15:35:16 by zpalfi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,7 @@ SRC				=	cd.c \
 					main.c \
 					free.c \
 					echo.c \
+					unset.c \
 					utils.c \
 					error.c \
 					parser.c \

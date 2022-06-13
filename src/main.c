@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:15:54 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/13 14:32:23 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/13 15:38:44 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,11 +91,11 @@ t_list	*init_env(char **envp)
 {
 	t_list	*env;
 
-	env = ft_lstnew(envp_name(envp, 0), envp_value(envp, 0));
+	env = ft_lstnew(envp_name(envp, 0), envp_value(envp, 0), 0);
 	int i = 1;
 	while (envp[i])
 	{
-		ft_lstadd_back(&env, ft_lstnew(envp_name(envp, i), envp_value(envp, i)));
+		ft_lstadd_back(&env, ft_lstnew(envp_name(envp, i), envp_value(envp, i), 0));
 		i++;
 	}
 	return (env);

@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/13 15:32:08 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/13 15:46:30 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	do_env(t_data *data, t_ast *ast);
 void	do_pwd(t_data *data, t_ast *ast);
 void	do_echo(t_data *data, t_ast *ast);
 void	do_exit(t_data *data, t_ast *ast);
+void	do_unset(t_data *data, t_ast *ast);
 void	do_export(t_data *data, t_ast *ast);
 void	ft_error(t_data *data, char *error);
 

@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 13:43:18 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/08 17:23:04 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/13 15:38:37 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,10 @@ typedef struct s_list
 	char			*name;
 	char			*value;
 	struct s_list	*next;
+	int				mode;
 }	t_list;
 
-t_list		*ft_lstnew(char *name, char *value);
+t_list		*ft_lstnew(char *name, char *value, int i);
 t_list		*ft_lstlast(t_list *lst);
 t_list		*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 int			ft_lstsize(t_list *lst);

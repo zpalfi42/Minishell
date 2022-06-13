@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:55 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/13 15:33:59 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/13 15:56:10 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	check_cmd(t_data *data, t_ast *ast)
 	{
 		do_export(data, ast);
 	}
-	// else if (ft_strncmp(ast->cmd, "unset\0", 6) == 0)
-	// {
-	// 	do_unset(data, ast);
-	// }
+	else if (ft_strncmp(ast->cmd, "unset\0", 6) == 0)
+	{
+		do_unset(data, ast);
+	}
 	else if (ft_strncmp(ast->cmd, "env\0", 4) == 0)
 	{
 		do_env(data, ast);
@@ -43,7 +43,7 @@ void	check_cmd(t_data *data, t_ast *ast)
 		do_exit(data, ast);
 	}
 	else
-		printf("Command not found :(\n");
+		printf("\033[1;31mCommand not found :(\n");
 }
 
 void	ast(t_data *data)

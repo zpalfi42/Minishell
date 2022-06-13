@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:50 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/13 15:32:49 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/13 15:48:35 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,16 @@ int	export_exists(t_data *data)
 	while (data->env)
 	{
 		if (ft_strcmp(data->env->name, name))
-			aux = 1;
+		{
+			if (data->env->mode == 0)
+			{
+				printf("\033[1;31mCan't change %s value!\n", data->env->name);
+				aux = 2;
+			}
+			else
+				aux = 1;
+			break ;
+		}
 		data->env = data->env->next;
 	}
 	data->env = envo;
