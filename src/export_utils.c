@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:50 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/13 15:48:35 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/13 16:35:39 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,13 @@ char	*export_value(t_data *data)
 {
 	char	*ret;
 	int		i;
+	int		j;
 
 	i = 0;
 	while (data->tokens[1][i] != '=')
 		i++;
 	i++;
-	int j = 0;
+	j = 0;
 	while (data->tokens[1][i + j] != '\0')
 		j++;
 	ret = malloc(sizeof(char) * j);
@@ -60,7 +61,7 @@ int	valid_export(t_data *data)
 	int	aux;
 
 	i = 1;
-	while(data->tokens[1][i])
+	while (data->tokens[1][i])
 	{
 		if (data->tokens[1][i] == '=' && i != 0)
 			aux = 0;

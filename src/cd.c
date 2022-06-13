@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 14:31:17 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/13 14:32:09 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/13 16:34:55 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,11 @@ static void	replace_home(t_data *data, t_ast *ast)
 		{
 			z = 0;
 			while (ast->home[z])
-			{
-				ast->dir[j] = ast->home[z];
-				j++;
-				z++;
-			}
+				ast->dir[j++] = ast->home[z++];
 			i++;
 		}
 		else
-		{
-			ast->dir[j] = data->tokens[1][i];
-			j++;
-			i++;
-		}
+			ast->dir[j++] = data->tokens[1][i++];
 	}
 }
 

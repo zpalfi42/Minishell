@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/13 15:46:30 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/13 16:33:27 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,7 @@ void	ft_error(t_data *data, char *error);
 
 char	*export_name(t_data *data);
 char	*export_value(t_data *data);
+
+t_list	*init_env(char **envp);
 
 #endif

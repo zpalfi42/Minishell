@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:59:29 by ealonso-          #+#    #+#             */
-/*   Updated: 2022/06/13 14:32:21 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/13 16:30:51 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	do_env(t_data *data, t_ast *ast)
 {
 	t_list	*envo;
-	(void) ast;
 
+	(void) ast;
 	envo = data->env;
 	while (data->env)
 	{
