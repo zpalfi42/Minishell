@@ -6,7 +6,7 @@
 #    By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 12:16:53 by zpalfi            #+#    #+#              #
-#    Updated: 2022/06/13 14:31:45 by zpalfi           ###   ########.fr        #
+#    Updated: 2022/06/13 15:32:43 by zpalfi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,17 +31,20 @@ INC				= -I $(INCLUDE_DIR) $(LIBS_HEADERS)
 
 SRC				=	cd.c \
 					ast.c \
-					pwd.c	\
+					pwd.c \
 					env.c \
 					exit.c \
 					main.c \
 					free.c \
 					echo.c \
+					utils.c \
 					error.c \
 					parser.c \
 					signal.c \
+					export.c \
 					token_len.c \
 					save_tokens.c \
+					export_utils.c \
 					count_tokens.c \
 					print_miniconcha.c \
 
