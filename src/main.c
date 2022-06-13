@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:15:54 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/08 17:55:45 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/13 14:32:23 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ t_list	*init_env(char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
-	t_list	*env;
 
 	(void) argc;
 	(void) argv;
@@ -112,15 +111,7 @@ int	main(int argc, char **argv, char **envp)
 	data = (t_data *)malloc(sizeof(t_data));
 	if (sig_handler())
 		return (1);
-	env = init_env(envp);
-	while (env)
-	{
-		printf("%s %s\n", env->name, env->value);
-		env = env->next;
-	}
-	int i = -1;
-	while (envp[++i])
-		printf("AA %s\n", envp[i]);
+	data->env = init_env(envp);
 	while (42)
 	{
 		data->count = 0;

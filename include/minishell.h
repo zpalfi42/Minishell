@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/08 16:54:50 by ealonso-         ###   ########.fr       */
+/*   Updated: 2022/06/13 14:32:00 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef struct s_data
 	int		word;
 	int		len;
 	int		i;
+	t_list	*env;
 }	t_data;
 
 typedef struct s_ast
@@ -57,19 +58,20 @@ typedef struct s_ast
 	char	*dir;
 }	t_ast;
 
-
 int		sig_handler(void);
 int		token_len(t_data *data, int i);
 
 void	ast(t_data *data);
-void	do_echo(t_data *data, t_ast *ast);
-void	do_exit(t_data *data, t_ast *ast);
-void	do_env(t_data *data, t_ast *ast);
 void	parser(t_data *data);
 void	free_all(t_data *data);
-void	save_tokens(t_data *data);
 void	print_miniconcha(void);
+void	save_tokens(t_data *data);
 void	count_tokens(t_data *data);
+void	do_cd(t_data *data, t_ast *ast);
+void	do_env(t_data *data, t_ast *ast);
+void	do_pwd(t_data *data, t_ast *ast);
+void	do_echo(t_data *data, t_ast *ast);
+void	do_exit(t_data *data, t_ast *ast);
 void	ft_error(t_data *data, char *error);
 
 #endif

@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/08 15:59:29 by ealonso-          #+#    #+#             */
-/*   Updated: 2022/06/13 14:32:21 by zpalfi           ###   ########.fr       */
+/*   Created: 2022/06/13 14:25:32 by zpalfi            #+#    #+#             */
+/*   Updated: 2022/06/13 14:25:57 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_env(t_data *data, t_ast *ast)
+void	do_pwd(t_data *data, t_ast *ast)
 {
-	t_list	*envo;
+	char	*pwd;
+
+	(void) data;
 	(void) ast;
 
-	envo = data->env;
-	while (data->env)
+	pwd = malloc(sizeof(char) * 200);
+	if (getcwd(pwd, 199) == NULL)
 	{
-		printf("%s=%s\n", data->env->name, data->env->value);
-		data->env = data->env->next;
+		perror("getcwd");
 	}
-	data->env = envo;
+	printf("%s\n", pwd);
 }

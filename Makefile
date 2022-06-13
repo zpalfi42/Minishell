@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+         #
+#    By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 12:16:53 by zpalfi            #+#    #+#              #
-#    Updated: 2022/06/08 16:41:54 by ealonso-         ###   ########.fr        #
+#    Updated: 2022/06/13 14:31:45 by zpalfi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,19 +29,21 @@ LIBS_HEADERS	= -I $(LIBS_DIR)/Libft/include/ \
 
 INC				= -I $(INCLUDE_DIR) $(LIBS_HEADERS)
 
-SRC				= ast.c \
-				  env.c \
-				  exit.c \
-				  main.c \
-				  free.c \
-				  echo.c \
-				  error.c \
-				  parser.c \
-				  signal.c \
-				  token_len.c \
-				  save_tokens.c \
-				  count_tokens.c \
-				  print_miniconcha.c \
+SRC				=	cd.c \
+					ast.c \
+					pwd.c	\
+					env.c \
+					exit.c \
+					main.c \
+					free.c \
+					echo.c \
+					error.c \
+					parser.c \
+					signal.c \
+					token_len.c \
+					save_tokens.c \
+					count_tokens.c \
+					print_miniconcha.c \
 
 OBJ				= $(addprefix $(OBJS_DIR)/,$(SRC:.c=.o))
 
