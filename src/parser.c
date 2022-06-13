@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:51:08 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/08 16:41:23 by ealonso-         ###   ########.fr       */
+/*   Updated: 2022/06/13 17:15:09 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	parser(t_data *data)
 {
 	data->i = 0;
 	countq(data);
+	printf("AAAA\n");
 	count_tokens(data);
+	printf("BBBB\n");
 	save_tokens(data);
 }

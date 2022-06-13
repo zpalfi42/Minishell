@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:30:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/07 17:29:02 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/13 17:17:22 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,37 @@ static int	token_len_sc(t_data *data, int i)
 	return (i);
 }
 
+static int	token_len_env(t_data *data, int i, int c)
+{
+	int		j;
+	char	*name;
+	t_list	*envo;
+
+	j = 0;
+	i++;
+	while (data->line[i + j] != c && data->line[i + j] != '$'
+		&& data->line[i + j] != '\0')
+		j++;
+	name = malloc(sizeof(char) * j);
+	j = 0;
+	while (data->line[i + j] != c && data->line[i + j] != '$'
+		&& data->line[i + j] != '\0')
+	{
+		name[j] = data->line[i + j];
+		j++;
+	}
+	name[j] = '\0';
+	envo = data->env;
+	while (data->env)
+	{
+		if (ft_strcmp(data->env->name, name))
+			data->len += ft_strlen(data->env->value);
+		data->env = data->env->next;
+	}
+	data->env = envo;
+	return (i + j);
+}
+
 int	token_len(t_data *data, int i)
 {
 	data->len = 0;
@@ -55,7 +86,9 @@ int	token_len(t_data *data, int i)
 	{
 		while (data->line[i] != ' ' && data->line[i] != '\0')
 		{
-			if (data->line[i] == 34 && data->dc > 1)
+			if (data->line[i] == '$')
+				i = token_len_env(data, i, ' ');
+			else if (data->line[i] == 34 && data->dc > 1)
 				i = token_len_dc(data, i);
 			else if (data->line[i] == 39 && data->sc > 1)
 				i = token_len_sc(data, i);
