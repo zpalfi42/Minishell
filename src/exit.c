@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:38:08 by ealonso-          #+#    #+#             */
-/*   Updated: 2022/06/14 14:23:03 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/14 16:42:15 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 void	do_exit(t_data *data)
 {
 	printf("Exit");
-	free_all(data);
+	free_exit(data);
 	exit (1);
 }

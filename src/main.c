@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:15:54 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/14 14:22:23 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/14 16:42:18 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	routine(t_data *data)
 		data->line = readline("\033[1;32mminiconcha>$ \033[1;00m");
 		if (data->line == 0)
 		{
-			free_all(data);
+			free_exit(data);
 			exit (1);
 		}
 		if (*data->line != '\0')
@@ -48,8 +48,10 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv;
 	print_miniconcha();
 	data = (t_data *)malloc(sizeof(t_data));
+	if (!data)
+		ft_error(data, "Failed malloc :(");
 	if (sig_handler())
 		return (1);
-	data->env = init_env(envp);
+	data->env = init_env(data, envp);
 	routine(data);
 }

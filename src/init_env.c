@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 16:32:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/14 14:22:24 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/14 16:42:17 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,15 @@ static int	value_len(char **envp, int z)
 	return (j);
 }
 
-static char	*envp_name(char **envp, int z)
+static char	*envp_name(t_data *data, char **envp, int z)
 {
 	int		i;
 	char	*name;
 
 	i = 0;
 	name = malloc(sizeof(char) * name_len(envp, z));
+	if (!name)
+		ft_error(data, "Failed malloc :(");
 	while (envp[z][i])
 	{
 		if (envp[z][i] == '=')
@@ -57,10 +59,11 @@ static char	*envp_name(char **envp, int z)
 		name[i] = envp[z][i];
 		i++;
 	}
+	name[i] = '\0';
 	return (name);
 }
 
-static char	*envp_value(char **envp, int z)
+static char	*envp_value(t_data *data, char **envp, int z)
 {
 	int		i;
 	int		j;
@@ -69,6 +72,8 @@ static char	*envp_value(char **envp, int z)
 	i = 0;
 	j = 0;
 	value = malloc(sizeof(char) * value_len(envp, z));
+	if (!value)
+		ft_error(data, "Failed malloc :(");
 	while (envp[z][i] != '=')
 		i++;
 	i++;
@@ -77,20 +82,21 @@ static char	*envp_value(char **envp, int z)
 		value[j] = envp[z][i + j];
 		j++;
 	}
+	value[i] = '\0';
 	return (value);
 }
 
-t_list	*init_env(char **envp)
+t_list	*init_env(t_data *data, char **envp)
 {
 	t_list	*env;
 	int		i;
 
-	env = ft_lstnew(envp_name(envp, 0), envp_value(envp, 0), 0);
+	env = ft_lstnew(envp_name(data, envp, 0), envp_value(data, envp, 0), 0);
 	i = 1;
 	while (envp[i])
 	{
-		ft_lstadd_back(&env, ft_lstnew(envp_name(envp, i),
-				envp_value(envp, i), 0));
+		ft_lstadd_back(&env, ft_lstnew(envp_name(data, envp, i),
+				envp_value(data, envp, i), 0));
 		i++;
 	}
 	return (env);

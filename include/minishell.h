@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/14 14:19:58 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/14 16:07:34 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,6 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
-typedef struct s_ast
-{
-	char	*cmd;
-	int		nr;
-	int		np;
-	char	*opt;
-	char	*arg;
-	char	*home;
-	char	*dir;
-}	t_ast;
-
 typedef struct s_data
 {
 	int		dc;
@@ -55,8 +44,14 @@ typedef struct s_data
 	int		word;
 	int		len;
 	int		i;
+	char	*cmd;
+	int		nr;
+	int		np;
+	char	*opt;
+	char	*arg;
+	char	*home;
+	char	*dir;
 	t_list	*env;
-	t_ast	*ast;
 }	t_data;
 
 int		sig_handler(void);
@@ -72,6 +67,7 @@ void	ast(t_data *data);
 void	parser(t_data *data);
 void	free_all(t_data *data);
 void	print_miniconcha(void);
+void	free_exit(t_data *data);
 void	del_one_env(t_data *data);
 void	save_tokens(t_data *data);
 void	change_value(t_data *data);
@@ -88,6 +84,6 @@ void	ft_error(t_data *data, char *error);
 char	*export_name(t_data *data);
 char	*export_value(t_data *data);
 
-t_list	*init_env(char **envp);
+t_list	*init_env(t_data *data, char **envp);
 
 #endif

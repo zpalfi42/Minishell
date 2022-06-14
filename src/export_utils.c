@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:50 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/14 14:22:53 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/14 16:42:16 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ char	*export_name(t_data *data)
 	while (data->tokens[1][i] != '=')
 		i++;
 	ret = malloc(sizeof(char) * i);
+	if (!ret)
+		ft_error(data, "Failed malloc :(");
 	i = -1;
 	while (data->tokens[1][++i] != '=')
 		ret[i] = data->tokens[1][i];
@@ -41,6 +43,8 @@ char	*export_value(t_data *data)
 	while (data->tokens[1][i + j] != '\0')
 		j++;
 	ret = malloc(sizeof(char) * j);
+	if (!ret)
+		ft_error(data, "Failed malloc :(");
 	j = -1;
 	while (data->tokens[1][i + ++j] != '\0')
 		ret[j] = data->tokens[1][i + j];
@@ -53,15 +57,17 @@ int	valid_export(t_data *data)
 	int	i;
 	int	aux;
 
+	aux = 1;
 	i = 0;
-	if ((65 > data->tokens[1][0] || data->tokens[1][0] > 90)
+	if (((65 > data->tokens[1][0] || data->tokens[1][0] > 90)
 		&& (97 > data->tokens[1][0] || data->tokens[1][0] > 122))
+		&& data->tokens[1][0] != 95)
 		return (1);
 	while (data->tokens[1][++i])
 	{
 		if (data->tokens[1][i] == '=' && aux != 0)
 			aux = 0;
-		else if (!is_valid_name(data->tokens[1][i]) && aux != 0)
+		else if (is_valid_name(data->tokens[1][i]) == 0 && aux != 0)
 			return (1);
 	}
 	return (aux);
