@@ -6,21 +6,18 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/13 16:35:42 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/14 14:22:53 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_export(t_data *data, t_ast *ast)
+void	do_export(t_data *data)
 {
 	int	i;
 
-	(void) ast;
 	if (valid_export(data))
-	{
 		printf("\033[1;31mInvalid export!\n");
-	}
 	else
 	{
 		i = export_exists(data);

@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:39:27 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/14 13:41:38 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/14 14:22:21 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,6 @@ int	save_env(t_data *data, int j)
 	name[z] = '\0';
 	j = save_env_2(data, j, name);
 	data->env = envo;
+	free(name);
 	return (j);
 }

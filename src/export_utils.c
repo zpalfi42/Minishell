@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:50 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/14 13:38:19 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/14 14:22:53 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,10 @@ void	change_value(t_data *data)
 	while (data->env)
 	{
 		if (ft_strcmp(data->env->name, name))
+		{
+			free(name);
 			break ;
+		}
 		data->env = data->env->next;
 	}
 	free(data->env->value);

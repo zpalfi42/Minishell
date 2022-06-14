@@ -6,17 +6,16 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:59:29 by ealonso-          #+#    #+#             */
-/*   Updated: 2022/06/13 16:30:51 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/14 14:23:06 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_env(t_data *data, t_ast *ast)
+void	do_env(t_data *data)
 {
 	t_list	*envo;
 
-	(void) ast;
 	envo = data->env;
 	while (data->env)
 	{

@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/14 13:40:32 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/14 14:19:58 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,17 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
+typedef struct s_ast
+{
+	char	*cmd;
+	int		nr;
+	int		np;
+	char	*opt;
+	char	*arg;
+	char	*home;
+	char	*dir;
+}	t_ast;
+
 typedef struct s_data
 {
 	int		dc;
@@ -45,18 +56,8 @@ typedef struct s_data
 	int		len;
 	int		i;
 	t_list	*env;
+	t_ast	*ast;
 }	t_data;
-
-typedef struct s_ast
-{
-	char	*cmd;
-	int		nr;
-	int		np;
-	char	*opt;
-	char	*arg;
-	char	*home;
-	char	*dir;
-}	t_ast;
 
 int		sig_handler(void);
 int		is_valid_name(char c);
@@ -71,16 +72,17 @@ void	ast(t_data *data);
 void	parser(t_data *data);
 void	free_all(t_data *data);
 void	print_miniconcha(void);
+void	del_one_env(t_data *data);
 void	save_tokens(t_data *data);
 void	change_value(t_data *data);
 void	count_tokens(t_data *data);
-void	do_cd(t_data *data, t_ast *ast);
-void	do_env(t_data *data, t_ast *ast);
-void	do_pwd(t_data *data, t_ast *ast);
-void	do_echo(t_data *data, t_ast *ast);
-void	do_exit(t_data *data, t_ast *ast);
-void	do_unset(t_data *data, t_ast *ast);
-void	do_export(t_data *data, t_ast *ast);
+void	do_cd(t_data *data);
+void	do_env(t_data *data);
+void	do_pwd(t_data *data);
+void	do_echo(t_data *data);
+void	do_exit(t_data *data);
+void	do_unset(t_data *data);
+void	do_export(t_data *data);
 void	ft_error(t_data *data, char *error);
 
 char	*export_name(t_data *data);

@@ -6,15 +6,14 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:38:08 by ealonso-          #+#    #+#             */
-/*   Updated: 2022/06/13 16:30:55 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/14 14:23:03 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_exit(t_data *data, t_ast *ast)
+void	do_exit(t_data *data)
 {
-	(void) ast;
 	printf("Exit");
 	free_all(data);
 	exit (1);

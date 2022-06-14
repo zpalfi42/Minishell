@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:34:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/13 16:30:37 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/14 14:23:07 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,11 @@ void	print_echo(t_data *data, int i, int n)
 		printf("\n");
 }
 
-void	do_echo(t_data *data, t_ast *ast)
+void	do_echo(t_data *data)
 {
 	int	n;
 	int	i;
 
-	(void) ast;
 	n = 0;
 	i = 1;
 	if (data->tokens[i] == 0)

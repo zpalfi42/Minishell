@@ -6,11 +6,23 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:49:44 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/13 16:31:45 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/14 14:22:52 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	clear_env(t_data *data)
+{
+	t_list	*t;
+
+	while (data->env)
+	{
+		t = data->env->next;
+		del_one_env(data);
+		data->env = t;
+	}
+}
 
 void	free_all(t_data *data)
 {
@@ -26,4 +38,8 @@ void	free_all(t_data *data)
 	if (data->tokens[i])
 		free(data->tokens[i]);
 	free(data->tokens);
+	if (data->ast->dir)
+		free(data->ast->dir);
+	if (data->ast)
+		free(data->ast);
 }

@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:15:54 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/13 16:34:32 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/14 14:22:23 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@ void	routine(t_data *data)
 		data->line = readline("\033[1;32mminiconcha>$ \033[1;00m");
 		if (data->line == 0)
 		{
-			free(data->line);
-			free(data);
+			free_all(data);
 			exit (1);
 		}
 		if (*data->line != '\0')
