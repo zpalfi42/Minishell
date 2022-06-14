@@ -6,11 +6,13 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:30:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/13 17:17:22 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/14 12:02:15 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	token_len_env(t_data *data, int i);
 
 static int	token_len_dc(t_data *data, int i)
 {
@@ -18,8 +20,13 @@ static int	token_len_dc(t_data *data, int i)
 	data->dc--;
 	while (data->line[i] != 34 && data->line[i] != '\0')
 	{
-		i++;
-		data->len++;
+		if (data->line[i] == '$')
+			i = token_len_env(data, i);
+		else
+		{
+			i++;
+			data->len++;
+		}
 	}
 	if (data->line[i] == 34)
 	{
@@ -46,7 +53,7 @@ static int	token_len_sc(t_data *data, int i)
 	return (i);
 }
 
-static int	token_len_env(t_data *data, int i, int c)
+static int	token_len_env(t_data *data, int i)
 {
 	int		j;
 	char	*name;
@@ -54,13 +61,11 @@ static int	token_len_env(t_data *data, int i, int c)
 
 	j = 0;
 	i++;
-	while (data->line[i + j] != c && data->line[i + j] != '$'
-		&& data->line[i + j] != '\0')
+	while (is_valid_name(data->line[i + j]))
 		j++;
 	name = malloc(sizeof(char) * j);
 	j = 0;
-	while (data->line[i + j] != c && data->line[i + j] != '$'
-		&& data->line[i + j] != '\0')
+	while (is_valid_name(data->line[i + j]))
 	{
 		name[j] = data->line[i + j];
 		j++;
@@ -87,7 +92,7 @@ int	token_len(t_data *data, int i)
 		while (data->line[i] != ' ' && data->line[i] != '\0')
 		{
 			if (data->line[i] == '$')
-				i = token_len_env(data, i, ' ');
+				i = token_len_env(data, i);
 			else if (data->line[i] == 34 && data->dc > 1)
 				i = token_len_dc(data, i);
 			else if (data->line[i] == 39 && data->sc > 1)
@@ -99,11 +104,8 @@ int	token_len(t_data *data, int i)
 			}
 		}
 		if (data->line[i] == ' ' || data->line[i] == '\0')
-		{
-			i++;
 			break ;
-		}
 	}
 	data->len++;
-	return (i);
+	return (i + 1);
 }

@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:50 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/13 16:35:39 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/14 13:38:19 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,9 @@ char	*export_name(t_data *data)
 	while (data->tokens[1][i] != '=')
 		i++;
 	ret = malloc(sizeof(char) * i);
-	i = 0;
-	while (data->tokens[1][i] != '=')
-	{
+	i = -1;
+	while (data->tokens[1][++i] != '=')
 		ret[i] = data->tokens[1][i];
-		i++;
-	}
 	ret[i] = '\0';
 	return (ret);
 }
@@ -38,19 +35,15 @@ char	*export_value(t_data *data)
 	int		j;
 
 	i = 0;
-	while (data->tokens[1][i] != '=')
-		i++;
-	i++;
+	j = 0;
+	while (data->tokens[1][i++] != '=')
 	j = 0;
 	while (data->tokens[1][i + j] != '\0')
 		j++;
 	ret = malloc(sizeof(char) * j);
-	j = 0;
-	while (data->tokens[1][i + j] != '\0')
-	{
+	j = -1;
+	while (data->tokens[1][i + ++j] != '\0')
 		ret[j] = data->tokens[1][i + j];
-		j++;
-	}
 	ret[j] = '\0';
 	return (ret);
 }
@@ -60,12 +53,16 @@ int	valid_export(t_data *data)
 	int	i;
 	int	aux;
 
-	i = 1;
-	while (data->tokens[1][i])
+	i = 0;
+	if ((65 > data->tokens[1][0] || data->tokens[1][0] > 90)
+		&& (97 > data->tokens[1][0] || data->tokens[1][0] > 122))
+		return (1);
+	while (data->tokens[1][++i])
 	{
-		if (data->tokens[1][i] == '=' && i != 0)
+		if (data->tokens[1][i] == '=' && aux != 0)
 			aux = 0;
-		i++;
+		else if (!is_valid_name(data->tokens[1][i]) && aux != 0)
+			return (1);
 	}
 	return (aux);
 }

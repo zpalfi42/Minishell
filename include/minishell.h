@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/13 16:33:27 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/14 13:40:32 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,13 @@ typedef struct s_ast
 }	t_ast;
 
 int		sig_handler(void);
+int		is_valid_name(char c);
 int		valid_export(t_data *data);
 int		ft_strcmp(char *s, char *d);
 int		export_exists(t_data *data);
+int		save_env(t_data *data, int j);
 int		token_len(t_data *data, int i);
+int		save_env_2(t_data *data, int j, char *name);
 
 void	ast(t_data *data);
 void	parser(t_data *data);
