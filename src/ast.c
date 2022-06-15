@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:55 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/14 16:42:12 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/15 15:01:30 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	check_cmd(t_data *data)
 		do_pwd(data);
 	else if (ft_strncmp(data->cmd, "export\0", 7) == 0)
 		do_export(data);
-	else if (ft_strncmp(data->cmd, "unset\0", 6) == 0)
-		do_unset(data);
+	// else if (ft_strncmp(data->cmd, "unset\0", 6) == 0)
+	// 	do_unset(data);
 	else if (ft_strncmp(data->cmd, "env\0", 4) == 0)
 		do_env(data);
 	else if (ft_strncmp(data->cmd, "exit\0", 5) == 0)

@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:59:29 by ealonso-          #+#    #+#             */
-/*   Updated: 2022/06/14 16:42:14 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/15 15:01:12 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 void	do_env(t_data *data)
 {
-	t_list	*envo;
+	int	i;
 
-	envo = data->env;
-	while (data->env)
+	i = 0;
+	while (data->envp[i])
 	{
-		printf("%s=%s\n", data->env->name, data->env->value);
-		data->env = data->env->next;
+		printf("%s\n", data->envp[i]);
+		i++;
 	}
-	data->env = envo;
 }

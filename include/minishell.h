@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/14 16:07:34 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/15 14:13:27 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ typedef struct s_data
 	char	*arg;
 	char	*home;
 	char	*dir;
-	t_list	*env;
+	char	**first_envp;
+	char	**envp;
 }	t_data;
 
 int		sig_handler(void);
@@ -81,8 +82,8 @@ void	do_unset(t_data *data);
 void	do_export(t_data *data);
 void	ft_error(t_data *data, char *error);
 
-char	*export_name(t_data *data);
-char	*export_value(t_data *data);
+char	*export_name(t_data *data, char *env);
+char	*export_value(t_data *data, char *env);
 
 t_list	*init_env(t_data *data, char **envp);
 
