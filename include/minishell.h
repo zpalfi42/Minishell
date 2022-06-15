@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/15 14:13:27 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/15 17:14:21 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int		ft_strcmp(char *s, char *d);
 int		export_exists(t_data *data);
 int		save_env(t_data *data, int j);
 int		token_len(t_data *data, int i);
+int		first_envp(t_data *data, char *s);
 int		save_env_2(t_data *data, int j, char *name);
 
 void	ast(t_data *data);

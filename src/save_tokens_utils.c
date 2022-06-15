@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:39:27 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/15 15:08:25 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/15 17:14:06 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,51 +20,54 @@ int	is_valid_name(char c)
 	return (0);
 }
 
-// int	save_env_2(t_data *data, int j, char *name)
-// {
-// 	int	z;
+int	save_env_2(t_data *data, int j, char *name)
+{
+	int		z;
+	int		i;
+	char	*envp_name;
+	char	*envp_value;
 
-// 	z = 0;
-// 	while (data->env)
-// 	{
-// 		if (ft_strcmp(data->env->name, name))
-// 		{
-// 			while (data->env->value[z])
-// 			{
-// 				data->tokens[data->word][j] = data->env->value[z];
-// 				z++;
-// 				j++;
-// 			}
-// 		}
-// 		data->env = data->env->next;
-// 	}
-// 	return (j);
-// }
+	z = 0;
+	i = 0;
+	while (data->envp[i])
+	{
+		envp_name = export_name(data, data->envp[i]);
+		if (ft_strcmp(envp_name, name))
+		{
+			envp_value = export_value(data, data->envp[i]);
+			while (envp_value[z])
+			{
+				data->tokens[data->word][j] = envp_value[z];
+				z++;
+				j++;
+			}
+		}
+		i++;
+	}
+	return (j);
+}
 
-// int	save_env(t_data *data, int j)
-// {
-// 	int		z;
-// 	char	*name;
-// 	t_list	*envo;
+int	save_env(t_data *data, int j)
+{
+	int		z;
+	char	*name;
 
-// 	envo = data->env;
-// 	data->i++;
-// 	z = 0;
-// 	while (is_valid_name(data->line[data->i + z]))
-// 		z++;
-// 	name = malloc(sizeof(char) * z);
-// 	if (!name)
-// 		ft_error(data, "Failed malloc :(");
-// 	z = 0;
-// 	while (is_valid_name(data->line[data->i]))
-// 	{
-// 		name[z] = data->line[data->i];
-// 		z++;
-// 		data->i++;
-// 	}
-// 	name[z] = '\0';
-// 	j = save_env_2(data, j, name);
-// 	data->env = envo;
-// 	free(name);
-// 	return (j);
-// }
+	data->i++;
+	z = 0;
+	while (is_valid_name(data->line[data->i + z]))
+		z++;
+	name = malloc(sizeof(char) * z);
+	if (!name)
+		ft_error(data, "Failed malloc :(");
+	z = 0;
+	while (is_valid_name(data->line[data->i]))
+	{
+		name[z] = data->line[data->i];
+		z++;
+		data->i++;
+	}
+	name[z] = '\0';
+	j = save_env_2(data, j, name);
+	free(name);
+	return (j);
+}

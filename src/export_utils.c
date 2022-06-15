@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:50 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/15 15:54:18 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/15 17:14:14 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ char	*export_name(t_data *data, char *env)
 	int		i;
 
 	i = 0;
-	while (env[i] != '=')
+	while (env[i] != '=' && env[i] != '\0')
 		i++;
 	ret = malloc(sizeof(char) * i);
 	if (!ret)
 		ft_error(data, "Failed malloc :(");
 	i = -1;
-	while (env[++i] != '=')
+	while (env[++i] != '=' && env[i] != '\0')
 		ret[i] = env[i];
 	ret[i] = '\0';
 	return (ret);

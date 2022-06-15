@@ -6,41 +6,43 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:30:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/15 15:04:19 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/15 17:14:07 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// static int	token_len_env(t_data *data, int i, int j)
-// {
-// 	char	*name;
-// 	t_list	*envo;
+static int	token_len_env(t_data *data, int i, int j)
+{
+	char	*name;
+	char	*envp_name;
+	int		z;
 
-// 	i++;
-// 	while (is_valid_name(data->line[i + j]))
-// 		j++;
-// 	name = malloc(sizeof(char) * j);
-// 	if (!name)
-// 		ft_error(data, "Failed malloc :(");
-// 	j = 0;
-// 	while (is_valid_name(data->line[i + j]))
-// 	{
-// 		name[j] = data->line[i + j];
-// 		j++;
-// 	}
-// 	name[j] = '\0';
-// 	envo = data->env;
-// 	while (data->env)
-// 	{
-// 		if (ft_strcmp(data->env->name, name))
-// 			data->len += ft_strlen(data->env->value);
-// 		data->env = data->env->next;
-// 	}
-// 	data->env = envo;
-// 	free(name);
-// 	return (i + j);
-// }
+	i++;
+	while (is_valid_name(data->line[i + j]))
+		j++;
+	name = malloc(sizeof(char) * j);
+	if (!name)
+		ft_error(data, "Failed malloc :(");
+	j = 0;
+	while (is_valid_name(data->line[i + j]))
+	{
+		name[j] = data->line[i + j];
+		j++;
+	}
+	name[j] = '\0';
+	z = 0;
+	while (data->envp[z] != 0)
+	{
+		envp_name = export_name(data, data->envp[z]);
+		if (ft_strcmp(envp_name, name))
+			data->len += ft_strlen(envp_name);
+		free(envp_name);
+		z++;
+	}
+	free(name);
+	return (i + j);
+}
 
 static int	token_len_dc(t_data *data, int i)
 {
@@ -48,13 +50,13 @@ static int	token_len_dc(t_data *data, int i)
 	data->dc--;
 	while (data->line[i] != 34 && data->line[i] != '\0')
 	{
-		// if (data->line[i] == '$')
-			// i = token_len_env(data, i, 0);
-		// else
-		// {
+		if (data->line[i] == '$')
+			i = token_len_env(data, i, 0);
+		else
+		{
 			i++;
 			data->len++;
-		// }
+		}
 	}
 	if (data->line[i] == 34)
 	{
@@ -90,8 +92,8 @@ int	token_len(t_data *data, int i)
 	{
 		while (data->line[i] != ' ' && data->line[i] != '\0')
 		{
-			// if (data->line[i] == '$')
-				// i = token_len_env(data, i, 0);
+			if (data->line[i] == '$')
+				i = token_len_env(data, i, 0);
 			if (data->line[i] == 34 && data->dc > 1)
 				i = token_len_dc(data, i);
 			else if (data->line[i] == 39 && data->sc > 1)
