@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 12:52:33 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/07 17:30:04 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/20 15:40:37 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 # endif
 
 char	*get_next_line(int fd);
-size_t	ft_strlen(const char *s);
-char	*ft_strjoin(char *s1, char *s2);
-char	*ft_strchr(const char *s, int c);
+size_t	ft_strlen_2(const char *s);
+char	*ft_strjoin_2(char *s1, char *s2);
+char	*ft_strchr_2(const char *s, int c);
 
 #endif

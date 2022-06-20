@@ -6,13 +6,13 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 14:13:59 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/03/14 13:27:22 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/20 15:41:33 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr_2(const char *s, int c)
 {
 	int	i;
 
@@ -20,7 +20,7 @@ char	*ft_strchr(const char *s, int c)
 	if (!s)
 		return (0);
 	if (c == '\0')
-		return ((char *)&s[ft_strlen(s)]);
+		return ((char *)&s[ft_strlen_2(s)]);
 	while (s[i] != '\0')
 	{
 		if (s[i] == (char) c)
@@ -30,7 +30,7 @@ char	*ft_strchr(const char *s, int c)
 	return (0);
 }
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*ft_strjoin_2(char *s1, char *s2)
 {
 	size_t	i;
 	size_t	j;
@@ -43,7 +43,7 @@ char	*ft_strjoin(char *s1, char *s2)
 	}
 	if (!s1 || !s2)
 		return (NULL);
-	str = malloc(sizeof(char) * ((ft_strlen(s1) + ft_strlen(s2)) + 1));
+	str = malloc(sizeof(char) * ((ft_strlen_2(s1) + ft_strlen_2(s2)) + 1));
 	if (!str)
 		return (NULL);
 	i = -1;
@@ -53,12 +53,12 @@ char	*ft_strjoin(char *s1, char *s2)
 			str[i] = s1[i];
 	while (s2[j] != '\0')
 		str[i++] = s2[j++];
-	str[ft_strlen(s1) + ft_strlen(s2)] = '\0';
+	str[ft_strlen_2(s1) + ft_strlen_2(s2)] = '\0';
 	free(s1);
 	return (str);
 }
 
-size_t	ft_strlen(const char *s)
+size_t	ft_strlen_2(const char *s)
 {
 	size_t	i;
 

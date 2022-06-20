@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/15 17:14:21 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/20 16:53:06 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ typedef struct s_data
 	int		sc;
 	int		dc_2;
 	int		sc_2;
+	int		erno;
 	char	**tokens;
 	char	*line;
 	int		count;
@@ -66,21 +67,22 @@ int		first_envp(t_data *data, char *s);
 int		save_env_2(t_data *data, int j, char *name);
 
 void	ast(t_data *data);
-void	parser(t_data *data);
-void	free_all(t_data *data);
-void	print_miniconcha(void);
-void	free_exit(t_data *data);
-void	del_one_env(t_data *data);
-void	save_tokens(t_data *data);
-void	change_value(t_data *data);
-void	count_tokens(t_data *data);
 void	do_cd(t_data *data);
+void	parser(t_data *data);
 void	do_env(t_data *data);
 void	do_pwd(t_data *data);
 void	do_echo(t_data *data);
 void	do_exit(t_data *data);
 void	do_unset(t_data *data);
+void	do_other(t_data *data);
+void	free_all(t_data *data);
+void	print_miniconcha(void);
 void	do_export(t_data *data);
+void	free_exit(t_data *data);
+void	del_one_env(t_data *data);
+void	save_tokens(t_data *data);
+void	change_value(t_data *data);
+void	count_tokens(t_data *data);
 void	ft_error(t_data *data, char *error);
 
 char	*export_name(t_data *data, char *env);

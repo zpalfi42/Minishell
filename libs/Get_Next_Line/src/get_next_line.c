@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/21 13:04:46 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/03/14 13:30:48 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/20 15:42:51 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static char	*ft_new_left_str(char *left_str)
 		free(left_str);
 		return (NULL);
 	}
-	str = (char *)malloc(sizeof(char) * (ft_strlen(left_str) - i + 1));
+	str = (char *)malloc(sizeof(char) * (ft_strlen_2(left_str) - i + 1));
 	if (!str)
 		return (NULL);
 	i++;
@@ -75,7 +75,7 @@ static char	*ft_read_to_left_str(int fd, char *left_str)
 	if (!buff)
 		return (NULL);
 	rd_bytes = 1;
-	while (!ft_strchr(left_str, '\n') && rd_bytes != 0)
+	while (!ft_strchr_2(left_str, '\n') && rd_bytes != 0)
 	{
 		rd_bytes = read(fd, buff, BUFFER_SIZE);
 		if (rd_bytes == -1)
@@ -84,7 +84,7 @@ static char	*ft_read_to_left_str(int fd, char *left_str)
 			return (NULL);
 		}
 		buff[rd_bytes] = '\0';
-		left_str = ft_strjoin(left_str, buff);
+		left_str = ft_strjoin_2(left_str, buff);
 	}
 	free(buff);
 	return (left_str);

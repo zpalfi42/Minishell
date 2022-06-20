@@ -6,75 +6,99 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 15:48:43 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/02/18 13:07:22 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/20 15:34:38 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	count_words(char const *s, char c)
+static size_t	words_count(char *s, char c)
 {
 	size_t	i;
-	int		count;
+	size_t	j;
 
 	i = 0;
-	count = 0;
-	while (s[i])
+	j = 0;
+	while (*s)
 	{
-		if (s[i] == c)
+		if (*s != c)
 			i++;
-		else
+		else if (*s == c && i != 0)
 		{
-			count++;
-			while (s[i] && s[i] != c)
-				i++;
+			j++;
+			i = 0;
 		}
+		s++;
 	}
-	return (count);
+	if (i != 0)
+		j++;
+	return (j);
 }
 
-static char	*asign_word(char const *s, int k, int i)
+static char	*word(char *s, char c)
 {
-	char	*d;
-	int		j;
+	char	*buf;
 
-	j = 0;
-	d = malloc(sizeof(char) * (i - k + 1));
-	while (k < i)
+	while (*s == c)
+		s++;
+	buf = s;
+	while (*buf && *buf != c)
+		buf++;
+	*buf = '\0';
+	return (ft_strdup(s));
+}
+
+static char	**free_arr(char **arr, char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (arr[i])
 	{
-		d[j] = s[k];
-		j++;
-		k++;
+		free(arr[i]);
+		i++;
 	}
-	d[j] = '\0';
-	return (d);
+	free(arr);
+	free(s);
+	return (NULL);
+}
+
+static char	**worker(char **arr, char *s1, char c, size_t j)
+{
+	size_t	i;
+	char	*str;
+
+	str = s1;
+	i = 0;
+	while (i < j)
+	{
+		if (*s1 != c)
+		{
+			arr[i] = word(s1, c);
+			if (!arr[i])
+				return (free_arr(arr, s1));
+			s1 = s1 + ft_strlen(arr[i]);
+			i++;
+		}
+		s1++;
+	}
+	arr[i] = NULL;
+	free(str);
+	return (arr);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**p;
-	size_t	i;
+	char	**w_arr;
+	char	*s1;
 	size_t	j;
-	size_t	k;
 
-	if (!s)
+	s1 = ft_strdup(s);
+	if (!s1)
 		return (NULL);
-	p = malloc(sizeof(char *) * (count_words(s, c) + 1));
-	if (!p)
+	j = words_count(s1, c);
+	w_arr = (char **)malloc(sizeof(char *) * (j + 1));
+	if (!w_arr)
 		return (NULL);
-	i = -1;
-	j = 0;
-	k = -1;
-	while (++i <= ft_strlen(s))
-	{
-		if (s[i] != c && k < 0)
-			k = i;
-		else if ((s[i] == c || i == ft_strlen(s)) && k >= 0)
-		{
-			p[j++] = asign_word(s, k, i);
-			k = -1;
-		}
-	}
-	p[j] = 0;
-	return (p);
+	return (worker(w_arr, s1, c, j));
 }

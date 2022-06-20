@@ -6,11 +6,32 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:55 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/15 17:14:20 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/20 16:55:52 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	do_path_cmd(t_data *data)
+{
+	pid_t	pid;
+
+	pid = fork();
+	if (pid < 0)
+		perror("Fork: ");
+	if (pid == 0)
+	{
+		if (access(data->tokens[0], 0) == 0)
+			execve(data->tokens[0], data->tokens, data->envp);
+		else
+		{
+			perror("Error");
+			data->erno = errno;
+			exit(data->erno);
+		}
+	}
+	waitpid(pid, NULL, 0);
+}
 
 void	check_cmd(t_data *data)
 {
@@ -28,8 +49,10 @@ void	check_cmd(t_data *data)
 		do_env(data);
 	else if (ft_strncmp(data->cmd, "exit\0", 5) == 0)
 		do_exit(data);
+	else if (ft_strncmp(data->cmd, "/", 1) == 0)
+		do_path_cmd(data);
 	else
-		printf("\033[1;31mCommand not found :(\n");
+		do_other(data);
 }
 
 void	ast(t_data *data)

@@ -6,11 +6,25 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:35:19 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/15 17:14:08 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/20 14:46:29 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	valid_name(char *name)
+{
+	int	i;
+
+	i = 0;
+	while (name[i])
+	{
+		if (!is_valid_name(name[i]))
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 int	in_envp(t_data *data)
 {
@@ -46,7 +60,6 @@ int	in_envp(t_data *data)
 void	do_unset(t_data *data)
 {
 	char	**new_envp;
-	char	*name;
 	int		i;
 	int		j;
 	int		z;
@@ -54,12 +67,13 @@ void	do_unset(t_data *data)
 	z = 0;
 	i = 0;
 	j = in_envp(data);
-	name = export_name(data, data->tokens[1]);
-	if (j != -1 && !first_envp(data, name))
+	if (valid_name(data->tokens[1]))
+		printf("\033[1;31m%s is not a valid name!\n", data->tokens[1]);
+	else if (j != -1 && !first_envp(data, data->tokens[1]))
 	{
 		while (data->envp[i] != 0)
 			i++;
-		new_envp = malloc(sizeof(char *) * (i - 1));
+		new_envp = malloc(sizeof(char *) * (i));
 		i = 0;
 		while (data->envp[i] != 0)
 		{
@@ -78,4 +92,6 @@ void	do_unset(t_data *data)
 		free(data->envp);
 		data->envp = new_envp;
 	}
+	else
+		printf("\033[1;31mCannot unset %s\n", data->tokens[1]);
 }

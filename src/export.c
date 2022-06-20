@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/15 17:14:12 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/20 14:32:55 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	add_export(t_data *data)
 	z = 0;
 	while (data->envp[i] != 0)
 		i++;
-	new_envp = malloc(sizeof(char *) * (i + 1));
+	new_envp = malloc(sizeof(char *) * (i + 2));
 	if (!new_envp)
 		ft_error(data, "Failed malloc :(");
 	name = export_name(data, data->tokens[1]);
