@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:35:19 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/20 14:46:29 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/21 15:09:25 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,10 @@ int	valid_name(char *name)
 {
 	int	i;
 
-	i = 0;
-	while (name[i])
-	{
+	i = -1;
+	while (name[++i])
 		if (!is_valid_name(name[i]))
 			return (1);
-		i++;
-	}
 	return (0);
 }
 
@@ -34,27 +31,42 @@ int	in_envp(t_data *data)
 	int		j;
 
 	name = export_name(data, data->tokens[1]);
-	i = 0;
+	i = -1;
 	j = 0;
-	while (data->envp[i] != 0)
+	while (data->envp[++i] != 0 && j == 0)
 	{
 		envp_name = export_name(data, data->envp[i]);
 		if (ft_strcmp(envp_name, name))
-		{
 			j = -1;
-			break ;
-		}
 		free(envp_name);
-		i++;
-	}
-	if (j == -1)
-	{
-		free(envp_name);
-		free(name);
-		return (i);
 	}
 	free(name);
+	if (j == -1)
+		return (i);
 	return (-1);
+}
+
+static void	assign_new(t_data *data, char **new_envp, int j)
+{
+	int	i;
+	int	z;
+
+	i = 0;
+	z = 0;
+	while (data->envp[i] != 0)
+	{
+		if (i == j)
+			i++;
+		else
+		{
+			new_envp[z] = malloc(sizeof(char) * ft_strlen(data->envp[i]));
+			ft_strlcpy(new_envp[z], data->envp[i],
+				ft_strlen(data->envp[i]) + 1);
+			i++;
+			z++;
+		}
+	}
+	new_envp[z] = 0;
 }
 
 void	do_unset(t_data *data)
@@ -74,21 +86,7 @@ void	do_unset(t_data *data)
 		while (data->envp[i] != 0)
 			i++;
 		new_envp = malloc(sizeof(char *) * (i));
-		i = 0;
-		while (data->envp[i] != 0)
-		{
-			if (i == j)
-				i++;
-			else
-			{
-				new_envp[z] = malloc(sizeof(char) * ft_strlen(data->envp[i]));
-				ft_strlcpy(new_envp[z], data->envp[i],
-					ft_strlen(data->envp[i]) + 1);
-				i++;
-				z++;
-			}
-		}
-		new_envp[z] = 0;
+		assign_new(data, new_envp, j);
 		free(data->envp);
 		data->envp = new_envp;
 	}

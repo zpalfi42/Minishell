@@ -6,7 +6,7 @@
 #    By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 12:16:53 by zpalfi            #+#    #+#              #
-#    Updated: 2022/06/20 16:05:52 by zpalfi           ###   ########.fr        #
+#    Updated: 2022/06/21 14:57:23 by zpalfi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRC				=	cd.c \
 					save_tokens.c \
 					export_utils.c \
 					count_tokens.c \
+					export_utils_2.c \
 					print_miniconcha.c \
 					save_tokens_utils.c \
 

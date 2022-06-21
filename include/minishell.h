@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/20 16:53:06 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/21 14:58:54 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ typedef struct s_data
 
 int		sig_handler(void);
 int		is_valid_name(char c);
+int		this_envp(t_data *data);
 int		valid_export(t_data *data);
 int		ft_strcmp(char *s, char *d);
 int		export_exists(t_data *data);
@@ -84,6 +85,7 @@ void	save_tokens(t_data *data);
 void	change_value(t_data *data);
 void	count_tokens(t_data *data);
 void	ft_error(t_data *data, char *error);
+void	change(t_data *data, int index, char **new_envp);
 
 char	*export_name(t_data *data, char *env);
 char	*export_value(t_data *data, char *env);
