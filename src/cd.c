@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 14:31:17 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/15 17:14:19 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/21 14:21:47 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,15 @@ void	do_cd(t_data *data)
 	if (data->tokens[1] == 0)
 	{
 		if (chdir(data->home) != 0)
+		{
 			perror("cd");
+			data->erno = errno;
+		}
 	}
 	else if (chdir(data->dir) != 0)
 	{
 		perror("cd");
+		data->erno = errno;
 	}
 	else
 		free(data->dir);
