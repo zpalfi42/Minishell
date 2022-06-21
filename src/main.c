@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:15:54 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/21 14:59:35 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/21 16:43:54 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	routine(t_data *data)
 			minishell(data);
 		}
 		free(data->line);
-		printf("%d\n", data->erno);
 	}
 }
 
@@ -56,8 +55,8 @@ int	envp_init(t_data *data, char **envp)
 	data->erno = 0;
 	while (envp[i] != 0)
 	{
-		data->envp[i] = malloc(sizeof(char) * ft_strlen(envp[i]));
-		data->first_envp[i] = malloc(sizeof(char) * ft_strlen(envp[i]));
+		data->envp[i] = malloc(sizeof(char) * (ft_strlen(envp[i]) + 1));
+		data->first_envp[i] = malloc(sizeof(char) * (ft_strlen(envp[i]) + 1));
 		if (!data->envp[i] || !data->first_envp[i])
 			return (1);
 		ft_strlcpy(data->envp[i], envp[i], (ft_strlen(envp[i]) + 1));

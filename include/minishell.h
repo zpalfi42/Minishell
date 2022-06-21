@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/21 14:58:54 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/21 16:03:19 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,13 @@ int		this_envp(t_data *data);
 int		valid_export(t_data *data);
 int		ft_strcmp(char *s, char *d);
 int		export_exists(t_data *data);
+int		len_env(t_data *data, int i);
 int		save_env(t_data *data, int j);
 int		token_len(t_data *data, int i);
 int		first_envp(t_data *data, char *s);
+int		save_env_errno(t_data *data, int j);
+int		token_len_errno(t_data *data, int i);
+int		token_len_env(t_data *data, int i, int j);
 int		save_env_2(t_data *data, int j, char *name);
 
 void	ast(t_data *data);

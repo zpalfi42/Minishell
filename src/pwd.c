@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 14:25:32 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/21 14:59:39 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/21 16:04:42 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ void	do_pwd(t_data *data)
 	if (!pwd)
 		ft_error(data, "Failed malloc :(");
 	if (getcwd(pwd, 199) == NULL)
+	{
 		perror("getcwd");
+		data->erno = errno;
+	}
 	printf("%s\n", pwd);
 	free(pwd);
 }

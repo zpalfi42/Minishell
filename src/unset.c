@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:35:19 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/21 15:09:25 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/21 15:37:08 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ int	in_envp(t_data *data)
 	}
 	free(name);
 	if (j == -1)
-		return (i);
+		return (i - 1);
 	return (-1);
 }
 
-static void	assign_new(t_data *data, char **new_envp, int j)
+static char	**assign_new(t_data *data, char **new_envp, int j)
 {
 	int	i;
 	int	z;
@@ -56,7 +56,10 @@ static void	assign_new(t_data *data, char **new_envp, int j)
 	while (data->envp[i] != 0)
 	{
 		if (i == j)
+		{
+			printf("--> %s\n", data->envp[i]);
 			i++;
+		}
 		else
 		{
 			new_envp[z] = malloc(sizeof(char) * ft_strlen(data->envp[i]));
@@ -67,6 +70,7 @@ static void	assign_new(t_data *data, char **new_envp, int j)
 		}
 	}
 	new_envp[z] = 0;
+	return (new_envp);
 }
 
 void	do_unset(t_data *data)
@@ -79,14 +83,16 @@ void	do_unset(t_data *data)
 	z = 0;
 	i = 0;
 	j = in_envp(data);
+	printf("--> %d\n", j);
 	if (valid_name(data->tokens[1]))
 		printf("\033[1;31m%s is not a valid name!\n", data->tokens[1]);
-	else if (j != -1 && !first_envp(data, data->tokens[1]))
+	else if (j != -1)
 	{
 		while (data->envp[i] != 0)
 			i++;
 		new_envp = malloc(sizeof(char *) * (i));
-		assign_new(data, new_envp, j);
+		new_envp = assign_new(data, new_envp, j);
+		printf("%s\n", new_envp[0]);
 		free(data->envp);
 		data->envp = new_envp;
 	}

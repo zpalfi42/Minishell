@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:39:27 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/21 14:59:40 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/21 15:53:39 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,23 @@ int	is_valid_name(char c)
 		|| (96 < c && c < 123) || (c == 95))
 		return (1);
 	return (0);
+}
+
+int	save_env_errno(t_data *data, int j)
+{
+	char	*serrno;
+	int		i;
+
+	data->i += 2;
+	serrno = ft_itoa(data->erno);
+	i = 0;
+	while (serrno[i] != '\0')
+	{
+		data->tokens[data->word][j] = serrno[i];
+		i++;
+		j++;
+	}
+	return (j);
 }
 
 int	save_env_2(t_data *data, int j, char *name)

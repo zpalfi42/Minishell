@@ -6,39 +6,11 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:30:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/21 15:01:48 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/21 16:03:29 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static int	token_len_env(t_data *data, int i, int j)
-{
-	char	*name;
-	char	*envp_name;
-	int		z;
-
-	i++;
-	while (is_valid_name(data->line[i + j]))
-		j++;
-	name = malloc(sizeof(char) * j);
-	if (!name)
-		ft_error(data, "Failed malloc :(");
-	j = -1;
-	while (++j && is_valid_name(data->line[i + j]))
-		name[j] = data->line[i + j];
-	name[j] = '\0';
-	z = -1;
-	while (data->envp[++z] != 0)
-	{
-		envp_name = export_name(data, data->envp[z]);
-		if (ft_strcmp(envp_name, name))
-			data->len += ft_strlen(envp_name);
-		free(envp_name);
-	}
-	free(name);
-	return (i + j);
-}
 
 static int	token_len_dc(t_data *data, int i)
 {
@@ -79,6 +51,43 @@ static int	token_len_sc(t_data *data, int i)
 	return (i);
 }
 
+int	token_len_env(t_data *data, int i, int j)
+{
+	char	*name;
+	char	*envp_name;
+	int		z;
+
+	i++;
+	while (is_valid_name(data->line[i + j]))
+		j++;
+	name = malloc(sizeof(char) * j);
+	if (!name)
+		ft_error(data, "Failed malloc :(");
+	j = -1;
+	while (++j && is_valid_name(data->line[i + j]))
+		name[j] = data->line[i + j];
+	name[j] = '\0';
+	z = -1;
+	while (data->envp[++z] != 0)
+	{
+		envp_name = export_name(data, data->envp[z]);
+		if (ft_strcmp(envp_name, name))
+			data->len += ft_strlen(envp_name);
+		free(envp_name);
+	}
+	free(name);
+	return (i + j);
+}
+
+int	token_len_errno(t_data *data, int i)
+{
+	char	*serrno;
+
+	serrno = ft_itoa(data->erno);
+	data->len += ft_strlen(serrno);
+	return (i + 2);
+}
+
 int	token_len(t_data *data, int i)
 {
 	data->len = 0;
@@ -89,7 +98,7 @@ int	token_len(t_data *data, int i)
 		while (data->line[i] != ' ' && data->line[i] != '\0')
 		{
 			if (data->line[i] == '$')
-				i = token_len_env(data, i, 0);
+				i = len_env(data, i);
 			if (data->line[i] == 34 && data->dc > 1)
 				i = token_len_dc(data, i);
 			else if (data->line[i] == 39 && data->sc > 1)

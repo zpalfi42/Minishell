@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zpalfi <zpalfi@student.42barcelon>         +#+  +:+       +#+        */
+/*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 12:29:57 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/01/17 18:15:38 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/21 16:29:26 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,18 @@
 
 int	ft_strlcpy(char *dst, const char *src, unsigned long int n)
 {
-	char		*d;
-	char		*e;
-	const char	*s;
+	unsigned int	count;
+	unsigned int	i;
 
-	d = dst;
-	e = dst + n;
-	s = src;
-	while (*s != '\0' && d < e)
-		*d++ = *s++;
-	if (d < e)
-		*d = 0;
-	else if (n > 0)
-		d[-1] = 0;
-	while (*s != '\0')
-		s++;
-	return (s - src);
+	count = 0;
+	while (src[count] != '\0')
+		++count;
+	i = 0;
+	while (src[i] != '\0' && i < (n - 1))
+	{
+		dst[i] = src[i];
+		++i;
+	}
+	dst[i] = '\0';
+	return (count);
 }

@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 14:56:34 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/21 14:58:55 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/21 16:08:36 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,23 +41,6 @@ void	change_value(t_data *data)
 	data->envp = new_envp;
 }
 
-int	first_envp(t_data *data, char *s)
-{
-	int		i;
-	char	*name;
-
-	i = 0;
-	while (data->first_envp[i])
-	{
-		name = export_name(data, data->first_envp[i]);
-		if (ft_strcmp(name, s))
-			return (1);
-		free(name);
-		i++;
-	}
-	return (0);
-}
-
 int	export_exists(t_data *data)
 {
 	char	*name;
@@ -71,16 +54,11 @@ int	export_exists(t_data *data)
 		envp_name = export_name(data, data->envp[i]);
 		if (ft_strcmp(envp_name, name))
 		{
-			if (first_envp(data, name))
-				i = -2;
-			else
-				i = -1;
+			i = -1;
 			break ;
 		}
 		free(envp_name);
 	}
-	if (i == -2)
-		printf("\033[1;31mCan't change %s value!\n", name);
 	free(name);
 	return (i);
 }

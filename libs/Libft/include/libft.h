@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/17 13:43:18 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/13 15:38:37 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/21 16:27:13 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define LIBFT_H
 
 # include <stdlib.h>
+# include <stdio.h>
 # include <unistd.h>
 # include <limits.h>
 

@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/21 15:07:30 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/21 15:25:59 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	cpy_old(t_data *data, char **new_envp)
 	return (i);
 }
 
-static void	assign_new(t_data *data, char **new_envp, int i)
+static int	assign_new(t_data *data, char **new_envp, int i)
 {
 	int		j;
 	int		z;
@@ -38,10 +38,10 @@ static void	assign_new(t_data *data, char **new_envp, int i)
 	value = export_value(data, data->tokens[1]);
 	i = cpy_old(data, new_envp);
 	if (i == -1)
-		return (NULL);
+		return (1);
 	new_envp[i] = malloc(sizeof(char) * (ft_strlen(name) + ft_strlen(value)));
 	if (!new_envp[i])
-		return (NULL);
+		return (1);
 	j = -1;
 	while (name[++j] != '\0')
 		new_envp[i][j] = name[j];
@@ -52,7 +52,7 @@ static void	assign_new(t_data *data, char **new_envp, int i)
 		new_envp[i][j + z] = value[z];
 	new_envp[i][j + z] = '\0';
 	new_envp[i + 1] = 0;
-	return (new_envp);
+	return (0);
 }
 
 void	add_export(t_data *data)
@@ -64,9 +64,8 @@ void	add_export(t_data *data)
 	while (data->envp[i] != 0)
 		i++;
 	new_envp = malloc(sizeof(char *) * (i + 2));
-	if (!new_envp)
+	if (!new_envp || assign_new(data, new_envp, i))
 		ft_error(data, "Failed malloc :(");
-	assign_new(data, new_envp, i);
 	if (new_envp == NULL)
 		ft_error(data, "Failed malloc :(");
 	free(data->envp);

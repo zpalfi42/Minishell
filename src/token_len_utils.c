@@ -1,33 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   token_len_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/08 15:59:29 by ealonso-          #+#    #+#             */
-/*   Updated: 2022/06/21 15:44:04 by zpalfi           ###   ########.fr       */
+/*   Created: 2022/06/21 15:58:21 by zpalfi            #+#    #+#             */
+/*   Updated: 2022/06/21 16:03:49 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_env(t_data *data)
+int	len_env(t_data *data, int i)
 {
-	int	i;
-
-	i = 0;
-	if (data->tokens[1] != 0)
-	{
-		printf("Error: %s\n", strerror(2));
-		data->erno = 2;
-	}
+	if (data->line[i + 1] == '?')
+		i = token_len_errno(data, i);
 	else
-	{
-		while (data->envp[i])
-		{
-			printf("%s\n", data->envp[i]);
-			i++;
-		}
-	}
+		i = token_len_env(data, i, 0);
+	return (i);
 }
