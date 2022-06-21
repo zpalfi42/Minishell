@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/21 15:25:59 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/21 17:28:21 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,10 @@ void	do_export(t_data *data)
 	int	i;
 
 	if (valid_export(data))
+	{
 		printf("\033[1;31mInvalid export!\n");
+		data->erno = 1;
+	}
 	else
 	{
 		i = export_exists(data);
