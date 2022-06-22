@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/22 15:23:41 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/22 17:37:28 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,14 @@ typedef struct s_cmd
 	int				outfile;
 	char			*cmd;
 	char			**arg;
+	char			**tokens;
 	struct s_cmd	*next;
 }	t_cmd;
 
 typedef struct s_data
 {
 	int		dc;
+	int		fd[2];
 	int		sc;
 	int		dc_2;
 	int		sc_2;
@@ -85,10 +87,9 @@ void	do_cd(t_data *data);
 void	parser(t_data *data);
 void	do_env(t_data *data);
 void	do_pwd(t_data *data);
-void	do_echo(t_data *data);
+void	do_echo(t_cmd *cmd);
 void	do_exit(t_data *data);
 void	do_unset(t_data *data);
-void	do_other(t_data *data);
 void	free_all(t_data *data);
 void	print_miniconcha(void);
 void	do_export(t_data *data);
@@ -98,6 +99,7 @@ void	save_tokens(t_data *data);
 void	pipe_parser(t_data *data);
 void	change_value(t_data *data);
 void	count_tokens(t_data *data);
+void	do_other(t_data *data, t_cmd *cmd);
 void	ft_error(t_data *data, char *error);
 void	change(t_data *data, int index, char **new_envp);
 

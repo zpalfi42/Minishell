@@ -6,40 +6,40 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:34:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/15 17:14:17 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/22 17:37:14 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_echo(t_data *data, int i, int n)
+void	print_echo(t_cmd *cmd, int i, int n)
 {
-	while (data->tokens[i] != 0)
+	while (cmd->tokens[i] != 0)
 	{
-		if (data->tokens[i + 1] != 0)
-			printf("%s ", data->tokens[i]);
+		if (cmd->tokens[i + 1] != 0)
+			printf("%s ", cmd->tokens[i]);
 		else
-			printf("%s", data->tokens[i]);
+			printf("%s", cmd->tokens[i]);
 		i++;
 	}
 	if (!n)
 		printf("\n");
 }
 
-void	do_echo(t_data *data)
+void	do_echo(t_cmd *cmd)
 {
 	int	n;
 	int	i;
 
 	n = 0;
 	i = 1;
-	if (data->tokens[i] == 0)
+	if (cmd->tokens[i] == 0)
 		printf("\n");
-	else if (ft_strcmp(data->tokens[i], "-n\0"))
+	else if (ft_strcmp(cmd->tokens[i], "-n\0"))
 	{
 		n = 1;
 		i++;
 	}
 	else
-		print_echo(data, i, n);
+		print_echo(cmd, i, n);
 }

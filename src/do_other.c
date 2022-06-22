@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:02:48 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/20 16:05:56 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/22 17:31:15 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static char	*get_comand(char **mypaths, char *cmd)
 	return (NULL);
 }
 
-static void	exec_other(t_data *data)
+static void	exec_other(t_data *data, t_cmd *cmd)
 {
 	char	**paths;
 	char	*comand;
@@ -49,17 +49,17 @@ static void	exec_other(t_data *data)
 		i++;
 	}
 	paths = ft_split(value, ':');
-	comand = get_comand(paths, data->tokens[0]);
+	comand = get_comand(paths, cmd->cmd);
 	if (!comand)
 	{
 		free(comand);
 		free(paths);
 		printf("\033[1;31mCommand not found :(\n");
 	}
-	execve(comand, data->tokens, data->envp);
+	execve(comand, cmd->tokens, data->envp);
 }
 
-void	do_other(t_data *data)
+void	do_other(t_data *data, t_cmd *cmd)
 {
 	pid_t	pid;
 
@@ -67,6 +67,6 @@ void	do_other(t_data *data)
 	if (pid < 0)
 		perror("Fork: ");
 	if (pid == 0)
-		exec_other(data);
+		exec_other(data, cmd);
 	waitpid(pid, NULL, 0);
 }

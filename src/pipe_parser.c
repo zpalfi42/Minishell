@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/22 14:38:17 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/22 15:49:58 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/22 17:31:09 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,17 @@ t_cmd	*cmd_lst_new(char **tokens, int i, int j)
 		return (NULL);
 	n->cmd = tokens[i];
 	n->arg = malloc(sizeof(char *) * (j - i));
+	n->tokens = malloc(sizeof(char *) * (j - i + 1));
 	z = 0;
+	n->tokens[z] = tokens[i];
 	while (tokens[++i] != 0 && i <= j)
 	{
 		n->arg[z] = tokens[i];
+		n->tokens[z + 1] = tokens[i];
 		z++;
 	}
 	n->arg[z] = 0;
+	n->tokens[z + 1] = 0;
 	n->next = NULL;
 	return (n);
 }
