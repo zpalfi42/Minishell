@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/21 16:03:19 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/22 15:23:41 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,15 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
+typedef struct s_cmd
+{
+	int				infile;
+	int				outfile;
+	char			*cmd;
+	char			**arg;
+	struct s_cmd	*next;
+}	t_cmd;
+
 typedef struct s_data
 {
 	int		dc;
@@ -45,15 +54,15 @@ typedef struct s_data
 	int		word;
 	int		len;
 	int		i;
+	int		pipes;
 	char	*cmd;
 	int		nr;
 	int		np;
-	char	*opt;
-	char	*arg;
 	char	*home;
 	char	*dir;
 	char	**first_envp;
 	char	**envp;
+	t_cmd	*cmd_lst;
 }	t_data;
 
 int		sig_handler(void);
@@ -86,6 +95,7 @@ void	do_export(t_data *data);
 void	free_exit(t_data *data);
 void	del_one_env(t_data *data);
 void	save_tokens(t_data *data);
+void	pipe_parser(t_data *data);
 void	change_value(t_data *data);
 void	count_tokens(t_data *data);
 void	ft_error(t_data *data, char *error);

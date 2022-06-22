@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:15:54 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/21 16:43:54 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/22 15:37:14 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	minishell(t_data *data)
 {
 	parser(data);
+	pipe_parser(data);
 	ast(data);
 	free_all(data);
 }
