@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:02:48 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/22 17:31:15 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/23 17:07:02 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,5 @@ static void	exec_other(t_data *data, t_cmd *cmd)
 
 void	do_other(t_data *data, t_cmd *cmd)
 {
-	pid_t	pid;
-
-	pid = fork();
-	if (pid < 0)
-		perror("Fork: ");
-	if (pid == 0)
-		exec_other(data, cmd);
-	waitpid(pid, NULL, 0);
+	exec_other(data, cmd);
 }

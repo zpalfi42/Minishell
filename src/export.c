@@ -6,87 +6,71 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/21 17:28:21 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/23 16:10:38 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	cpy_old(t_data *data, char **new_envp)
+int	export_exists(t_data *data, t_cmd *cmd)
 {
-	int	i;
+	char	*name;
+	char	*envp_name;
+	int		i;
 
+	name = export_name(data, cmd->tokens[1]);
 	i = -1;
 	while (data->envp[++i] != 0)
 	{
-		new_envp[i] = malloc(sizeof(char) * (ft_strlen(data->envp[i])));
-		if (!new_envp[i])
-			return (-1);
-		ft_strlcpy(new_envp[i], data->envp[i], (ft_strlen(data->envp[i]) + 1));
+		envp_name = export_name(data, data->envp[i]);
+		if (ft_strcmp(envp_name, name))
+		{
+			i = -1;
+			break ;
+		}
+		free(envp_name);
 	}
+	free(name);
 	return (i);
 }
 
-static int	assign_new(t_data *data, char **new_envp, int i)
+int	valid_export(t_data *data, t_cmd *cmd)
 {
-	int		j;
-	int		z;
-	char	*name;
-	char	*value;
+	int	i;
+	int	aux;
 
-	name = export_name(data, data->tokens[1]);
-	value = export_value(data, data->tokens[1]);
-	i = cpy_old(data, new_envp);
-	if (i == -1)
-		return (1);
-	new_envp[i] = malloc(sizeof(char) * (ft_strlen(name) + ft_strlen(value)));
-	if (!new_envp[i])
-		return (1);
-	j = -1;
-	while (name[++j] != '\0')
-		new_envp[i][j] = name[j];
-	new_envp[i][j] = '=';
-	j++;
-	z = -1;
-	while (value[++z] != '\0')
-		new_envp[i][j + z] = value[z];
-	new_envp[i][j + z] = '\0';
-	new_envp[i + 1] = 0;
-	return (0);
-}
-
-void	add_export(t_data *data)
-{
-	int		i;
-	char	**new_envp;
-
+	(void) data;
+	aux = 1;
 	i = 0;
-	while (data->envp[i] != 0)
-		i++;
-	new_envp = malloc(sizeof(char *) * (i + 2));
-	if (!new_envp || assign_new(data, new_envp, i))
-		ft_error(data, "Failed malloc :(");
-	if (new_envp == NULL)
-		ft_error(data, "Failed malloc :(");
-	free(data->envp);
-	data->envp = new_envp;
+	if (((65 > cmd->tokens[1][0] || cmd->tokens[1][0] > 90)
+		&& (97 > cmd->tokens[1][0] || cmd->tokens[1][0] > 122))
+		&& cmd->tokens[1][0] != 95)
+		return (1);
+	while (cmd->tokens[1][++i])
+	{
+		if (cmd->tokens[1][i] == '=' && aux != 0)
+			aux = 0;
+		else if (is_valid_name(cmd->tokens[1][i]) == 0 && aux != 0)
+			return (1);
+	}
+	return (aux);
 }
 
-void	do_export(t_data *data)
+void	do_export(t_data *data, t_cmd *cmd)
 {
 	int	i;
 
-	if (valid_export(data))
+	if (valid_export(data, cmd))
 	{
 		printf("\033[1;31mInvalid export!\n");
 		data->erno = 1;
 	}
 	else
 	{
-		i = export_exists(data);
+		i = export_exists(data, cmd);
 		if (i == -1)
-			change_value(data);
+			change_value(data, cmd);
 		else if (i != -2)
-			add_export(data);
+			add_export(data, cmd);
 	}
 }

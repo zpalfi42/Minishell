@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/22 17:37:28 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/23 17:07:01 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ typedef struct s_data
 
 int		sig_handler(void);
 int		is_valid_name(char c);
-int		this_envp(t_data *data);
-int		valid_export(t_data *data);
+int		this_envp(t_data *data, t_cmd *cmd);
+int		valid_export(t_data *data, t_cmd *cmd);
 int		ft_strcmp(char *s, char *d);
-int		export_exists(t_data *data);
+int		export_exists(t_data *data, t_cmd *cmd);
 int		len_env(t_data *data, int i);
 int		save_env(t_data *data, int j);
 int		token_len(t_data *data, int i);
@@ -83,25 +83,26 @@ int		token_len_env(t_data *data, int i, int j);
 int		save_env_2(t_data *data, int j, char *name);
 
 void	ast(t_data *data);
-void	do_cd(t_data *data);
+void	do_cd(t_data *data, t_cmd *cmd);
 void	parser(t_data *data);
-void	do_env(t_data *data);
-void	do_pwd(t_data *data);
+void	do_env(t_data *data, t_cmd *cmd);
+void	do_pwd(t_data *data, t_cmd *cmd);
 void	do_echo(t_cmd *cmd);
-void	do_exit(t_data *data);
-void	do_unset(t_data *data);
+void	do_exit(t_data *data, t_cmd *cmd);
+void	do_unset(t_data *data, t_cmd *cmd);
 void	free_all(t_data *data);
 void	print_miniconcha(void);
-void	do_export(t_data *data);
+void	do_export(t_data *data, t_cmd *cmd);
 void	free_exit(t_data *data);
 void	del_one_env(t_data *data);
 void	save_tokens(t_data *data);
 void	pipe_parser(t_data *data);
-void	change_value(t_data *data);
+void	change_value(t_data *data, t_cmd *cmd);
 void	count_tokens(t_data *data);
 void	do_other(t_data *data, t_cmd *cmd);
 void	ft_error(t_data *data, char *error);
-void	change(t_data *data, int index, char **new_envp);
+void	add_export(t_data *data, t_cmd *cmd);
+void	change(t_data *data, t_cmd *cmd, int index, char **new_envp);
 
 char	*export_name(t_data *data, char *env);
 char	*export_value(t_data *data, char *env);

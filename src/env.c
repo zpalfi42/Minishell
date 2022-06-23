@@ -6,18 +6,18 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:59:29 by ealonso-          #+#    #+#             */
-/*   Updated: 2022/06/21 15:44:04 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/23 15:09:36 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_env(t_data *data)
+void	do_env(t_data *data, t_cmd *cmd)
 {
 	int	i;
 
 	i = 0;
-	if (data->tokens[1] != 0)
+	if (cmd->tokens[1] != 0)
 	{
 		printf("Error: %s\n", strerror(2));
 		data->erno = 2;

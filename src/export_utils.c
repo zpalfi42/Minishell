@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:50 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/21 14:57:24 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/23 16:10:37 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,37 +52,17 @@ char	*export_value(t_data *data, char *env)
 	return (ret);
 }
 
-int	valid_export(t_data *data)
-{
-	int	i;
-	int	aux;
-
-	aux = 1;
-	i = 0;
-	if (((65 > data->tokens[1][0] || data->tokens[1][0] > 90)
-		&& (97 > data->tokens[1][0] || data->tokens[1][0] > 122))
-		&& data->tokens[1][0] != 95)
-		return (1);
-	while (data->tokens[1][++i])
-	{
-		if (data->tokens[1][i] == '=' && aux != 0)
-			aux = 0;
-		else if (is_valid_name(data->tokens[1][i]) == 0 && aux != 0)
-			return (1);
-	}
-	return (aux);
-}
-
-int	this_envp(t_data *data)
+int	this_envp(t_data *data, t_cmd *cmd)
 {
 	char	*name;
 	char	*env_name;
 	int		i;
 	int		j;
 
-	name = export_name(data, data->tokens[1]);
+	name = export_name(data, cmd->tokens[1]);
 	i = 0;
 	j = 0;
+	printf("--< %s\n", name);
 	while (data->envp[i])
 	{
 		env_name = export_name(data, data->envp[i]);
@@ -100,14 +80,14 @@ int	this_envp(t_data *data)
 	return (i);
 }
 
-void	change(t_data *data, int index, char **new_envp)
+void	change(t_data *data, t_cmd *cmd, int index, char **new_envp)
 {
 	char	*new_value;
 	char	*new_name;
 	int		i;
 	int		j;
 
-	new_value = export_value(data, data->tokens[1]);
+	new_value = export_value(data, cmd->tokens[1]);
 	new_name = export_name(data, data->envp[index]);
 	new_envp[index] = malloc(sizeof(char)
 			* (ft_strlen(new_name) + ft_strlen(new_value)));
@@ -127,4 +107,34 @@ void	change(t_data *data, int index, char **new_envp)
 		j++;
 	}
 	new_envp[index][i] = '\0';
+	printf("--> %s\n", new_envp[index]);
+}
+
+void	change_value(t_data *data, t_cmd *cmd)
+{
+	char	**new_envp;
+	int		i;
+	int		j;
+
+	j = this_envp(data, cmd);
+	i = 0;
+	while (data->envp[i] != 0)
+		i++;
+	new_envp = malloc(sizeof(char *) * i);
+	i = 0;
+	while (data->envp[i] != 0)
+	{
+		if (j == i)
+			change(data, cmd, i, new_envp);
+		else
+		{
+			new_envp[i] = malloc(sizeof(char) * ft_strlen(data->envp[i]));
+			ft_strlcpy(new_envp[i], data->envp[i],
+				ft_strlen(data->envp[i]) + 1);
+		}
+		i++;
+	}
+	free(data->envp);
+	new_envp[i] = 0;
+	data->envp = new_envp;
 }

@@ -6,13 +6,13 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 14:31:17 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/21 15:38:53 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/23 15:15:06 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	replace_home(t_data *data)
+static void	replace_home(t_data *data, t_cmd *cmd)
 {
 	int		i;
 	int		j;
@@ -23,9 +23,9 @@ static void	replace_home(t_data *data)
 	data->dir = malloc(sizeof(char) * 200);
 	if (!data->dir)
 		ft_error(data, "Failed malloc :(");
-	while (data->tokens[1][i] != '\0')
+	while (cmd->tokens[1][i] != '\0')
 	{
-		if (data->tokens[1][i] == '~')
+		if (cmd->tokens[1][i] == '~')
 		{
 			z = 0;
 			while (data->home[z])
@@ -33,15 +33,16 @@ static void	replace_home(t_data *data)
 			i++;
 		}
 		else
-			data->dir[j++] = data->tokens[1][i++];
+			data->dir[j++] = cmd->tokens[1][i++];
 	}
 }
 
-void	do_cd(t_data *data)
+void	do_cd(t_data *data, t_cmd *cmd)
 {
-	if (data->tokens[1] != 0)
-		replace_home(data);
-	if (data->tokens[1] == 0)
+	printf("--> %s %s\n", cmd->tokens[0], cmd->tokens[1]);
+	if (cmd->tokens[1] != 0)
+		replace_home(data, cmd);
+	if (cmd->tokens[1] == 0)
 	{
 		if (chdir(data->home) != 0)
 		{

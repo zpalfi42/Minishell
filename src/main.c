@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:15:54 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/22 15:37:14 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/23 17:10:08 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	routine(t_data *data)
 		data->line = readline("\033[1;32mminiconcha>$ \033[1;00m");
 		if (data->line == 0)
 		{
+			printf("HOLAA\n");
 			free_exit(data);
 			exit (1);
 		}
