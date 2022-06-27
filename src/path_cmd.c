@@ -1,34 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   path_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/08 15:59:29 by ealonso-          #+#    #+#             */
-/*   Updated: 2022/06/27 15:52:30 by zpalfi           ###   ########.fr       */
+/*   Created: 2022/06/27 17:06:53 by zpalfi            #+#    #+#             */
+/*   Updated: 2022/06/27 17:07:34 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	do_env(t_data *data, t_cmd *cmd, int fd)
+void	do_path_cmd(t_data *data, t_cmd *cmd)
 {
-	int	i;
-
-	i = 0;
-	if (cmd->tokens[1] != 0)
-	{
-		printf("Error: %s\n", strerror(2));
-		data->erno = 2;
-	}
+	if (access(cmd->cmd, 0) == 0)
+		execve(cmd->cmd, cmd->tokens, data->envp);
 	else
 	{
-		while (data->envp[i])
-		{
-			ft_putendl_fd(data->envp[i], fd);
-			i++;
-		}
+		perror("Error");
+		data->erno = errno;
+		exit(data->erno);
 	}
-	return (1);
 }

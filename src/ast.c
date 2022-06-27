@@ -6,150 +6,115 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:55 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/23 17:17:19 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/27 17:07:39 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_path_cmd(t_data *data, t_cmd *cmd)
-{
-	if (access(cmd->cmd, 0) == 0)
-		execve(cmd->cmd, cmd->tokens, data->envp);
-	else
-	{
-		perror("Error");
-		data->erno = errno;
-		exit(data->erno);
-	}
-}
-
-int	is_builtin(t_data *data, t_cmd *cmd)
+int	is_builtin(t_data *data, t_cmd *cmd, int fd)
 {
 	(void) data;
 	if (ft_strncmp(cmd->cmd, "echo\0", 5) == 0)
-		return (1);
+		return (do_echo(cmd, fd));
 	else if (ft_strncmp(cmd->cmd, "cd\0", 3) == 0)
-		return (1);
+		return (do_cd(data, cmd));
 	else if (ft_strncmp(cmd->cmd, "pwd\0", 4) == 0)
-		return (1);
+		return (do_pwd(data, cmd, fd));
 	else if (ft_strncmp(cmd->cmd, "export\0", 7) == 0)
-		return (1);
+		return (do_export(data, cmd));
 	else if (ft_strncmp(cmd->cmd, "unset\0", 6) == 0)
-		return (1);
+		return (do_unset(data, cmd));
 	else if (ft_strncmp(cmd->cmd, "env\0", 4) == 0)
-		return (1);
+		return (do_env(data, cmd, fd));
 	else if (ft_strncmp(cmd->cmd, "exit\0", 5) == 0)
-		return (1);
-	return (0);
+		return (do_exit(data, cmd));
+	return (127);
 }
 
-void	check_cmd(t_data *data, t_cmd *cmd)
+void	redirect_io(int in, int out)
 {
-	if (ft_strncmp(cmd->cmd, "echo\0", 5) == 0)
-		do_echo(cmd);
-	else if (ft_strncmp(cmd->cmd, "cd\0", 3) == 0)
-		do_cd(data, cmd);
-	else if (ft_strncmp(cmd->cmd, "pwd\0", 4) == 0)
-		do_pwd(data, cmd);
-	else if (ft_strncmp(cmd->cmd, "export\0", 7) == 0)
-		do_export(data, cmd);
-	else if (ft_strncmp(cmd->cmd, "unset\0", 6) == 0)
-		do_unset(data, cmd);
-	else if (ft_strncmp(cmd->cmd, "env\0", 4) == 0)
-		do_env(data, cmd);
-	else if (ft_strncmp(cmd->cmd, "exit\0", 5) == 0)
-		do_exit(data, cmd);
-	else if (ft_strncmp(cmd->cmd, "/", 1) == 0)
-		do_path_cmd(data, cmd);
-	else
-		do_other(data, cmd);
-}
-
-// void	process_child_1(t_data *data, t_cmd *cmd)
-// {
-// 	(void) cmd;
-// 	dup2(data->fd[1], 1);
-// 	close(data->fd[0]);
-// 	check_cmd(data, cmd);
-// 	exit(1);
-// }
-
-// void	process_child_2(t_data *data, t_cmd *cmd)
-// {
-// 	dup2(data->fd[0], 0);
-// 	close(data->fd[1]);
-// 	check_cmd(data, cmd);
-// 	exit(1);
-// }
-
-void	exec(t_data *data, t_cmd *cmd)
-{
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-	if (cmd->next != NULL)
+	if (in != 0)
 	{
-		dup2(data->fd[1], 1);
-		close(data->fd[1]);
-		close(data->fd[0]);
+		dup2(in, 0);
+		close(in);
 	}
-	check_cmd(data, cmd);
+	if (out != 1)
+	{
+		dup2(out, 1);
+		if (in != 0)
+			close(in);
+		close(out);
+	}
+}
+
+void	exec(t_data *data, int in, int out)
+{
+	int		aux;
+	pid_t	pid;
+
+	aux = is_builtin(data, data->cmd_lst, out);
+	if (aux == 127)
+	{
+		pid = fork();
+		if (pid < 0)
+		{
+			perror("Fork:");
+			data->erno = errno;
+		}
+		if (pid == 0)
+		{
+			if (in == -1)
+				exit(1);
+			redirect_io(in, out);
+			if (ft_strncmp(data->cmd_lst->cmd, "/", 1) == 0)
+				do_path_cmd(data, data->cmd_lst);
+			else
+				do_other(data, data->cmd_lst);
+		}
+		else
+			waitpid(pid, NULL, 0);
+	}
+}
+
+void	assign_io(t_data *data, int *in, int *out, int fd[2])
+{
+	(void) in;
+	if (data->cmd_lst->next)
+	{
+		if (pipe(fd) == -1)
+		{
+			perror("Pipe:");
+			data->erno = errno;
+		}
+		*out = fd[1];
+	}
+	else
+		*out = 1;
 }
 
 void	ast(t_data *data)
 {
-	pid_t	pid;
+	int		fd[2];
+	int		in;
+	int		out;
+	int		first;
 
-	if (is_builtin(data, data->cmd_lst) && data->cmd_lst->next == NULL)
+	first = 1;
+	while (data->cmd_lst != NULL)
 	{
-		check_cmd(data, data->cmd_lst);
+		if (first)
+			in = 0;
+		else
+			in = fd[0];
+		assign_io(data, &in, &out, fd);
+		if (data->cmd_lst->cmd != NULL)
+			exec(data, in, out);
+		if (out != 1)
+			close(out);
+		if (in != 0)
+			close(in);
+		data->cmd_lst = data->cmd_lst->next;
+		first = 0;
 	}
-	else
-	{
-		while (data->cmd_lst != NULL)
-		{
-			if (data->cmd_lst->next != NULL)
-				pipe(data->fd);
-			pid = fork();
-			if (pid < 0)
-				return ;
-			if (pid == 0)
-				exec(data, data->cmd_lst);
-			if (data->cmd_lst->next != NULL)
-			{
-				dup2(data->fd[0], 0);
-				close(data->fd[0]);
-				close(data->fd[1]);
-			}
-			data->cmd_lst = data->cmd_lst->next;
-		}
-	}
-	// if (data->cmd_lst->next != NULL)
-	// {
-	// 	if (pipe(data->fd) < 0)
-	// 	{
-	// 		perror("Pipe");
-	// 		data->erno = errno;
-	// 	}
-	// 	data->home = getenv("HOME");
-	// 	pid1 = fork();
-	// 	if (pid1 < -1)
-	// 	{
-	// 		perror("Fork:");
-	// 		data->erno = errno;
-	// 	}
-	// 	if (pid1 == 0)
-	// 		process_child_1(data, data->cmd_lst);
-	// 	pid2 = fork();
-	// 	if (pid2 < 0)
-	// 		perror("Fork: ");
-	// 	if (pid2 == 0)
-	// 		process_child_2(data, data->cmd_lst->next);
-	// 	close(data->fd[0]);
-	// 	close(data->fd[1]);
-	// 	waitpid(pid1, NULL, 0);
-	// 	waitpid(pid2, NULL, 0);
-	// }
-	// else
-	// 	check_cmd(data, data->cmd_lst);
 }

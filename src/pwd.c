@@ -6,13 +6,13 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 14:25:32 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/23 15:31:30 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/27 15:54:44 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_pwd(t_data *data, t_cmd *cmd)
+int	do_pwd(t_data *data, t_cmd *cmd, int fd)
 {
 	char	*pwd;
 
@@ -32,8 +32,9 @@ void	do_pwd(t_data *data, t_cmd *cmd)
 			perror("getcwd");
 			data->erno = errno;
 		}
-		printf("%s\n", pwd);
+		ft_putendl_fd(pwd, fd);
 		free(pwd);
 		data->erno = 0;
 	}
+	return (1);
 }

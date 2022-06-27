@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/23 17:07:01 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/27 17:07:17 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,21 @@ typedef struct s_data
 }	t_data;
 
 int		sig_handler(void);
+int		do_echo(t_cmd *cmd, int fd);
 int		is_valid_name(char c);
 int		this_envp(t_data *data, t_cmd *cmd);
 int		valid_export(t_data *data, t_cmd *cmd);
 int		ft_strcmp(char *s, char *d);
 int		export_exists(t_data *data, t_cmd *cmd);
+int		do_cd(t_data *data, t_cmd *cmd);
 int		len_env(t_data *data, int i);
 int		save_env(t_data *data, int j);
 int		token_len(t_data *data, int i);
+int		do_env(t_data *data, t_cmd *cmd, int fd);
+int		do_pwd(t_data *data, t_cmd *cmd, int fd);
+int		do_exit(t_data *data, t_cmd *cmd);
+int		do_export(t_data *data, t_cmd *cmd);
+int		do_unset(t_data *data, t_cmd *cmd);
 int		first_envp(t_data *data, char *s);
 int		save_env_errno(t_data *data, int j);
 int		token_len_errno(t_data *data, int i);
@@ -83,19 +90,13 @@ int		token_len_env(t_data *data, int i, int j);
 int		save_env_2(t_data *data, int j, char *name);
 
 void	ast(t_data *data);
-void	do_cd(t_data *data, t_cmd *cmd);
 void	parser(t_data *data);
-void	do_env(t_data *data, t_cmd *cmd);
-void	do_pwd(t_data *data, t_cmd *cmd);
-void	do_echo(t_cmd *cmd);
-void	do_exit(t_data *data, t_cmd *cmd);
-void	do_unset(t_data *data, t_cmd *cmd);
 void	free_all(t_data *data);
 void	print_miniconcha(void);
-void	do_export(t_data *data, t_cmd *cmd);
 void	free_exit(t_data *data);
 void	del_one_env(t_data *data);
 void	save_tokens(t_data *data);
+void	do_path_cmd(t_data *data, t_cmd *cmd);
 void	pipe_parser(t_data *data);
 void	change_value(t_data *data, t_cmd *cmd);
 void	count_tokens(t_data *data);

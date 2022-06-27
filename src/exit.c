@@ -6,13 +6,13 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:38:08 by ealonso-          #+#    #+#             */
-/*   Updated: 2022/06/23 16:15:46 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/27 15:46:31 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	do_exit(t_data *data, t_cmd *cmd)
+int	do_exit(t_data *data, t_cmd *cmd)
 {
 	int	i;
 	int	aux;
@@ -30,4 +30,5 @@ void	do_exit(t_data *data, t_cmd *cmd)
 	printf("Exit");
 	free_exit(data);
 	exit (1);
+	return (1);
 }

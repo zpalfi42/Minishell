@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 14:31:17 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/23 15:15:06 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/27 15:44:29 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static void	replace_home(t_data *data, t_cmd *cmd)
 	}
 }
 
-void	do_cd(t_data *data, t_cmd *cmd)
+int	do_cd(t_data *data, t_cmd *cmd)
 {
 	printf("--> %s %s\n", cmd->tokens[0], cmd->tokens[1]);
 	if (cmd->tokens[1] != 0)
@@ -57,4 +57,5 @@ void	do_cd(t_data *data, t_cmd *cmd)
 	}
 	else
 		free(data->dir);
+	return (1);
 }
