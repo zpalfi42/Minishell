@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/28 14:37:09 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/28 15:44:01 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ typedef struct s_cmd
 	char			*cmd;
 	char			**arg;
 	char			**tokens;
-	t_list			*files;
+	t_files			*files;
 	struct s_cmd	*next;
 }	t_cmd;
 
