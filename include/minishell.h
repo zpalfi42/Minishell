@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/27 17:07:17 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/28 14:21:40 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@
 # include <readline/history.h>
 # include <readline/readline.h>
 
+typedef struct s_files
+{
+	int				type;
+	char			*filename;
+	struct s_files	*next;
+}	t_files;
+
 typedef struct s_cmd
 {
 	int				infile;
@@ -39,6 +46,7 @@ typedef struct s_cmd
 	char			*cmd;
 	char			**arg;
 	char			**tokens;
+	t_list			*files;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -96,6 +104,7 @@ void	print_miniconcha(void);
 void	free_exit(t_data *data);
 void	del_one_env(t_data *data);
 void	save_tokens(t_data *data);
+void	token_len_init(t_data *data);
 void	do_path_cmd(t_data *data, t_cmd *cmd);
 void	pipe_parser(t_data *data);
 void	change_value(t_data *data, t_cmd *cmd);

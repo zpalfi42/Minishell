@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:30:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/21 16:03:29 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/28 14:21:24 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,11 @@ int	token_len_errno(t_data *data, int i)
 
 int	token_len(t_data *data, int i)
 {
-	data->len = 0;
-	data->dc = data->dc_2;
-	data->sc = data->sc_2;
+	token_len_init(data);
 	while (data->line[i] != '\0')
 	{
+		while (data->line[i] == ' ')
+			i++;
 		while (data->line[i] != ' ' && data->line[i] != '\0')
 		{
 			if (data->line[i] == '$')

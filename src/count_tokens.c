@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:32:18 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/15 17:14:18 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/28 14:18:08 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	count_tokens(t_data *data)
 	i = 0;
 	while (data->line[i] != '\0')
 	{
+		while(data->line[i] == ' ')
+			i++;
 		while (data->line[i] != ' ' && data->line[i] != '\0')
 		{
 			if (data->line[i] == 34 && data->dc > 1)

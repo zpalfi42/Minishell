@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:31:14 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/21 15:47:45 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/28 14:19:48 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ void	save_tokens(t_data *data)
 	while (data->line[data->i] != '\0')
 	{
 		j = 0;
+		while (data->line[data->i] == ' ')
+			data->i++;
 		while (data->line[data->i] != ' ' && data->line[data->i] != '\0')
 		{
 			if (data->line[data->i] == 34 && data->dc_2 > 1)
@@ -119,8 +121,6 @@ void	save_tokens(t_data *data)
 				j = save_tokens_normal(data, j);
 		}
 		data->tokens[data->word][j] = '\0';
-		if (data->line[data->i] == ' ')
-			data->i++;
 		data->word++;
 	}
 }
