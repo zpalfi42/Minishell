@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/28 14:21:40 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/28 14:37:09 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int		do_cd(t_data *data, t_cmd *cmd);
 int		len_env(t_data *data, int i);
 int		save_env(t_data *data, int j);
 int		token_len(t_data *data, int i);
+int		malloc_tokens(t_data *data);
 int		do_env(t_data *data, t_cmd *cmd, int fd);
 int		do_pwd(t_data *data, t_cmd *cmd, int fd);
 int		do_exit(t_data *data, t_cmd *cmd);
@@ -109,6 +110,7 @@ void	do_path_cmd(t_data *data, t_cmd *cmd);
 void	pipe_parser(t_data *data);
 void	change_value(t_data *data, t_cmd *cmd);
 void	count_tokens(t_data *data);
+void	save_tokens_init(t_data *data);
 void	do_other(t_data *data, t_cmd *cmd);
 void	ft_error(t_data *data, char *error);
 void	add_export(t_data *data, t_cmd *cmd);

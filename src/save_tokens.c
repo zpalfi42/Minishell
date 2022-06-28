@@ -6,13 +6,13 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:31:14 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/28 14:19:48 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/28 14:36:04 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	malloc_tokens(t_data *data)
+int	malloc_tokens(t_data *data)
 {
 	int	i;
 
@@ -101,16 +101,14 @@ void	save_tokens(t_data *data)
 {
 	int	j;
 
-	data->tokens = (char **)malloc(sizeof(char *) * (data->count + 1));
-	if (!data->tokens)
-		ft_error(data, "Failed token malloc :(");
-	data->tokens[data->count] = 0;
-	malloc_tokens(data);
+	save_tokens_init(data);
 	while (data->line[data->i] != '\0')
 	{
 		j = 0;
-		while (data->line[data->i] == ' ')
+		while (data->line[data->i] == ' ' && data->line[data->i] != '\0')
 			data->i++;
+		if (data->line[data->i] == '\0')
+			break ;
 		while (data->line[data->i] != ' ' && data->line[data->i] != '\0')
 		{
 			if (data->line[data->i] == 34 && data->dc_2 > 1)

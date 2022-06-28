@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:30:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/28 14:21:24 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/28 14:28:46 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	token_len(t_data *data, int i)
 	token_len_init(data);
 	while (data->line[i] != '\0')
 	{
-		while (data->line[i] == ' ')
+		while (data->line[i] == ' ' && data->line[i] != '\0')
 			i++;
 		while (data->line[i] != ' ' && data->line[i] != '\0')
 		{
