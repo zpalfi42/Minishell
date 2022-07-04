@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/28 15:44:01 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/06/28 17:22:25 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_cmd
 {
 	int				infile;
 	int				outfile;
+	int				first;
 	char			*cmd;
 	char			**arg;
 	char			**tokens;
@@ -96,6 +97,8 @@ int		first_envp(t_data *data, char *s);
 int		save_env_errno(t_data *data, int j);
 int		token_len_errno(t_data *data, int i);
 int		token_len_env(t_data *data, int i, int j);
+int		output_file(t_cmd *n, char **tokens, int z);
+int		input_file(t_cmd *n, char **tokens, int z);
 int		save_env_2(t_data *data, int j, char *name);
 
 void	ast(t_data *data);
@@ -115,10 +118,16 @@ void	do_other(t_data *data, t_cmd *cmd);
 void	ft_error(t_data *data, char *error);
 void	add_export(t_data *data, t_cmd *cmd);
 void	change(t_data *data, t_cmd *cmd, int index, char **new_envp);
+void	files_add_back(t_files **files, t_files *new);
+void	cmd_add_back(t_cmd	**lst, t_cmd *new);
 
 char	*export_name(t_data *data, char *env);
 char	*export_value(t_data *data, char *env);
 
 t_list	*init_env(t_data *data, char **envp);
+
+t_files	*files_lst_new(char *name, int mode, char c);
+
+t_cmd	*cmd_lst_new(char **tokens, int i, int j);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 12:16:53 by zpalfi            #+#    #+#              #
-#    Updated: 2022/06/27 17:07:33 by zpalfi           ###   ########.fr        #
+#    Updated: 2022/06/28 17:15:53 by zpalfi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,14 +43,18 @@ SRC				=	cd.c \
 					parser.c \
 					signal.c \
 					export.c \
+					lst_new.c \
 					do_other.c \
 					init_env.c \
 					path_cmd.c \
 					token_len.c \
+					in_out_file.c \
 					pipe_parser.c \
 					save_tokens.c \
 					export_utils.c \
+					cmd_add_back.c \
 					count_tokens.c \
+					files_add_back.c \
 					export_utils_2.c \
 					token_len_utils.c \
 					print_miniconcha.c \
