@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:50 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/27 17:08:31 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/04 17:05:33 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ int	this_envp(t_data *data, t_cmd *cmd)
 	name = export_name(data, cmd->tokens[1]);
 	i = 0;
 	j = 0;
-	printf("--< %s\n", name);
 	while (data->envp[i])
 	{
 		env_name = export_name(data, data->envp[i]);
@@ -106,7 +105,6 @@ void	change(t_data *data, t_cmd *cmd, int index, char **new_envp)
 		i++;
 	}
 	new_envp[index][i] = '\0';
-	printf("--> %s\n", new_envp[index]);
 }
 
 void	change_value(t_data *data, t_cmd *cmd)
