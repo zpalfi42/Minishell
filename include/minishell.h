@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/28 17:22:25 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/04 16:34:06 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,15 @@ typedef struct s_cmd
 {
 	int				infile;
 	int				outfile;
-	int				first;
+	int				first_1;
+	int				first_2;
+	int				aux;
 	char			*cmd;
 	char			**arg;
 	char			**tokens;
-	t_files			*files;
+	int				*tokens_type;
+	t_files			*infiles;
+	t_files			*outfiles;
 	struct s_cmd	*next;
 }	t_cmd;
 
@@ -60,6 +64,7 @@ typedef struct s_data
 	int		sc_2;
 	int		erno;
 	char	**tokens;
+	int		*tokens_type;
 	char	*line;
 	int		count;
 	int		word;
@@ -77,7 +82,7 @@ typedef struct s_data
 }	t_data;
 
 int		sig_handler(void);
-int		do_echo(t_cmd *cmd, int fd);
+int		do_echo(t_data *data, t_cmd *cmd, int fd);
 int		is_valid_name(char c);
 int		this_envp(t_data *data, t_cmd *cmd);
 int		valid_export(t_data *data, t_cmd *cmd);
@@ -128,6 +133,6 @@ t_list	*init_env(t_data *data, char **envp);
 
 t_files	*files_lst_new(char *name, int mode, char c);
 
-t_cmd	*cmd_lst_new(char **tokens, int i, int j);
+t_cmd	*cmd_lst_new(t_data *data, char **tokens, int i, int j);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:31:14 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/28 14:36:04 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/04 16:30:59 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static int	save_tokens_dc(t_data *data, int j)
 		data->dc_2--;
 		data->i++;
 	}
+	data->tokens_type[data->word] = 2;
 	return (j);
 }
 
@@ -72,6 +73,7 @@ static int	save_tokens_sc(t_data *data, int j)
 		data->sc_2--;
 		data->i++;
 	}
+	data->tokens_type[data->word] = 1;
 	return (j);
 }
 
@@ -94,6 +96,7 @@ static int	save_tokens_normal(t_data *data, int j)
 		data->i++;
 		j++;
 	}
+	data->tokens_type[data->word] = 0;
 	return (j);
 }
 

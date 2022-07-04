@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:55 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/04 14:45:06 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/04 16:20:08 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	is_builtin(t_data *data, t_cmd *cmd, int fd)
 {
 	(void) data;
 	if (ft_strncmp(cmd->cmd, "echo\0", 5) == 0)
-		return (do_echo(cmd, fd));
+		return (do_echo(data, cmd, fd));
 	else if (ft_strncmp(cmd->cmd, "cd\0", 3) == 0)
 		return (do_cd(data, cmd));
 	else if (ft_strncmp(cmd->cmd, "pwd\0", 4) == 0)
@@ -77,6 +77,45 @@ void	exec(t_data *data, int in, int out)
 	}
 }
 
+int	out_redirect(t_files *files)
+{
+	int	fd;
+
+	fd = 1;
+	while (files != NULL)
+	{
+		if (files->type == 0)
+			fd = open(files->filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
+		if (files->type == 1)
+			fd = open(files->filename, O_RDWR | O_APPEND | O_CREAT, 0777);
+		if (fd == -1)
+			perror(files->filename);
+		if (files->next != NULL)
+			close(fd);
+		files = files->next;
+	}
+	return (fd);
+}
+
+int	in_redirect(t_files *files)
+{
+	int	fd;
+
+	fd = 0;
+	while (files != NULL)
+	{
+		fd = open(files->filename, O_RDONLY, 0777);
+		if (fd == -1)
+		{
+			perror(files->filename);
+		}
+		if (files->next != NULL)
+			close(fd);
+		files = files->next;
+	}
+	return (fd);
+}
+
 void	assign_io(t_data *data, int *in, int *out, int fd[2])
 {
 	(void) in;
@@ -91,6 +130,10 @@ void	assign_io(t_data *data, int *in, int *out, int fd[2])
 	}
 	else
 		*out = 1;
+	if (data->cmd_lst->infiles != NULL)
+		*in = in_redirect(data->cmd_lst->infiles);
+	if (data->cmd_lst->outfiles != NULL)
+		*out = out_redirect(data->cmd_lst->outfiles);
 }
 
 void	ast(t_data *data)
@@ -101,6 +144,7 @@ void	ast(t_data *data)
 	int		first;
 
 	first = 1;
+	data->home = getenv("HOME");
 	while (data->cmd_lst != NULL)
 	{
 		if (first)
