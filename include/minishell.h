@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/04 16:34:06 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/11 17:40:58 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct s_data
 
 int		sig_handler(void);
 int		do_echo(t_data *data, t_cmd *cmd, int fd);
-int		is_valid_name(char c);
+int		is_valid_name(char c, int z);
 int		this_envp(t_data *data, t_cmd *cmd);
 int		valid_export(t_data *data, t_cmd *cmd);
 int		ft_strcmp(char *s, char *d);
@@ -122,10 +122,13 @@ void	save_tokens_init(t_data *data);
 void	do_other(t_data *data, t_cmd *cmd);
 void	ft_error(t_data *data, char *error);
 void	add_export(t_data *data, t_cmd *cmd);
+void	replace_home(t_data *data, t_cmd *cmd);
+void	change_pwd(t_data *data, char *pwd, int mode);
 void	change(t_data *data, t_cmd *cmd, int index, char **new_envp);
 void	files_add_back(t_files **files, t_files *new);
 void	cmd_add_back(t_cmd	**lst, t_cmd *new);
 
+char	*cd_init(t_data *data);
 char	*export_name(t_data *data, char *env);
 char	*export_value(t_data *data, char *env);
 
