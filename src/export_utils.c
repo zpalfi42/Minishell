@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:50 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/04 17:05:33 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/11 15:55:21 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	change_value(t_data *data, t_cmd *cmd)
 	i = 0;
 	while (data->envp[i] != 0)
 		i++;
-	new_envp = malloc(sizeof(char *) * i);
+	new_envp = malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	while (data->envp[i] != 0)
 	{
@@ -125,7 +125,7 @@ void	change_value(t_data *data, t_cmd *cmd)
 			change(data, cmd, i, new_envp);
 		else
 		{
-			new_envp[i] = malloc(sizeof(char) * ft_strlen(data->envp[i]));
+			new_envp[i] = malloc(sizeof(char) * (ft_strlen(data->envp[i]) + 1));
 			ft_strlcpy(new_envp[i], data->envp[i],
 				ft_strlen(data->envp[i]) + 1);
 		}

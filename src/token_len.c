@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:30:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/28 14:28:46 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/11 16:44:02 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ int	token_len_env(t_data *data, int i, int j)
 	i++;
 	while (is_valid_name(data->line[i + j]))
 		j++;
-	name = malloc(sizeof(char) * j);
+	name = malloc(sizeof(char) * (j + 1));
 	if (!name)
 		ft_error(data, "Failed malloc :(");
 	j = -1;
-	while (++j && is_valid_name(data->line[i + j]))
+	while ((++j > -42) && is_valid_name(data->line[i + j]))
 		name[j] = data->line[i + j];
 	name[j] = '\0';
 	z = -1;
@@ -72,7 +72,7 @@ int	token_len_env(t_data *data, int i, int j)
 	{
 		envp_name = export_name(data, data->envp[z]);
 		if (ft_strcmp(envp_name, name))
-			data->len += ft_strlen(envp_name);
+			data->len += ft_strlen(export_value(data, data->envp[z]));
 		free(envp_name);
 	}
 	free(name);

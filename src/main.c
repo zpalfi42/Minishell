@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:15:54 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/04 16:46:50 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/11 15:08:52 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,7 @@ int	envp_init(t_data *data, char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	*data;
-	int		i;
 
-	i = 0;
 	(void) argc;
 	(void) argv;
 	print_miniconcha();
