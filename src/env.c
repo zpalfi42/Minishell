@@ -6,13 +6,13 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:59:29 by ealonso-          #+#    #+#             */
-/*   Updated: 2022/06/27 15:52:30 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/12 16:41:36 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	do_env(t_data *data, t_cmd *cmd, int fd)
+int	do_env(t_data *data, t_cmd *cmd, int fd, int mode)
 {
 	int	i;
 
@@ -30,5 +30,7 @@ int	do_env(t_data *data, t_cmd *cmd, int fd)
 			i++;
 		}
 	}
+	if (mode == 1)
+		exit (1);
 	return (1);
 }

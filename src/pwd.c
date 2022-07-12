@@ -6,13 +6,13 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 14:25:32 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/27 15:54:44 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/12 16:45:54 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	do_pwd(t_data *data, t_cmd *cmd, int fd)
+int	do_pwd(t_data *data, t_cmd *cmd, int fd, int mode)
 {
 	char	*pwd;
 
@@ -36,5 +36,7 @@ int	do_pwd(t_data *data, t_cmd *cmd, int fd)
 		free(pwd);
 		data->erno = 0;
 	}
+	if (mode == 1)
+		exit (1);
 	return (1);
 }

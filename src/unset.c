@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:35:19 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/27 15:46:59 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/12 15:21:39 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	valid_name(char *name)
 
 	i = -1;
 	while (name[++i])
-		if (!is_valid_name(name[i]))
+		if (!is_valid_name(name[i], i))
 			return (1);
 	return (0);
 }

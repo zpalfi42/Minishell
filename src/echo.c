@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:34:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/04 16:46:07 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/12 16:36:07 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*modify_token(t_data *data, char *token)
 	return (new);
 }
 
-static void	replace_home(t_data *data, t_cmd *cmd)
+void	replace_home_echo(t_data *data, t_cmd *cmd)
 {
 	int	i;
 
@@ -75,7 +75,7 @@ void	print_echo(t_cmd *cmd, int i, int n, int fd)
 		ft_putstr_fd("\n", fd);
 }
 
-int	do_echo(t_data *data, t_cmd *cmd, int fd)
+int	do_echo(t_data *data, t_cmd *cmd, int fd, int mode)
 {
 	int	n;
 	int	i;
@@ -94,5 +94,7 @@ int	do_echo(t_data *data, t_cmd *cmd, int fd)
 		}
 		print_echo(cmd, i, n, fd);
 	}
+	if (mode == 1)
+		exit (1);
 	return (1);
 }

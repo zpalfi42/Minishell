@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 14:56:34 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/06/27 17:08:50 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/12 15:45:55 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ static int	assign_new(t_data *data, t_cmd *cmd, char **new_envp, int i)
 	char	*name;
 	char	*value;
 
-	name = export_name(data, cmd->tokens[1]);
-	value = export_value(data, cmd->tokens[1]);
+	name = export_name(data, cmd->tokens[data->i]);
+	value = export_value(data, cmd->tokens[data->i]);
 	i = cpy_old(data, new_envp);
 	if (i == -1)
 		return (1);

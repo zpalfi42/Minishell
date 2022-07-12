@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:50 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/11 15:55:21 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/12 15:45:56 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	this_envp(t_data *data, t_cmd *cmd)
 	int		i;
 	int		j;
 
-	name = export_name(data, cmd->tokens[1]);
+	name = export_name(data, cmd->tokens[data->i]);
 	i = 0;
 	j = 0;
 	while (data->envp[i])
@@ -86,17 +86,14 @@ void	change(t_data *data, t_cmd *cmd, int index, char **new_envp)
 	int		i;
 	int		j;
 
-	new_value = export_value(data, cmd->tokens[1]);
+	new_value = export_value(data, cmd->tokens[data->i]);
 	new_name = export_name(data, data->envp[index]);
 	new_envp[index] = malloc(sizeof(char)
 			* (ft_strlen(new_name) + ft_strlen(new_value)));
-	i = 0;
+	i = -1;
 	j = -1;
-	while (new_name[i])
-	{
+	while (new_name[++i])
 		new_envp[index][i] = new_name[i];
-		i++;
-	}
 	new_envp[index][i] = '=';
 	i++;
 	while (new_value[++j])
@@ -105,6 +102,8 @@ void	change(t_data *data, t_cmd *cmd, int index, char **new_envp)
 		i++;
 	}
 	new_envp[index][i] = '\0';
+	free(new_name);
+	free(new_value);
 }
 
 void	change_value(t_data *data, t_cmd *cmd)

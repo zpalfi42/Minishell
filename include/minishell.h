@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/11 17:40:58 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/12 16:45:28 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_data
 	int		sc;
 	int		dc_2;
 	int		sc_2;
+	int		aux;
 	int		erno;
 	char	**tokens;
 	int		*tokens_type;
@@ -82,22 +83,22 @@ typedef struct s_data
 }	t_data;
 
 int		sig_handler(void);
-int		do_echo(t_data *data, t_cmd *cmd, int fd);
+int		do_echo(t_data *data, t_cmd *cmd, int fd, int mode);
 int		is_valid_name(char c, int z);
 int		this_envp(t_data *data, t_cmd *cmd);
 int		valid_export(t_data *data, t_cmd *cmd);
 int		ft_strcmp(char *s, char *d);
 int		export_exists(t_data *data, t_cmd *cmd);
-int		do_cd(t_data *data, t_cmd *cmd);
+int		do_cd(t_data *data, t_cmd *cmd, int mode);
 int		len_env(t_data *data, int i);
 int		save_env(t_data *data, int j);
 int		token_len(t_data *data, int i);
 int		malloc_tokens(t_data *data);
-int		do_env(t_data *data, t_cmd *cmd, int fd);
-int		do_pwd(t_data *data, t_cmd *cmd, int fd);
+int		do_env(t_data *data, t_cmd *cmd, int fd, int mode);
+int		do_pwd(t_data *data, t_cmd *cmd, int fd, int mode);
 int		do_exit(t_data *data, t_cmd *cmd);
-int		do_export(t_data *data, t_cmd *cmd);
-int		do_unset(t_data *data, t_cmd *cmd);
+int		do_export(t_data *data, t_cmd *cmd, int mode);
+int		do_unset(t_data *data, t_cmd *cmd, int mode);
 int		first_envp(t_data *data, char *s);
 int		save_env_errno(t_data *data, int j);
 int		token_len_errno(t_data *data, int i);

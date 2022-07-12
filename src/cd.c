@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 14:31:17 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/11 17:34:52 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/12 16:35:14 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	change_pwd(t_data *data, char *pwd, int mode)
 	data->envp = new_envp;
 }
 
-int	do_cd(t_data *data, t_cmd *cmd)
+int	do_cd(t_data *data, t_cmd *cmd, int mode)
 {
 	char	*pwd;
 
@@ -125,5 +125,7 @@ int	do_cd(t_data *data, t_cmd *cmd)
 		free(data->dir);
 	getcwd(pwd, 199);
 	change_pwd(data, pwd, 0);
+	if (mode == 1)
+		exit (1);
 	return (1);
 }
