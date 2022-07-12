@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:35:19 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/12 15:21:39 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/12 16:51:56 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static char	**assign_new(t_data *data, char **new_envp, int j)
 	return (new_envp);
 }
 
-int	do_unset(t_data *data, t_cmd *cmd)
+int	do_unset(t_data *data, t_cmd *cmd, int mode)
 {
 	char	**new_envp;
 	int		i;
@@ -93,5 +93,7 @@ int	do_unset(t_data *data, t_cmd *cmd)
 	}
 	else
 		printf("\033[1;31mCannot unset %s\n", cmd->tokens[1]);
+	if (mode == 1)
+		exit (1);	
 	return (1);
 }

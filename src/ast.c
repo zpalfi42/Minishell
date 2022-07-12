@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:55 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/12 16:45:24 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/12 16:52:04 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	exec_builtin(t_data *data, t_cmd *cmd, int fd, int mode)
 	else if (data->aux == 6)
 		do_env(data, cmd, fd, mode);
 	else if (data->aux == 7)
-		do_exit(data, cmd);
+		do_exit(data, cmd, mode);
 }
 
 int	is_builtin(t_data *data, t_cmd *cmd)
