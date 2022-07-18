@@ -21,12 +21,12 @@ static t_cmd	*last_cmd(t_cmd *lst)
 	return (lst);
 }
 
-void	cmd_add_back(t_cmd	**lst, t_cmd *new)
+int	cmd_add_back(t_cmd	**lst, t_cmd *new)
 {
 	t_cmd	*t;
 
 	if (!lst || !new)
-		return ;
+		return (-1);
 	t = *lst;
 	if (*lst)
 	{
@@ -35,4 +35,5 @@ void	cmd_add_back(t_cmd	**lst, t_cmd *new)
 	}
 	else
 		*lst = new;
+	return (0);
 }

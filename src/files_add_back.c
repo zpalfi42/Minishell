@@ -21,12 +21,12 @@ static t_files	*last_files(t_files	*files)
 	return (files);
 }
 
-void	files_add_back(t_files **files, t_files *new)
+int	files_add_back(t_files **files, t_files *new)
 {
 	t_files	*t;
 
 	if (!files || !new)
-		return ;
+		return (-1);
 	t = *files;
 	if (*files)
 	{
@@ -35,4 +35,5 @@ void	files_add_back(t_files **files, t_files *new)
 	}
 	else
 		*files = new;
+	return (0);
 }

@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	pipe_parser(t_data *data)
+int	pipe_parser(t_data *data)
 {
 	int	i;
 	int	j;
@@ -28,14 +28,28 @@ void	pipe_parser(t_data *data)
 	while (data->tokens[++i] != 0)
 		if (ft_strcmp(data->tokens[i], "|\0"))
 			break ;
+	if (i == 0 || (data->tokens[i] != 0 && ft_strcmp(data->tokens[i + 1], "|\0")))
+	{
+		printf("zsh: parse error near '%s'\n", data->tokens[i]);
+		return (-1);
+	}
 	data->cmd_lst = cmd_lst_new(data, data->tokens, 0, i);
+	if (data->cmd_lst == NULL)
+		return (-1);
 	while (data->pipes > 0)
 	{
 		j = i + 1;
 		while (data->tokens[++i] != 0)
 			if (ft_strcmp(data->tokens[i], "|\0"))
 				break ;
-		cmd_add_back(&data->cmd_lst, cmd_lst_new(data, data->tokens, j, i));
+		if (data->tokens[i ] != 0 && ft_strcmp(data->tokens[i + 1], "|\0"))
+		{
+			printf("zsh: parse error near '%s'\n", data->tokens[i]);
+			return (-1);
+		}
+		if (cmd_add_back(&data->cmd_lst, cmd_lst_new(data, data->tokens, j, i)) == -1)
+			return (-1);
 		data->pipes--;
 	}
+	return (0);
 }

@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-t_files	*files_lst_new(char *name, int mode, char c)
+t_files	*files_lst_new(char *name, int mode, char c, int token_type)
 {
 	t_files	*n;
 	int		i;
@@ -20,6 +20,11 @@ t_files	*files_lst_new(char *name, int mode, char c)
 
 	i = 0;
 	j = 2;
+	if ((ft_strncmp(name, ">\0", 2) == 0 || ft_strncmp(name, ">>\0", 3) == 0 || ft_strncmp(name, "<\0", 2) == 0) && token_type == 0)
+	{
+		printf("Syntax error near unexpected token '%s'\n", name);
+		return (NULL);
+	}
 	if (mode == 2)
 		j = 1;
 	n = (t_files *)malloc(sizeof(t_files));
@@ -48,7 +53,7 @@ void	cmd_tokens_saver(t_cmd *n, t_data *data, int i, int j)
 	n->tokens_type[z] = data->tokens_type[i];
 	while (data->tokens[++i] != 0 && i < j)
 	{
-		if (data->tokens[i][0] == '<' || data->tokens[i][0] == '>')
+		if ((data->tokens[i][0] == '<' || data->tokens[i][0] == '>') && data->tokens_type[i] == 0)
 			break ;
 		n->arg[z] = data->tokens[i];
 		n->tokens[z + 1] = data->tokens[i];
@@ -60,21 +65,24 @@ void	cmd_tokens_saver(t_cmd *n, t_data *data, int i, int j)
 	n->tokens_type[z + 1] = -1;
 }
 
-void	in_out_parser(t_cmd *n, char **tokens, int z, int j)
+int	in_out_parser(t_cmd *n, t_data *data, int z, int j)
 {
 	n->first_1 = 1;
 	n->first_2 = 1;
-	while (tokens[++z] != 0 && z < j)
+	while (data->tokens[++z] != 0 && z < j)
 	{
-		if (tokens[z][0] == '>')
-			z = output_file(n, tokens, z);
-		else if (tokens[z][0] == '<')
-			z = input_file(n, tokens, z);
+		if (data->tokens[z][0] == '>' && data->tokens_type[z] == 0)
+			z = output_file(n, data->tokens, z, data);
+		else if (data->tokens[z][0] == '<' && data->tokens_type[z] == 0)
+			z = input_file(n, data->tokens, z, data);
+		if (z == -1)
+			return (0);
 	}
 	if (n->first_1 == 1)
 		n->outfiles = NULL;
 	if (n->first_2 == 1)
 		n->infiles = NULL;
+	return (1);
 }
 
 char	*find_cmd(t_cmd *n, char **tokens, int i, int j)
@@ -139,11 +147,12 @@ t_cmd	*cmd_lst_new(t_data *data, char **tokens, int i, int j)
 	n->arg = malloc(sizeof(char *) * (j - i));
 	z = i - 1;
 	while (tokens[++z] != 0 && z < j)
-		if (tokens[z][0] == '<' || tokens[z][0] == '>')
+		if ((tokens[z][0] == '<' || tokens[z][0] == '>') && data->tokens_type[z] == 0)
 			break ;
 	n->tokens = malloc(sizeof(char *) * (z - i + 1));
 	n->tokens_type = malloc(sizeof(int) * (z - i + 1));
-	in_out_parser(n, tokens, i - 1, j);
+	if (in_out_parser(n, data, i - 1, j) == 0)
+		return (NULL);
 	cmd_tokens_saver(n, data, n->aux, j);
 	n->next = NULL;
 	return (n);

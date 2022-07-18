@@ -103,8 +103,8 @@ int		first_envp(t_data *data, char *s);
 int		save_env_errno(t_data *data, int j);
 int		token_len_errno(t_data *data, int i);
 int		token_len_env(t_data *data, int i, int j);
-int		output_file(t_cmd *n, char **tokens, int z);
-int		input_file(t_cmd *n, char **tokens, int z);
+int		output_file(t_cmd *n, char **tokens, int z, t_data *data);
+int		input_file(t_cmd *n, char **tokens, int z, t_data *data);
 int		save_env_2(t_data *data, int j, char *name);
 
 void	ast(t_data *data);
@@ -116,7 +116,7 @@ void	del_one_env(t_data *data);
 void	save_tokens(t_data *data);
 void	token_len_init(t_data *data);
 void	do_path_cmd(t_data *data, t_cmd *cmd);
-void	pipe_parser(t_data *data);
+int		pipe_parser(t_data *data);
 void	change_value(t_data *data, t_cmd *cmd);
 void	count_tokens(t_data *data);
 void	save_tokens_init(t_data *data);
@@ -126,8 +126,8 @@ void	add_export(t_data *data, t_cmd *cmd);
 void	replace_home(t_data *data, t_cmd *cmd);
 void	change_pwd(t_data *data, char *pwd, int mode);
 void	change(t_data *data, t_cmd *cmd, int index, char **new_envp);
-void	files_add_back(t_files **files, t_files *new);
-void	cmd_add_back(t_cmd	**lst, t_cmd *new);
+int		files_add_back(t_files **files, t_files *new);
+int		cmd_add_back(t_cmd	**lst, t_cmd *new);
 
 char	*cd_init(t_data *data);
 char	*export_name(t_data *data, char *env);
@@ -135,7 +135,7 @@ char	*export_value(t_data *data, char *env);
 
 t_list	*init_env(t_data *data, char **envp);
 
-t_files	*files_lst_new(char *name, int mode, char c);
+t_files	*files_lst_new(char *name, int mode, char c,  int token_type);
 
 t_cmd	*cmd_lst_new(t_data *data, char **tokens, int i, int j);
 

@@ -15,9 +15,13 @@
 void	minishell(t_data *data)
 {
 	parser(data);
-	pipe_parser(data);
-	ast(data);
-	free_all(data);
+	if (pipe_parser(data) == -1)
+		free_all(data);
+	else
+	{
+		ast(data);
+		free_all(data);
+	}
 }
 
 void	routine(t_data *data)
