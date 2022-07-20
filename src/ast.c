@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:55 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/12 16:52:04 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/20 16:49:05 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,134 +66,12 @@ void	redirect_io(int in, int out)
 	}
 }
 
-void	exec(t_data *data, int in, int out)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid < 0)
-	{
-		perror("Fork:");
-		data->erno = errno;
-	}
-	if (pid == 0)
-	{
-		if (in == -1)
-			exit(1);
-		redirect_io(in, out);
-		data->aux = is_builtin(data, data->cmd_lst);
-		if (data->aux != 127)
-			exec_builtin(data, data->cmd_lst, out, 1);
-		if (data->aux == 127)
-		{
-			if (ft_strncmp(data->cmd_lst->cmd, "/", 1) == 0)
-				do_path_cmd(data, data->cmd_lst);
-			else
-				do_other(data, data->cmd_lst);
-		}
-	}
-	else
-		waitpid(pid, NULL, 0);
-}
-
-void	exec_simple(t_data *data, int in, int out)
-{
-	pid_t	pid;
-
-	data->aux = is_builtin(data, data->cmd_lst);
-	if (data->aux != 127)
-		exec_builtin(data, data->cmd_lst, out, 0);
-	else if (data->aux == 127)
-	{
-		pid = fork();
-		if (pid < 0)
-		{
-			perror("Fork:");
-			data->erno = errno;
-		}
-		if (pid == 0)
-		{
-			if (in == -1)
-				exit(1);
-			redirect_io(in, out);
-			if (ft_strncmp(data->cmd_lst->cmd, "/", 1) == 0)
-				do_path_cmd(data, data->cmd_lst);
-			else
-				do_other(data, data->cmd_lst);
-		}
-		else
-			waitpid(pid, NULL, 0);
-	}
-}
-
-int	out_redirect(t_files *files)
-{
-	int	fd;
-
-	fd = 1;
-	while (files != NULL)
-	{
-		if (files->type == 0)
-			fd = open(files->filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
-		if (files->type == 1)
-			fd = open(files->filename, O_RDWR | O_APPEND | O_CREAT, 0777);
-		if (fd == -1)
-			perror(files->filename);
-		if (files->next != NULL)
-			close(fd);
-		files = files->next;
-	}
-	return (fd);
-}
-
-int	in_redirect(t_files *files)
-{
-	int	fd;
-
-	fd = 0;
-	while (files != NULL)
-	{
-		fd = open(files->filename, O_RDONLY, 0777);
-		if (fd == -1)
-		{
-			perror(files->filename);
-		}
-		if (files->next != NULL)
-			close(fd);
-		files = files->next;
-	}
-	return (fd);
-}
-
-void	assign_io(t_data *data, int *in, int *out, int fd[2])
-{
-	(void) in;
-	if (data->cmd_lst->next)
-	{
-		if (pipe(fd) == -1)
-		{
-			perror("Pipe:");
-			data->erno = errno;
-		}
-		*out = fd[1];
-	}
-	else
-		*out = 1;
-	if (data->cmd_lst->infiles != NULL)
-		*in = in_redirect(data->cmd_lst->infiles);
-	if (data->cmd_lst->outfiles != NULL)
-		*out = out_redirect(data->cmd_lst->outfiles);
-}
-
-void	ast(t_data *data)
+void	ast_simple(t_data *data, int first)
 {
 	int		fd[2];
 	int		in;
 	int		out;
-	int		first;
 
-	first = 1;
-	data->home = getenv("HOME");
 	if (first == 1 && data->cmd_lst->next == NULL)
 	{
 		if (first)
@@ -210,6 +88,18 @@ void	ast(t_data *data)
 		data->cmd_lst = data->cmd_lst->next;
 		first = 0;
 	}
+}
+
+void	ast(t_data *data)
+{
+	int		fd[2];
+	int		in;
+	int		out;
+	int		first;
+
+	first = 1;
+	data->home = getenv("HOME");
+	ast_simple(data, first);
 	while (data->cmd_lst != NULL)
 	{
 		if (first)

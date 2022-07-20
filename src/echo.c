@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:34:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/12 16:36:07 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/20 17:43:00 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int	do_echo(t_data *data, t_cmd *cmd, int fd, int mode)
 	int	i;
 
 	n = 0;
+	mode = 0;
 	i = 1;
 	if (cmd->tokens[i] == 0)
 		ft_putstr_fd("\n", fd);

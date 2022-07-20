@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:39:27 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/12 16:41:46 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/20 16:50:20 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,15 +112,4 @@ int	save_env(t_data *data, int j)
 	j = save_env_2(data, j, name);
 	free(name);
 	return (j);
-}
-
-void	save_tokens_init(t_data *data)
-{
-	data->tokens = (char **)malloc(sizeof(char *) * (data->count + 1));
-	data->tokens_type = (int *)malloc(sizeof(int) * (data->count + 1));
-	if (!data->tokens || !data->tokens_type)
-		ft_error(data, "Failed token malloc :(");
-	data->tokens[data->count] = 0;
-	data->tokens_type[data->count] = -1;
-	malloc_tokens(data);
 }

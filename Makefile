@@ -6,7 +6,7 @@
 #    By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 12:16:53 by zpalfi            #+#    #+#              #
-#    Updated: 2022/07/11 17:31:25 by zpalfi           ###   ########.fr        #
+#    Updated: 2022/07/20 17:05:51 by zpalfi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRC				=	cd.c \
 					pwd.c \
 					env.c \
 					exit.c \
+					exec.c \
 					main.c \
 					free.c \
 					echo.c \
@@ -43,23 +44,27 @@ SRC				=	cd.c \
 					parser.c \
 					signal.c \
 					export.c \
+					in_file.c \
 					lst_new.c \
+					out_file.c \
 					do_other.c \
 					init_env.c \
 					path_cmd.c \
 					cd_utils.c \
 					token_len.c \
-					in_out_file.c \
+					assign_io.c \
 					pipe_parser.c \
 					save_tokens.c \
 					export_utils.c \
 					cmd_add_back.c \
 					count_tokens.c \
+					files_lst_new.c \
 					files_add_back.c \
 					export_utils_2.c \
 					token_len_utils.c \
 					print_miniconcha.c \
 					save_tokens_utils.c \
+					save_tokens_utils_2.c \
 
 OBJ				= $(addprefix $(OBJS_DIR)/,$(SRC:.c=.o))
 

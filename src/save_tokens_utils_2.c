@@ -1,20 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   save_token_utils_2.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/07 17:49:04 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/20 16:49:10 by zpalfi           ###   ########.fr       */
+/*   Created: 2022/07/20 16:49:50 by zpalfi            #+#    #+#             */
+/*   Updated: 2022/07/20 16:50:35 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_error(t_data *data, char *error)
+void	save_tokens_init(t_data *data)
 {
-	free_all(data);
-	printf("\033[1;31m%s\n", error);
-	exit(1);
+	data->tokens = (char **)malloc(sizeof(char *) * (data->count + 1));
+	data->tokens_type = (int *)malloc(sizeof(int) * (data->count + 1));
+	if (!data->tokens || !data->tokens_type)
+		ft_error(data, "Failed token malloc :(");
+	data->tokens[data->count] = 0;
+	data->tokens_type[data->count] = -1;
+	malloc_tokens(data);
 }

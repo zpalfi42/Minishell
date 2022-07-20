@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/12 16:51:52 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/20 17:03:20 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 typedef struct s_files
 {
 	int				type;
+	int				end[2];
 	char			*filename;
 	struct s_files	*next;
 }	t_files;
@@ -71,6 +72,7 @@ typedef struct s_data
 	int		word;
 	int		len;
 	int		i;
+	int		z;
 	int		pipes;
 	char	*cmd;
 	int		nr;
@@ -106,6 +108,7 @@ int		token_len_env(t_data *data, int i, int j);
 int		output_file(t_cmd *n, char **tokens, int z, t_data *data);
 int		input_file(t_cmd *n, char **tokens, int z, t_data *data);
 int		save_env_2(t_data *data, int j, char *name);
+int		is_builtin(t_data *data, t_cmd *cmd);
 
 void	ast(t_data *data);
 void	parser(t_data *data);
@@ -128,6 +131,11 @@ void	change_pwd(t_data *data, char *pwd, int mode);
 void	change(t_data *data, t_cmd *cmd, int index, char **new_envp);
 int		files_add_back(t_files **files, t_files *new);
 int		cmd_add_back(t_cmd	**lst, t_cmd *new);
+void	exec_simple(t_data *data, int in, int out);
+void	exec(t_data *data, int in, int out);
+void	assign_io(t_data *data, int *in, int *out, int fd[2]);
+void	redirect_io(int in, int out);
+void	exec_builtin(t_data *data, t_cmd *cmd, int fd, int mode);
 
 char	*cd_init(t_data *data);
 char	*export_name(t_data *data, char *env);
@@ -135,7 +143,7 @@ char	*export_value(t_data *data, char *env);
 
 t_list	*init_env(t_data *data, char **envp);
 
-t_files	*files_lst_new(char *name, int mode, char c,  int token_type);
+t_files	*files_lst_new(char *name, int mode, char c, int token_type);
 
 t_cmd	*cmd_lst_new(t_data *data, char **tokens, int i, int j);
 

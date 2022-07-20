@@ -6,43 +6,11 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:14:31 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/12 16:41:42 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/20 16:49:18 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-t_files	*files_lst_new(char *name, int mode, char c, int token_type)
-{
-	t_files	*n;
-	int		i;
-	int		j;
-
-	i = 0;
-	j = 2;
-	if ((ft_strncmp(name, ">\0", 2) == 0 || ft_strncmp(name, ">>\0", 3) == 0 || ft_strncmp(name, "<\0", 2) == 0) && token_type == 0)
-	{
-		printf("Syntax error near unexpected token '%s'\n", name);
-		return (NULL);
-	}
-	if (mode == 2)
-		j = 1;
-	n = (t_files *)malloc(sizeof(t_files));
-	if (!n)
-		return (NULL);
-	n->type = mode;
-	while (name[i] == c && i < j)
-		i++;
-	j = 0;
-	while (name[j + i] != '\0')
-		j++;
-	n->filename = malloc(sizeof(char) * (j + 1));
-	j = -1;
-	while (name[++j + i] != '\0')
-		n->filename[j] = name[j + i];
-	n->next = NULL;
-	return (n);
-}
 
 void	cmd_tokens_saver(t_cmd *n, t_data *data, int i, int j)
 {
@@ -53,7 +21,8 @@ void	cmd_tokens_saver(t_cmd *n, t_data *data, int i, int j)
 	n->tokens_type[z] = data->tokens_type[i];
 	while (data->tokens[++i] != 0 && i < j)
 	{
-		if ((data->tokens[i][0] == '<' || data->tokens[i][0] == '>') && data->tokens_type[i] == 0)
+		if ((data->tokens[i][0] == '<' || data->tokens[i][0] == '>')
+			&& data->tokens_type[i] == 0)
 			break ;
 		n->arg[z] = data->tokens[i];
 		n->tokens[z + 1] = data->tokens[i];
@@ -85,6 +54,32 @@ int	in_out_parser(t_cmd *n, t_data *data, int z, int j)
 	return (1);
 }
 
+int	find_cmd_2(char **tokens, int i, int aux)
+{
+	if (tokens[i][0] == '<')
+	{
+		if (tokens[i][1] == '\0')
+			aux = 1;
+		else
+			aux = 0;
+	}
+	else if (tokens[i][0] == '>')
+	{
+		if (tokens[i][1] == '\0')
+			aux = 1;
+		else if (tokens[i][1] == '>')
+		{
+			if (tokens[i][2] == '\0')
+				aux = 1;
+			else
+				aux = 0;
+		}
+		else
+			aux = 0;
+	}
+	return (aux);
+}
+
 char	*find_cmd(t_cmd *n, char **tokens, int i, int j)
 {
 	int	aux;
@@ -102,27 +97,7 @@ char	*find_cmd(t_cmd *n, char **tokens, int i, int j)
 				return (tokens[i]);
 			}
 		}
-		if (tokens[i][0] == '<')
-		{
-			if (tokens[i][1] == '\0')
-				aux = 1;
-			else
-				aux = 0;
-		}
-		else if (tokens[i][0] == '>')
-		{
-			if (tokens[i][1] == '\0')
-				aux = 1;
-			else if (tokens[i][1] == '>')
-			{
-				if (tokens[i][2] == '\0')
-					aux = 1;
-				else
-					aux = 0;
-			}
-			else
-				aux = 0;
-		}
+		aux = find_cmd_2(tokens, i, aux);
 		i++;
 	}
 	n->aux = i;
@@ -132,7 +107,6 @@ char	*find_cmd(t_cmd *n, char **tokens, int i, int j)
 t_cmd	*cmd_lst_new(t_data *data, char **tokens, int i, int j)
 {
 	t_cmd	*n;
-	int		z;
 
 	n = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!n)
@@ -145,12 +119,13 @@ t_cmd	*cmd_lst_new(t_data *data, char **tokens, int i, int j)
 		n->cmd = tokens[i];
 	}
 	n->arg = malloc(sizeof(char *) * (j - i));
-	z = i - 1;
-	while (tokens[++z] != 0 && z < j)
-		if ((tokens[z][0] == '<' || tokens[z][0] == '>') && data->tokens_type[z] == 0)
+	data->z = i - 1;
+	while (tokens[++data->z] != 0 && data->z < j)
+		if ((tokens[data->z][0] == '<' || tokens[data->z][0] == '>')
+			&& data->tokens_type[data->z] == 0)
 			break ;
-	n->tokens = malloc(sizeof(char *) * (z - i + 1));
-	n->tokens_type = malloc(sizeof(int) * (z - i + 1));
+	n->tokens = malloc(sizeof(char *) * (data->z - i + 1));
+	n->tokens_type = malloc(sizeof(int) * (data->z - i + 1));
 	if (in_out_parser(n, data, i - 1, j) == 0)
 		return (NULL);
 	cmd_tokens_saver(n, data, n->aux, j);
