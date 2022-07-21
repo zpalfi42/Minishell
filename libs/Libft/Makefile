@@ -6,46 +6,73 @@
 #    By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/01/17 14:18:26 by zpalfi            #+#    #+#              #
-#    Updated: 2022/03/14 13:52:54 by zpalfi           ###   ########.fr        #
+#    Updated: 2022/07/21 17:30:08 by zpalfi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME 		= libft
-OUTPUT		= $(NAME).a
+NAME	=	libft.a
 
-#------------- DIRS -------------#
+SRC		=	src/ft_atoi.c \
+			src/ft_calloc.c \
+			src/ft_toupper.c \
+			src/ft_strrchr.c \
+			src/ft_strnstr.c \
+			src/ft_strchr.c \
+			src/ft_tolower.c \
+			src/ft_strdup.c \
+			src/ft_strlen.c \
+			src/ft_strlcpy.c \
+			src/ft_substr.c \
+			src/ft_strlcat.c \
+			src/ft_strncmp.c \
+			src/ft_isdigit.c \
+			src/ft_isalpha.c \
+			src/ft_isalnum.c \
+			src/ft_isascii.c \
+			src/ft_isprint.c \
+			src/ft_itoa.c \
+			src/ft_strmapi.c \
+			src/ft_strtrim.c \
+			src/ft_memchr.c \
+			src/ft_memcmp.c \
+			src/ft_putchar_fd.c \
+			src/ft_putstr_fd.c \
+			src/ft_putendl_fd.c \
+			src/ft_putnbr_fd.c \
+			src/ft_striteri.c \
+			src/ft_split.c \
+			src/ft_memcpy.c \
+			src/ft_memset.c \
+			src/ft_strjoin.c \
+			src/ft_memmove.c \
+			src/ft_bzero.c \
+			src/ft_lstadd_back.c \
+			src/ft_lstnew.c \
+			src/ft_lstadd_back.c \
+			src/ft_lstlast.c \
+			
+OBJB	= $(SRCB:%.c=%.o)
+OBJ		= $(SRC:%.c=%.o)
+CFLAGS	= -Wall -Wextra -Werror -I include
+CC		= gcc
 
-INCLUDE_DIR	= include
-SRC_DIR		= src
-OBJ_DIR		= obj
+$(NAME): $(OBJ) include/libft.h
+	ar rc $(NAME) $(OBJ)
 
-#------------- FILES --------------#
+.PHONY : clean
+clean:
+	rm -f *.o
 
-INC			= -I $(INCLUDE_DIR)
-SRC 		= $(shell ls $(SRC_DIR) | grep -E "ft_.+\.c") \
+.PHONY : fclean
+fclean: clean
+	rm -f $(NAME)
 
-OBJ			= $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
-
-#--------------- COMPILATION ---------------#
-
-CFLAGS		= -Wall -Werror -Wextra -g $(INC)
-CC			= gcc
-
-obj/%.o:src/%.c
-	@mkdir -p $(dir $@)
-	@$(CC) -c $(CFLAGS) -o $@ $^
-
+.PHONY : all
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	@ar -cr $(OUTPUT) $(OBJ)
-
-clean:
-	@rm -rf $(OBJ_DIR)
-
-fclean: clean
-	@rm -f $(OUTPUT)
-
+.PHONY : re
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY : bonus
+bonus: $(OBJB)
+	ar rc $(NAME) $(OBJB)

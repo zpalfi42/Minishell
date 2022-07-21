@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:34:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/20 17:43:00 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/21 15:48:39 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ int	do_echo(t_data *data, t_cmd *cmd, int fd, int mode)
 	int	i;
 
 	n = 0;
-	mode = 0;
 	i = 1;
 	if (cmd->tokens[i] == 0)
 		ft_putstr_fd("\n", fd);
@@ -96,6 +95,6 @@ int	do_echo(t_data *data, t_cmd *cmd, int fd, int mode)
 		print_echo(cmd, i, n, fd);
 	}
 	if (mode == 1)
-		exit (1);
+		exit(1);
 	return (1);
 }

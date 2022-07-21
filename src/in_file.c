@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:11:58 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/20 17:03:59 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/21 17:25:25 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	double_simple_in(t_cmd *n, char **tokens, int z, t_data *data)
 {
-	if (n->first_2 == 1 && tokens[++z] != NULL)
+	if (tokens[++z] != NULL && n->first_2 == 1)
 	{
 		n->infiles = files_lst_new(tokens[z], 3, '<', data->tokens_type[z]);
 		if (n->infiles == NULL)
@@ -59,7 +59,7 @@ static int	double_input_file(t_cmd *n, char **tokens, int z, t_data *data)
 
 static int	simple_input_file(t_cmd *n, char **tokens, int z, t_data *data)
 {
-	if (n->first_2 == 1 && tokens[++z] != NULL)
+	if (tokens[++z] != NULL && n->first_2 == 1)
 	{
 		n->infiles = files_lst_new(tokens[z], 2, '<', data->tokens_type[z]);
 		if (n->infiles == NULL)

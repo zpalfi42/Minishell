@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 16:33:12 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/20 16:49:15 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/21 17:17:21 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ t_files	*files_lst_new(char *name, int mode, char c, int token_type)
 			|| ft_strncmp(name, "<\0", 2) == 0
 			|| ft_strncmp(name, "<<\0", 3) == 0) && token_type == 0)
 	{
+		printf("%s\n", name);
 		printf("Syntax error near unexpected token '%s'\n", name);
 		return (NULL);
 	}

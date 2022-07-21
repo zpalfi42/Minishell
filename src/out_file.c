@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 16:54:43 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/20 17:01:38 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/21 17:26:41 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int	double_simple_out(t_cmd *n, char **tokens, int z, t_data *data)
 {
-	if (n->first_1 == 1 && tokens[++z] != NULL)
+	if (tokens[++z] != NULL && n->first_1 == 1)
 	{
 		n->outfiles = files_lst_new(tokens[z], 1, '>',
 				data->tokens_type[z]);
@@ -61,7 +61,7 @@ static int	double_output_file(t_cmd *n, char **tokens, int z, t_data *data)
 
 static int	output_simple_file(t_cmd *n, char **tokens, int z, t_data *data)
 {
-	if (n->first_1 == 1 && tokens[++z] != NULL)
+	if (tokens[++z] != NULL && n->first_1 == 1)
 	{
 		n->outfiles = files_lst_new(tokens[z], 0, '>',
 				data->tokens_type[z]);

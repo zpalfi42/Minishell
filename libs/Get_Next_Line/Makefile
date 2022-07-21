@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: zpalfi <zpalfi@student.42barcelon>         +#+  +:+       +#+         #
+#    By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 13:15:04 by zpalfi            #+#    #+#              #
-#    Updated: 2022/03/14 13:28:44 by zpalfi           ###   ########.fr        #
+#    Updated: 2022/07/21 17:08:41 by zpalfi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,29 +19,33 @@ OUTPUT		= $(NAME).a
 
 INC			= -I $(INCLUDE_DIR)
 
-SRC			= get_next_line.c \
-			  get_next_line_utils.c \
-
-OBJ			= $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
+SRC			= src/get_next_line.c \
+			  src/get_next_line_utils.c \
 
 CC			= gcc
 CFLAGS		= -Wall -Wextra -Werror -g $(INC)
 
-obj/%.o:src/%.c
-	@mkdir -p $(dir $@)
-	@$(CC) -c $(CFLAGS) -o $@ $^
+OBJ		= $(SRC:%.c=%.o)
+CFLAGS	= -Wall -Wextra -Werror -I include
+CC		= gcc
 
+$(NAME): $(OBJ) include/get_next_line.h
+	ar rc $(NAME) $(OBJ)
+
+.PHONY : clean
+clean:
+	rm -f *.o
+
+.PHONY : fclean
+fclean: clean
+	rm -f $(NAME)
+
+.PHONY : all
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	@ar -cr $(OUTPUT) $(OBJ)
+.PHONY : re
+re: fclean all
 
-clean:
-	@rm -rf $(OBJ_DIR)
-
-fclean:	clean
-	@rm -rf $(OUTPUT)
-
-re:	fclean all
-
-.PHONY: all re fclean clean
+.PHONY : bonus
+bonus: $(OBJB)
+	ar rc $(NAME) $(OBJB)

@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 16:48:17 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/20 17:35:00 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/21 15:29:24 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int	in_redirect(t_files *files)
 
 void	assign_io(t_data *data, int *in, int *out, int fd[2])
 {
-	(void) in;
 	if (data->cmd_lst->next)
 	{
 		if (pipe(fd) == -1)

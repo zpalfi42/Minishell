@@ -6,7 +6,7 @@
 #    By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 12:16:53 by zpalfi            #+#    #+#              #
-#    Updated: 2022/07/20 17:05:51 by zpalfi           ###   ########.fr        #
+#    Updated: 2022/07/21 17:07:25 by zpalfi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,7 +82,7 @@ objs/%.o:src/%.c
 
 all:	$(NAME)
 
-$(NAME): $(OBJ) $(LIBS)
+$(NAME): $(OBJ) $(LIBS) ./include/minishell.h
 	@$(CC) $(OBJ) -lreadline -L ~/.brew/opt/readline/lib $(LIBS) -o $(NAME)
 	@echo "Built $(NAME)"
 

@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:55 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/20 16:49:05 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/21 15:47:02 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,15 @@ int	is_builtin(t_data *data, t_cmd *cmd)
 	return (127);
 }
 
-void	redirect_io(int in, int out)
+void	redirect_io(int in, int out, int mode)
 {
+	(void) out;
 	if (in != 0)
 	{
 		dup2(in, 0);
 		close(in);
 	}
-	if (out != 1)
+	if (out != 1 && mode)
 	{
 		dup2(out, 1);
 		if (in != 0)

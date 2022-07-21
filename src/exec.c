@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 16:47:01 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/20 17:45:50 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/21 15:48:44 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,18 @@ int	exec_2(t_data *data, int in, int out)
 {
 	if (in == -1)
 		exit(1);
-	printf("out: %d\n", out);
-	printf("in: %d\n", in);
-	redirect_io(in, out);
+	// printf("out: %d\n", out);
+	// printf("in: %d\n", in);
 	data->aux = is_builtin(data, data->cmd_lst);
 	if (data->aux != 127)
 	{
-		printf("%d\n", out);
+		redirect_io(in, out, 0);
 		exec_builtin(data, data->cmd_lst, out, 1);
-		exit(1);
+		// exit(1);
 	}
 	if (data->aux == 127)
 	{
+		redirect_io(in, out, 1);
 		if (ft_strncmp(data->cmd_lst->cmd, "/", 1) == 0)
 			do_path_cmd(data, data->cmd_lst);
 		else
@@ -39,26 +39,25 @@ int	exec_2(t_data *data, int in, int out)
 void	exec(t_data *data, int in, int out)
 {
 	pid_t	pid;
-	int		aux;
 
+	data->aux = 0;
 	pid = fork();
-	aux = 0;
 	if (pid < 0)
 	{
 		perror("Fork:");
 		data->erno = errno;
 	}
 	if (pid == 0)
-		aux = exec_2(data, in, out);
+		exec_2(data, in, out);
 	else
-		waitpid(pid, NULL, 0);
+		wait(NULL);
 }
 
 void	exec_simple_2(t_data *data, int in, int out)
 {
 	if (in == -1)
 		exit(1);
-	redirect_io(in, out);
+	redirect_io(in, out, 1);
 	if (ft_strncmp(data->cmd_lst->cmd, "/", 1) == 0)
 		do_path_cmd(data, data->cmd_lst);
 	else
