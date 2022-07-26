@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:55 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/21 15:47:02 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/26 17:25:05 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	exec_builtin(t_data *data, t_cmd *cmd, int fd, int mode)
 	else if (data->aux == 3)
 		do_pwd(data, cmd, fd, mode);
 	else if (data->aux == 4)
-		do_export(data, cmd, mode);
+		do_export(data, cmd, mode, fd);
 	else if (data->aux == 5)
 		do_unset(data, cmd, mode);
 	else if (data->aux == 6)
@@ -52,14 +52,15 @@ int	is_builtin(t_data *data, t_cmd *cmd)
 
 void	redirect_io(int in, int out, int mode)
 {
-	(void) out;
 	if (in != 0)
 	{
+		close(0);
 		dup2(in, 0);
 		close(in);
 	}
 	if (out != 1 && mode)
 	{
+		close(1);
 		dup2(out, 1);
 		if (in != 0)
 			close(in);

@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 16:47:01 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/21 15:48:44 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/26 17:25:45 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,11 @@ int	exec_2(t_data *data, int in, int out)
 {
 	if (in == -1)
 		exit(1);
-	// printf("out: %d\n", out);
-	// printf("in: %d\n", in);
 	data->aux = is_builtin(data, data->cmd_lst);
 	if (data->aux != 127)
 	{
 		redirect_io(in, out, 0);
 		exec_builtin(data, data->cmd_lst, out, 1);
-		// exit(1);
 	}
 	if (data->aux == 127)
 	{

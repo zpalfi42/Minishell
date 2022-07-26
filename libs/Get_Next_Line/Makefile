@@ -6,7 +6,7 @@
 #    By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 13:15:04 by zpalfi            #+#    #+#              #
-#    Updated: 2022/07/21 17:08:41 by zpalfi           ###   ########.fr        #
+#    Updated: 2022/07/26 17:27:18 by zpalfi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,22 +30,18 @@ CFLAGS	= -Wall -Wextra -Werror -I include
 CC		= gcc
 
 $(NAME): $(OBJ) include/get_next_line.h
-	ar rc $(NAME) $(OBJ)
+	@ar rc $(NAME) $(OBJ)
 
 .PHONY : clean
 clean:
-	rm -f *.o
+	@rm -f *.o
 
 .PHONY : fclean
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 .PHONY : all
 all: $(NAME)
 
 .PHONY : re
 re: fclean all
-
-.PHONY : bonus
-bonus: $(OBJB)
-	ar rc $(NAME) $(OBJB)

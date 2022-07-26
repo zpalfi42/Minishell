@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:14:31 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/21 17:24:15 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/26 15:29:07 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,8 @@ t_cmd	*cmd_lst_new(t_data *data, char **tokens, int i, int j)
 			break ;
 	n->tokens = malloc(sizeof(char *) * (data->z - i + 1));
 	n->tokens_type = malloc(sizeof(int) * (data->z - i + 1));
-	if (in_out_parser(n, data, i - 1, j) == 0)
+	int z = in_out_parser(n, data, i - 1, j);
+	if (z == 0)
 		return (NULL);
 	cmd_tokens_saver(n, data, n->aux, j);
 	n->next = NULL;

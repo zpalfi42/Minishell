@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/21 16:25:50 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/26 15:50:16 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int		malloc_tokens(t_data *data);
 int		do_env(t_data *data, t_cmd *cmd, int fd, int mode);
 int		do_pwd(t_data *data, t_cmd *cmd, int fd, int mode);
 int		do_exit(t_data *data, t_cmd *cmd, int mode);
-int		do_export(t_data *data, t_cmd *cmd, int mode);
+int		do_export(t_data *data, t_cmd *cmd, int mode, int fd);
 int		do_unset(t_data *data, t_cmd *cmd, int mode);
 int		first_envp(t_data *data, char *s);
 int		save_env_errno(t_data *data, int j);

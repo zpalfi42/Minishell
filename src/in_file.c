@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:11:58 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/21 17:25:25 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/26 15:40:51 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,13 @@ static int	double_input_file(t_cmd *n, char **tokens, int z, t_data *data)
 	{
 		if (n->first_1 == 1)
 		{
-			n->infiles = files_lst_new(tokens[z], 3, '<', data->tokens_type[z]);
+			n->infiles = files_lst_new(tokens[z] + 2, 3, '<', data->tokens_type[z]);
 			if (n->infiles == NULL)
 				return (-1);
 			n->first_1 = 0;
 		}
 		else
-			if (files_add_back(&n->infiles, files_lst_new(tokens[z], 3, '>',
+			if (files_add_back(&n->infiles, files_lst_new(tokens[z] + 2, 3, '>',
 						data->tokens_type[z])) == -1)
 				return (-1);
 	}
@@ -90,13 +90,13 @@ int	input_file(t_cmd *n, char **tokens, int z, t_data *data)
 	{
 		if (n->first_2 == 1 && data->tokens[z][1] != '>')
 		{
-			n->infiles = files_lst_new(tokens[z], 2, '<', data->tokens_type[z]);
+			n->infiles = files_lst_new(tokens[z] + 1, 2, '<', data->tokens_type[z]);
 			if (n->infiles == NULL)
 				return (-1);
 			n->first_2 = 0;
 		}
 		else
-			if (files_add_back(&n->infiles, files_lst_new(tokens[z]
+			if (files_add_back(&n->infiles, files_lst_new(tokens[z] + 1
 						, 2, '<', data->tokens_type[z])) == -1)
 				return (-1);
 	}

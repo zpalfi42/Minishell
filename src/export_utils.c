@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:50 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/20 16:49:13 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/26 16:59:50 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,24 @@ void	change(t_data *data, t_cmd *cmd, int index, char **new_envp)
 	free(new_value);
 }
 
+void	matrixcpy(t_data *data, char **src)
+{
+	int	i;
+
+	i = 0;
+	while (src[i] != 0)
+		i++;
+	data->envp = malloc(sizeof(char *) * (i + 1));
+	i = 0;
+	while (src[i] != 0)
+	{
+		data->envp[i] = malloc(sizeof(char) * (ft_strlen(src[i]) + 1));
+		ft_strlcpy(data->envp[i], src[i], ft_strlen(src[i]) + 1);
+		i++;
+	}
+	data->envp[i] = 0;
+}
+
 void	change_value(t_data *data, t_cmd *cmd)
 {
 	char	**new_envp;
@@ -132,5 +150,6 @@ void	change_value(t_data *data, t_cmd *cmd)
 	}
 	free(data->envp);
 	new_envp[i] = 0;
-	data->envp = new_envp;
+	matrixcpy(data, new_envp);
+	free(new_envp);
 }

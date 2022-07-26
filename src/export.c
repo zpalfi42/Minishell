@@ -6,11 +6,24 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/20 16:49:14 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/26 16:28:12 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	print_export(t_data *data, int fd)
+{
+	int	i;
+
+	i = 0;
+	while (data->envp[i])
+	{
+		ft_putstr_fd("declare -x ", fd);
+		ft_putendl_fd(data->envp[i], fd);
+		i++;
+	}
+}
 
 int	export_exists(t_data *data, t_cmd *cmd)
 {
@@ -23,6 +36,7 @@ int	export_exists(t_data *data, t_cmd *cmd)
 	while (data->envp[++i] != 0)
 	{
 		envp_name = export_name(data, data->envp[i]);
+		printf("%s --> %s =? %s\n", data->envp[i], name, envp_name);
 		if (ft_strcmp(envp_name, name))
 		{
 			i = -1;
@@ -56,11 +70,13 @@ int	valid_export(t_data *data, t_cmd *cmd)
 	return (aux);
 }
 
-int	do_export(t_data *data, t_cmd *cmd, int mode)
+int	do_export(t_data *data, t_cmd *cmd, int mode, int fd)
 {
 	int	i;
 
 	data->i = 1;
+	if (cmd->tokens[data->i] == NULL)
+		print_export(data, fd);
 	while (cmd->tokens[data->i] != 0)
 	{
 		if (valid_export(data, cmd))
@@ -71,6 +87,7 @@ int	do_export(t_data *data, t_cmd *cmd, int mode)
 		else
 		{
 			i = export_exists(data, cmd);
+			// printf("--> %d\n", i);
 			if (i == -1)
 				change_value(data, cmd);
 			else if (i != -2)

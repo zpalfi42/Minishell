@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:31:14 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/20 16:49:24 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/07/26 16:59:07 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	save_tokens_dc(t_data *data, int j)
 	{
 		if (data->line[data->i] == 39)
 			data->sc_2--;
-		if (data->line[data->i] == '$')
+		if (data->line[data->i] == '$' && data->line[data->i + 1] != '\0' && data->line[data->i + 1] != ' ')
 			j = save_env(data, j);
 		else
 		{
@@ -83,7 +83,7 @@ static int	save_tokens_normal(t_data *data, int j)
 		data->dc_2--;
 	if (data->line[data->i] == 39)
 		data->sc_2--;
-	if (data->line[data->i] == '$')
+	if (data->line[data->i] == '$' && data->line[data->i + 1] != '\0' && data->line[data->i + 1] != ' ')
 	{
 		if (data->line[data->i + 1] == '?')
 			j = save_env_errno(data, j);
