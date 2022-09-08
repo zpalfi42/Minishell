@@ -6,33 +6,11 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:14:31 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/26 15:29:07 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/08 13:28:34 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	cmd_tokens_saver(t_cmd *n, t_data *data, int i, int j)
-{
-	int	z;
-
-	z = 0;
-	n->tokens[z] = data->tokens[i];
-	n->tokens_type[z] = data->tokens_type[i];
-	while (data->tokens[++i] != 0 && i < j)
-	{
-		if ((data->tokens[i][0] == '<' || data->tokens[i][0] == '>')
-			&& data->tokens_type[i] == 0)
-			break ;
-		n->arg[z] = data->tokens[i];
-		n->tokens[z + 1] = data->tokens[i];
-		n->tokens_type[z + 1] = data->tokens_type[i];
-		z++;
-	}
-	n->arg[z] = 0;
-	n->tokens[z + 1] = 0;
-	n->tokens_type[z + 1] = -1;
-}
 
 int	in_out_parser(t_cmd *n, t_data *data, int z, int j)
 {
@@ -104,13 +82,8 @@ char	*find_cmd(t_cmd *n, char **tokens, int i, int j)
 	return (NULL);
 }
 
-t_cmd	*cmd_lst_new(t_data *data, char **tokens, int i, int j)
+void	cmd_control_redirections(char **tokens, t_cmd *n, int i, int j)
 {
-	t_cmd	*n;
-
-	n = (t_cmd *)malloc(sizeof(t_cmd));
-	if (!n)
-		return (NULL);
 	if (tokens[i][0] == '<' || tokens[i][0] == '>')
 		n->cmd = find_cmd(n, tokens, i, j);
 	else
@@ -118,6 +91,17 @@ t_cmd	*cmd_lst_new(t_data *data, char **tokens, int i, int j)
 		n->aux = i;
 		n->cmd = tokens[i];
 	}
+}
+
+t_cmd	*cmd_lst_new(t_data *data, char **tokens, int i, int j)
+{
+	t_cmd	*n;
+	int		z;
+
+	n = (t_cmd *)malloc(sizeof(t_cmd));
+	if (!n)
+		return (NULL);
+	cmd_control_redirections(tokens, n, i, j);
 	n->arg = malloc(sizeof(char *) * (j - i));
 	data->z = i - 1;
 	while (tokens[++data->z] != 0 && data->z < j)
@@ -126,7 +110,7 @@ t_cmd	*cmd_lst_new(t_data *data, char **tokens, int i, int j)
 			break ;
 	n->tokens = malloc(sizeof(char *) * (data->z - i + 1));
 	n->tokens_type = malloc(sizeof(int) * (data->z - i + 1));
-	int z = in_out_parser(n, data, i - 1, j);
+	z = in_out_parser(n, data, i - 1, j);
 	if (z == 0)
 		return (NULL);
 	cmd_tokens_saver(n, data, n->aux, j);

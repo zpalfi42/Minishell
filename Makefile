@@ -6,7 +6,7 @@
 #    By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 12:16:53 by zpalfi            #+#    #+#              #
-#    Updated: 2022/07/21 17:07:25 by zpalfi           ###   ########.fr        #
+#    Updated: 2022/09/08 13:14:13 by zpalfi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,7 @@ SRC				=	cd.c \
 					export_utils.c \
 					cmd_add_back.c \
 					count_tokens.c \
+					lst_new_utils.c \
 					files_lst_new.c \
 					files_add_back.c \
 					export_utils_2.c \

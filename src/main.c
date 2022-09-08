@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:15:54 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/26 15:28:46 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/08 13:28:35 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	routine(t_data *data)
 {
 	while (42)
 	{
+		printf("--> %d\n", data->erno);
 		data->count = 0;
 		data->word = 0;
 		data->line = readline("\033[1;32mminiconcha>$ \033[1;00m");

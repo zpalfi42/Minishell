@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 16:54:43 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/26 15:40:29 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/08 13:28:36 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,8 @@ static int	double_output_file(t_cmd *n, char **tokens, int z, t_data *data)
 			n->first_1 = 0;
 		}
 		else
-			if (files_add_back(&n->outfiles, files_lst_new(tokens[z] + 2, 1, '>',
+			if (files_add_back(&n->outfiles,
+					files_lst_new(tokens[z] + 2, 1, '>',
 						data->tokens_type[z])) == -1)
 				return (-1);
 	}

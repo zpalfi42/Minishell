@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 16:33:12 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/26 15:42:08 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/08 13:28:31 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,25 @@ t_files	*files_normal(char *name, int i, t_files *n)
 	return (n);
 }
 
+char	*is_redir(char *name)
+{
+	if ((ft_strnstr(name, ">", ft_strlen(name)) != NULL
+			|| ft_strnstr(name, ">>", ft_strlen(name)) != NULL
+			|| ft_strnstr(name, "<", ft_strlen(name)) != NULL
+			|| ft_strnstr(name, "<<", ft_strlen(name)) != NULL))
+	{
+		return (NULL);
+	}
+	return (name);
+}
+
 t_files	*files_lst_new(char *name, int mode, char c, int token_type)
 {
 	t_files	*n;
 	int		i;
 	int		j;
 
-	if ((ft_strnstr(name, ">", ft_strlen(name)) != NULL || ft_strnstr(name, ">>", ft_strlen(name)) != NULL
-			|| ft_strnstr(name, "<", ft_strlen(name)) != NULL
-			|| ft_strnstr(name, "<<", ft_strlen(name)) != NULL) && token_type == 0)
+	if (is_redir(name) == NULL && token_type == 0)
 	{
 		printf("Syntax error near unexpected token '%s'\n", name);
 		return (NULL);

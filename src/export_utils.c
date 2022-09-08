@@ -6,29 +6,11 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:50 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/26 16:59:50 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/08 13:28:30 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*export_name(t_data *data, char *env)
-{
-	char	*ret;
-	int		i;
-
-	i = 0;
-	while (env[i] != '=' && env[i] != '\0')
-		i++;
-	ret = malloc(sizeof(char) * i);
-	if (!ret)
-		ft_error(data, "Failed malloc :(");
-	i = -1;
-	while (env[++i] != '=' && env[i] != '\0')
-		ret[i] = env[i];
-	ret[i] = '\0';
-	return (ret);
-}
 
 char	*export_value(t_data *data, char *env)
 {
@@ -135,8 +117,8 @@ void	change_value(t_data *data, t_cmd *cmd)
 	while (data->envp[i] != 0)
 		i++;
 	new_envp = malloc(sizeof(char *) * (i + 1));
-	i = 0;
-	while (data->envp[i] != 0)
+	i = -1;
+	while (data->envp[++i] != 0)
 	{
 		if (j == i)
 			change(data, cmd, i, new_envp);
@@ -146,7 +128,6 @@ void	change_value(t_data *data, t_cmd *cmd)
 			ft_strlcpy(new_envp[i], data->envp[i],
 				ft_strlen(data->envp[i]) + 1);
 		}
-		i++;
 	}
 	free(data->envp);
 	new_envp[i] = 0;

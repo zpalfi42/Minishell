@@ -6,11 +6,29 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 14:56:34 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/20 16:49:12 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/08 13:28:29 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+char	*export_name(t_data *data, char *env)
+{
+	char	*ret;
+	int		i;
+
+	i = 0;
+	while (env[i] != '=' && env[i] != '\0')
+		i++;
+	ret = malloc(sizeof(char) * i);
+	if (!ret)
+		ft_error(data, "Failed malloc :(");
+	i = -1;
+	while (env[++i] != '=' && env[i] != '\0')
+		ret[i] = env[i];
+	ret[i] = '\0';
+	return (ret);
+}
 
 static int	cpy_old(t_data *data, char **new_envp)
 {

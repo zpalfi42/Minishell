@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/26 16:28:12 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/08 13:28:30 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	export_exists(t_data *data, t_cmd *cmd)
 	while (data->envp[++i] != 0)
 	{
 		envp_name = export_name(data, data->envp[i]);
-		printf("%s --> %s =? %s\n", data->envp[i], name, envp_name);
 		if (ft_strcmp(envp_name, name))
 		{
 			i = -1;
@@ -87,7 +86,6 @@ int	do_export(t_data *data, t_cmd *cmd, int mode, int fd)
 		else
 		{
 			i = export_exists(data, cmd);
-			// printf("--> %d\n", i);
 			if (i == -1)
 				change_value(data, cmd);
 			else if (i != -2)

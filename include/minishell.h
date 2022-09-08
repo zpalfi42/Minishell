@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/07/26 15:50:16 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/08 13:13:14 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void	exec_simple(t_data *data, int in, int out);
 void	exec(t_data *data, int in, int out);
 void	assign_io(t_data *data, int *in, int *out, int fd[2]);
 void	redirect_io(int in, int out, int mode);
+void	cmd_tokens_saver(t_cmd *n, t_data *data, int i, int j);
 void	exec_builtin(t_data *data, t_cmd *cmd, int fd, int mode);
 
 char	*cd_init(t_data *data);
