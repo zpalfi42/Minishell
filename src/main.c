@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:15:54 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 13:28:35 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/08 16:56:28 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	minishell(t_data *data)
 
 void	routine(t_data *data)
 {
+	rename_home(data, 1);
 	while (42)
 	{
-		printf("--> %d\n", data->erno);
 		data->count = 0;
 		data->word = 0;
 		data->line = readline("\033[1;32mminiconcha>$ \033[1;00m");

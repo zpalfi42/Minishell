@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 14:31:17 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 13:28:24 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/08 15:51:36 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static void	change_pwd_value(int index, char **new_envp, char *pwd, int mode)
 		new_envp[index][i] = pwd[j];
 		i++;
 	}
+	free(pwd);
 	new_envp[index][i] = '\0';
 }
 
@@ -95,6 +96,7 @@ void	change_pwd(t_data *data, char *pwd, int mode)
 			ft_strlcpy(new_envp[i], data->envp[i],
 				ft_strlen(data->envp[i]) + 1);
 		}
+		free(data->envp[i]);
 	}
 	free(data->envp);
 	new_envp[i] = 0;

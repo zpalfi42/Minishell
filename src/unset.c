@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:35:19 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 13:28:45 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/08 16:55:07 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,16 +56,21 @@ static char	**assign_new(t_data *data, char **new_envp, int j)
 	while (data->envp[i] != 0)
 	{
 		if (i == j)
+		{
+			free(data->envp[i]);
 			i++;
+		}
 		else
 		{
 			new_envp[z] = malloc(sizeof(char) * ft_strlen(data->envp[i]));
 			ft_strlcpy(new_envp[z], data->envp[i],
 				ft_strlen(data->envp[i]) + 1);
+			free(data->envp[i]);
 			i++;
 			z++;
 		}
 	}
+	free(data->envp);
 	new_envp[z] = 0;
 	return (new_envp);
 }
@@ -88,7 +93,6 @@ int	do_unset(t_data *data, t_cmd *cmd, int mode)
 			i++;
 		new_envp = malloc(sizeof(char *) * (i));
 		new_envp = assign_new(data, new_envp, j);
-		free(data->envp);
 		data->envp = new_envp;
 	}
 	else

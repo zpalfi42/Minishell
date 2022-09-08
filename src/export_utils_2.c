@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 14:56:34 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 13:28:29 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/08 16:57:25 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,16 @@ static int	cpy_old(t_data *data, char **new_envp)
 		if (!new_envp[i])
 			return (-1);
 		ft_strlcpy(new_envp[i], data->envp[i], (ft_strlen(data->envp[i]) + 1));
+		free(data->envp[i]);
 	}
+	free(data->envp);
 	return (i);
+}
+
+static void	free_nv(char *name, char *value)
+{
+	free(name);
+	free(value);
 }
 
 static int	assign_new(t_data *data, t_cmd *cmd, char **new_envp, int i)
@@ -70,6 +78,7 @@ static int	assign_new(t_data *data, t_cmd *cmd, char **new_envp, int i)
 		new_envp[i][j + z] = value[z];
 	new_envp[i][j + z] = '\0';
 	new_envp[i + 1] = 0;
+	free_nv(name, value);
 	return (0);
 }
 
@@ -86,6 +95,5 @@ void	add_export(t_data *data, t_cmd *cmd)
 		ft_error(data, "Failed malloc :(");
 	if (new_envp == NULL)
 		ft_error(data, "Failed malloc :(");
-	free(data->envp);
 	data->envp = new_envp;
 }

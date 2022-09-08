@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:34:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 13:28:26 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/08 16:31:46 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	do_echo(t_data *data, t_cmd *cmd, int fd, int mode)
 		ft_putstr_fd("\n", fd);
 	else
 	{
-		replace_home(data, cmd);
+		replace_home_echo(data, cmd);
 		if (ft_strcmp(cmd->tokens[i], "-n\0"))
 		{
 			n = 1;

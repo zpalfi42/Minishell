@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:49:44 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 13:28:32 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/08 16:42:29 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,6 @@ void	free_exit(t_data *data)
 		i++;
 	}
 	free(data->first_envp);
+	free(data->home);
 	free(data);
 }

@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 13:28:30 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/08 16:37:32 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ int	export_exists(t_data *data, t_cmd *cmd)
 		if (ft_strcmp(envp_name, name))
 		{
 			i = -1;
+			free(envp_name);
 			break ;
 		}
 		free(envp_name);
@@ -69,14 +70,36 @@ int	valid_export(t_data *data, t_cmd *cmd)
 	return (aux);
 }
 
+void	rename_home(t_data *data, int mode)
+{
+	int		i;
+	char	*aux_name;
+
+	i = 0;
+	while (data->envp[i])
+	{
+		aux_name = export_name(data, data->envp[i]);
+		if (ft_strcmp(aux_name, "HOME\0"))
+		{
+			if (mode == 0)
+				free(data->home);
+			data->home = export_value(data, data->envp[i]);
+			free(aux_name);
+			break ;
+		}
+		free(aux_name);
+		i++;
+	}
+}
+
 int	do_export(t_data *data, t_cmd *cmd, int mode, int fd)
 {
 	int	i;
 
-	data->i = 1;
-	if (cmd->tokens[data->i] == NULL)
+	data->i = 0;
+	if (cmd->tokens[1] == NULL)
 		print_export(data, fd);
-	while (cmd->tokens[data->i] != 0)
+	while (cmd->tokens[++data->i] != 0)
 	{
 		if (valid_export(data, cmd))
 		{
@@ -91,8 +114,8 @@ int	do_export(t_data *data, t_cmd *cmd, int mode, int fd)
 			else if (i != -2)
 				add_export(data, cmd);
 		}
-		data->i++;
 	}
+	rename_home(data, 0);
 	if (mode == 1)
 		exit (1);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 13:13:14 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/08 16:37:43 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ typedef struct s_files
 {
 	int				type;
 	int				end[2];
+
 	char			*filename;
+
 	struct s_files	*next;
 }	t_files;
 
@@ -47,10 +49,12 @@ typedef struct s_cmd
 	int				first_1;
 	int				first_2;
 	int				aux;
+	int				*tokens_type;
+
 	char			*cmd;
 	char			**arg;
 	char			**tokens;
-	int				*tokens_type;
+
 	t_files			*infiles;
 	t_files			*outfiles;
 	struct s_cmd	*next;
@@ -65,20 +69,22 @@ typedef struct s_data
 	int		sc_2;
 	int		aux;
 	int		erno;
-	char	**tokens;
-	int		*tokens_type;
-	char	*line;
 	int		count;
 	int		word;
 	int		len;
 	int		i;
 	int		z;
 	int		pipes;
-	char	*cmd;
+	int		*tokens_type;
 	int		nr;
 	int		np;
+
+	char	*line;
+	char	*cmd;
 	char	*home;
 	char	*dir;
+
+	char	**tokens;
 	char	**first_envp;
 	char	**envp;
 	t_cmd	*cmd_lst;
@@ -137,6 +143,7 @@ void	assign_io(t_data *data, int *in, int *out, int fd[2]);
 void	redirect_io(int in, int out, int mode);
 void	cmd_tokens_saver(t_cmd *n, t_data *data, int i, int j);
 void	exec_builtin(t_data *data, t_cmd *cmd, int fd, int mode);
+void	rename_home(t_data *data, int mode);
 
 char	*cd_init(t_data *data);
 char	*export_name(t_data *data, char *env);

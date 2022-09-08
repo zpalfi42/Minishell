@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:55 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 13:28:23 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/08 16:30:33 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ void	ast(t_data *data)
 	int		first;
 
 	first = 1;
-	data->home = getenv("HOME");
 	ast_simple(data, first);
 	while (data->cmd_lst != NULL)
 	{

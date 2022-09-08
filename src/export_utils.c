@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:50 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 13:28:30 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/08 15:06:03 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,12 @@ int	this_envp(t_data *data, t_cmd *cmd)
 		if (ft_strcmp(name, env_name))
 		{
 			j = -1;
+			free(env_name);
 			break ;
 		}
 		free(env_name);
 		i++;
 	}
-	if (j == -1)
-		free(env_name);
 	free(name);
 	return (i);
 }
@@ -101,8 +100,10 @@ void	matrixcpy(t_data *data, char **src)
 	{
 		data->envp[i] = malloc(sizeof(char) * (ft_strlen(src[i]) + 1));
 		ft_strlcpy(data->envp[i], src[i], ft_strlen(src[i]) + 1);
+		free(src[i]);
 		i++;
 	}
+	free(src);
 	data->envp[i] = 0;
 }
 
@@ -128,9 +129,9 @@ void	change_value(t_data *data, t_cmd *cmd)
 			ft_strlcpy(new_envp[i], data->envp[i],
 				ft_strlen(data->envp[i]) + 1);
 		}
+		free(data->envp[i]);
 	}
 	free(data->envp);
 	new_envp[i] = 0;
 	matrixcpy(data, new_envp);
-	free(new_envp);
 }
