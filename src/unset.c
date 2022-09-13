@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:35:19 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 16:55:07 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/12 13:57:07 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,16 @@ int	do_unset(t_data *data, t_cmd *cmd, int mode)
 	char	**new_envp;
 	int		i;
 	int		j;
-	int		z;
 
-	z = 0;
 	i = 0;
 	j = in_envp(data, cmd);
 	if (valid_name(cmd->tokens[1]))
+	{
 		printf("\033[1;31m%s is not a valid name!\n", cmd->tokens[1]);
+		data->erno = 1;
+		if (mode == 1)
+			exit (1);
+	}
 	else if (j != -1)
 	{
 		while (data->envp[i] != 0)
@@ -94,10 +97,9 @@ int	do_unset(t_data *data, t_cmd *cmd, int mode)
 		new_envp = malloc(sizeof(char *) * (i));
 		new_envp = assign_new(data, new_envp, j);
 		data->envp = new_envp;
+		data->erno = 0;
 	}
-	else
-		printf("\033[1;31mCannot unset %s\n", cmd->tokens[1]);
 	if (mode == 1)
-		exit (1);
+		exit (0);
 	return (1);
 }

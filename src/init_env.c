@@ -6,98 +6,56 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 16:32:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 13:28:33 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/12 12:38:31 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	name_len(char **envp, int z)
+int	oldpwd_save(t_data *data, int i)
+{
+	data->envp[i] = malloc(sizeof(char) * 8);
+	data->first_envp[i] = malloc(sizeof(char) * 8);
+	if (!data->envp[i] || !data->first_envp[i])
+		return (1);
+	ft_strlcpy(data->envp[i], "OLDPWD=\0", 8);
+	ft_strlcpy(data->first_envp[i], "OLDPWD=\0", 8);
+	return (0);
+}
+
+int	envp_save(t_data *data, char **envp, int i)
+{
+	data->envp[i] = malloc(sizeof(char) * (ft_strlen(envp[i]) + 1));
+	data->first_envp[i] = malloc(sizeof(char) * (ft_strlen(envp[i]) + 1));
+	if (!data->envp[i] || !data->first_envp[i])
+		return (1);
+	ft_strlcpy(data->envp[i], envp[i], (ft_strlen(envp[i]) + 1));
+	ft_strlcpy(data->first_envp[i], envp[i], (ft_strlen(envp[i]) + 1));
+	return (0);
+}
+
+int	envp_init(t_data *data, char **envp)
 {
 	int	i;
 
 	i = 0;
-	while (envp[z][i])
-	{
-		if (envp[z][i] == '=')
-			break ;
+	while (envp[i] != 0)
 		i++;
-	}
-	return (i);
-}
-
-static int	value_len(char **envp, int z)
-{
-	int		i;
-	int		j;
-
+	data->envp = malloc(sizeof(char *) * (i + 1));
+	data->first_envp = malloc(sizeof(char *) * (i + 1));
+	if (!data->first_envp || !data->envp)
+		return (1);
 	i = 0;
-	j = 0;
-	while (envp[z][i] != '=')
-		i++;
-	i++;
-	while (envp[z][i + j] != '\0')
+	data->erno = 0;
+	while (envp[i] != 0)
 	{
-		j++;
-	}
-	return (j);
-}
-
-static char	*envp_name(t_data *data, char **envp, int z)
-{
-	int		i;
-	char	*name;
-
-	i = 0;
-	name = malloc(sizeof(char) * name_len(envp, z));
-	if (!name)
-		ft_error(data, "Failed malloc :(");
-	while (envp[z][i])
-	{
-		if (envp[z][i] == '=')
-			break ;
-		name[i] = envp[z][i];
+		if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)
+			oldpwd_save(data, i);
+		else
+			envp_save(data, envp, i);
 		i++;
 	}
-	name[i] = '\0';
-	return (name);
-}
-
-static char	*envp_value(t_data *data, char **envp, int z)
-{
-	int		i;
-	int		j;
-	char	*value;
-
-	i = 0;
-	j = 0;
-	value = malloc(sizeof(char) * value_len(envp, z));
-	if (!value)
-		ft_error(data, "Failed malloc :(");
-	while (envp[z][i] != '=')
-		i++;
-	i++;
-	while (envp[z][i + j] != '\0')
-	{
-		value[j] = envp[z][i + j];
-		j++;
-	}
-	value[i] = '\0';
-	return (value);
-}
-
-t_list	*init_env(t_data *data, char **envp)
-{
-	t_list	*env;
-	int		i;
-
-	env = ft_lstnew(envp_name(data, envp, 0), envp_value(data, envp, 0), 0);
-	i = 1;
-	while (envp[i])
-	{
-		ft_lstadd_back(&env, ft_lstnew(envp_name(data, envp, i),
-				envp_value(data, envp, i), 0));
-		i++;
-	}
-	return (env);
+	data->envp[i] = 0;
+	data->first_envp[i] = 0;
+	return (0);
 }

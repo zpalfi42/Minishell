@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 16:37:43 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/13 13:32:38 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,65 +91,69 @@ typedef struct s_data
 }	t_data;
 
 int		sig_handler(void);
-int		do_echo(t_data *data, t_cmd *cmd, int fd, int mode);
-int		is_valid_name(char c, int z);
-int		this_envp(t_data *data, t_cmd *cmd);
-int		valid_export(t_data *data, t_cmd *cmd);
+int		pipe_parser(t_data *data);
+int		malloc_tokens(t_data *data);
 int		ft_strcmp(char *s, char *d);
-int		export_exists(t_data *data, t_cmd *cmd);
-int		do_cd(t_data *data, t_cmd *cmd, int mode);
+int		is_valid_name(char c, int z);
 int		len_env(t_data *data, int i);
 int		save_env(t_data *data, int j);
 int		token_len(t_data *data, int i);
-int		malloc_tokens(t_data *data);
-int		do_env(t_data *data, t_cmd *cmd, int fd, int mode);
-int		do_pwd(t_data *data, t_cmd *cmd, int fd, int mode);
-int		do_exit(t_data *data, t_cmd *cmd, int mode);
-int		do_export(t_data *data, t_cmd *cmd, int mode, int fd);
-int		do_unset(t_data *data, t_cmd *cmd, int mode);
+int		find_j(t_data *data, int mode);
 int		first_envp(t_data *data, char *s);
 int		save_env_errno(t_data *data, int j);
+int		this_envp(t_data *data, t_cmd *cmd);
 int		token_len_errno(t_data *data, int i);
-int		token_len_env(t_data *data, int i, int j);
-int		output_file(t_cmd *n, char **tokens, int z, t_data *data);
-int		input_file(t_cmd *n, char **tokens, int z, t_data *data);
-int		save_env_2(t_data *data, int j, char *name);
 int		is_builtin(t_data *data, t_cmd *cmd);
+int		envp_init(t_data *data, char **envp);
+int		cmd_add_back(t_cmd	**lst, t_cmd *new);
+int		valid_export(t_data *data, t_cmd *cmd);
+int		export_exists(t_data *data, t_cmd *cmd);
+int		do_cd(t_data *data, t_cmd *cmd, int mode);
+int		token_len_env(t_data *data, int i, int j);
+int		save_env_2(t_data *data, int j, char *name);
+int		do_exit(t_data *data, t_cmd *cmd, int mode);
+int		do_unset(t_data *data, t_cmd *cmd, int mode);
+int		files_add_back(t_files **files, t_files *new);
+int		do_env(t_data *data, t_cmd *cmd, int fd, int mode);
+int		do_pwd(t_data *data, t_cmd *cmd, int fd, int mode);
+int		do_echo(t_data *data, t_cmd *cmd, int fd, int mode);
+int		do_export(t_data *data, t_cmd *cmd, int mode, int fd);
+int		input_file(t_cmd *n, char **tokens, int z, t_data *data);
+int		output_file(t_cmd *n, char **tokens, int z, t_data *data);
 
 void	ast(t_data *data);
+void	handler(int signum);
 void	parser(t_data *data);
 void	free_all(t_data *data);
 void	print_miniconcha(void);
 void	free_exit(t_data *data);
 void	del_one_env(t_data *data);
 void	save_tokens(t_data *data);
-void	token_len_init(t_data *data);
-void	do_path_cmd(t_data *data, t_cmd *cmd);
-int		pipe_parser(t_data *data);
-void	change_value(t_data *data, t_cmd *cmd);
+void	handler_block(int signum);
 void	count_tokens(t_data *data);
+void	token_len_init(t_data *data);
 void	save_tokens_init(t_data *data);
 void	do_other(t_data *data, t_cmd *cmd);
 void	ft_error(t_data *data, char *error);
-void	add_export(t_data *data, t_cmd *cmd);
-void	replace_home(t_data *data, t_cmd *cmd);
-void	change_pwd(t_data *data, char *pwd, int mode);
-void	change(t_data *data, t_cmd *cmd, int index, char **new_envp);
-int		files_add_back(t_files **files, t_files *new);
-int		cmd_add_back(t_cmd	**lst, t_cmd *new);
-void	exec_simple(t_data *data, int in, int out);
 void	exec(t_data *data, int in, int out);
-void	assign_io(t_data *data, int *in, int *out, int fd[2]);
+void	rename_home(t_data *data, int mode);
+void	add_export(t_data *data, t_cmd *cmd);
+void	do_path_cmd(t_data *data, t_cmd *cmd);
+void	change_value(t_data *data, t_cmd *cmd);
+void	replace_home(t_data *data, t_cmd *cmd);
 void	redirect_io(int in, int out, int mode);
+void	do_export_else(t_data *data, t_cmd *cmd);
+void	exec_simple(t_data *data, int in, int out);
+void	change_pwd(t_data *data, char *pwd, int mode);
+void	assign_io(t_data *data, int *in, int *out, int fd[2]);
 void	cmd_tokens_saver(t_cmd *n, t_data *data, int i, int j);
 void	exec_builtin(t_data *data, t_cmd *cmd, int fd, int mode);
-void	rename_home(t_data *data, int mode);
+void	change(t_data *data, t_cmd *cmd, int index, char **new_envp);
+void	change_pwd_value(int index, char **new_envp, char *pwd, int mode);
 
 char	*cd_init(t_data *data);
 char	*export_name(t_data *data, char *env);
 char	*export_value(t_data *data, char *env);
-
-t_list	*init_env(t_data *data, char **envp);
 
 t_files	*files_lst_new(char *name, int mode, char c, int token_type);
 

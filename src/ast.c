@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:55 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 16:30:33 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/13 16:28:38 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,31 @@ void	redirect_io(int in, int out, int mode)
 	}
 }
 
+void	free_cmd(t_cmd **cmd)
+{
+	t_cmd	*n;
+
+	while (cmd && *cmd)
+	{
+		n = (*cmd)->next;
+		free((*cmd)->arg);
+		free((*cmd)->tokens);
+		free((*cmd)->tokens_type);
+		free((*cmd));
+		*cmd = n;
+	}
+}
+
 void	ast_simple(t_data *data, int first)
 {
 	int		fd[2];
 	int		in;
 	int		out;
+	t_cmd	*n;
 
 	if (first == 1 && data->cmd_lst->next == NULL)
 	{
+		n = data->cmd_lst->next;
 		if (first)
 			in = 0;
 		else
@@ -87,7 +104,8 @@ void	ast_simple(t_data *data, int first)
 			close(out);
 		if (in != 0)
 			close(in);
-		data->cmd_lst = data->cmd_lst->next;
+		free_cmd(&data->cmd_lst);
+		data->cmd_lst = n;
 		first = 0;
 	}
 }
@@ -98,9 +116,11 @@ void	ast(t_data *data)
 	int		in;
 	int		out;
 	int		first;
+	t_cmd	*n;
 
 	first = 1;
 	ast_simple(data, first);
+	n = data->cmd_lst;
 	while (data->cmd_lst != NULL)
 	{
 		if (first)
@@ -117,4 +137,5 @@ void	ast(t_data *data)
 		data->cmd_lst = data->cmd_lst->next;
 		first = 0;
 	}
+	free_cmd(&n);
 }

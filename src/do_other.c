@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:02:48 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 13:28:25 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/13 16:29:14 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,25 @@ static void	exec_other(t_data *data, t_cmd *cmd)
 	if (!comand)
 	{
 		free(comand);
+		i = 0;
+		while (paths[i])
+		{
+			free(paths[i]);
+			i++;
+		}
 		free(paths);
+		free(value);
 		printf("\033[1;31mCommand not found :(\n");
 		exit (1);
 	}
+	i = 0;
+	while (paths[i])
+	{
+		free(paths[i]);
+		i++;
+	}
+	free(paths);
+	free(value);
 	execve(comand, cmd->tokens, data->envp);
 }
 

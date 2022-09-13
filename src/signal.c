@@ -6,13 +6,15 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 16:27:49 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 13:28:43 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/13 14:44:50 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	handler(int signum)
+extern int	g_status;
+
+void	handler(int signum)
 {
 	if (signum == SIGINT)
 	{
@@ -23,6 +25,14 @@ static void	handler(int signum)
 		rl_replace_line("", 1);
 	rl_on_new_line();
 	rl_redisplay();
+}
+
+void	handler_block(int signum)
+{
+	(void)signum;
+	printf("^C\n");
+	g_status = 130;
+	exit(130);
 }
 
 int	sig_handler(void)

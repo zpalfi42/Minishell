@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:38:08 by ealonso-          #+#    #+#             */
-/*   Updated: 2022/09/08 13:28:28 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/12 11:15:46 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,6 @@ int	do_exit(t_data *data, t_cmd *cmd, int mode)
 		printf("Exit");
 		free_exit(data);
 	}
-	exit (1);
+	exit (ft_atoi(cmd->tokens[1]));
 	return (1);
 }

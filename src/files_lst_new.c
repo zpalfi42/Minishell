@@ -6,11 +6,13 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 16:33:12 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 13:28:31 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/13 16:32:02 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_status;
 
 t_files	*files_heredoc_2(char *aux, t_files *n)
 {
@@ -18,9 +20,11 @@ t_files	*files_heredoc_2(char *aux, t_files *n)
 
 	while (42)
 	{
-		buf = readline("> ");
+		buf = readline(">");
 		if (!buf)
+		{
 			break ;
+		}
 		if (ft_strcmp(buf, aux))
 			break ;
 		ft_putendl_fd(buf, n->end[1]);
@@ -34,16 +38,11 @@ t_files	*files_heredoc_2(char *aux, t_files *n)
 	return (n);
 }
 
-t_files	*files_heredoc(char *name, int i, t_files *n)
+char	*get_limiter(char *name, int i)
 {
-	char	*aux;
-	int		j;
+	char			*aux;
+	int				j;
 
-	if (pipe(n->end) == -1)
-	{
-		printf("Pipe error\n");
-		return (NULL);
-	}
 	j = 0;
 	while (name[j + i] != '\0')
 		j++;
@@ -55,7 +54,20 @@ t_files	*files_heredoc(char *name, int i, t_files *n)
 		j++;
 	}
 	aux[j] = '\0';
-	return (files_heredoc_2(aux, n));
+}
+
+t_files	*files_heredoc(char *name, int i, t_files *n)
+{
+	char			*aux;
+
+	if (pipe(n->end) == -1)
+	{
+		printf("Pipe error\n");
+		return (NULL);
+	}
+	aux = get_limiter(name, i);
+	files_heredoc_2(aux, n);
+	return (n);
 }
 
 t_files	*files_normal(char *name, int i, t_files *n)

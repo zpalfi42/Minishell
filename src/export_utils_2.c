@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 14:56:34 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 16:57:25 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/12 16:59:31 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*export_name(t_data *data, char *env)
 	i = 0;
 	while (env[i] != '=' && env[i] != '\0')
 		i++;
-	ret = malloc(sizeof(char) * i);
+	ret = malloc(sizeof(char) * i + 1);
 	if (!ret)
 		ft_error(data, "Failed malloc :(");
 	i = -1;
@@ -47,10 +47,16 @@ static int	cpy_old(t_data *data, char **new_envp)
 	return (i);
 }
 
-static void	free_nv(char *name, char *value)
+void	do_export_else(t_data *data, t_cmd *cmd)
 {
-	free(name);
-	free(value);
+	int	i;
+
+	i = export_exists(data, cmd);
+	if (i == -1)
+		change_value(data, cmd);
+	else if (i != -2)
+		add_export(data, cmd);
+	data->erno = 0;
 }
 
 static int	assign_new(t_data *data, t_cmd *cmd, char **new_envp, int i)
@@ -78,8 +84,7 @@ static int	assign_new(t_data *data, t_cmd *cmd, char **new_envp, int i)
 		new_envp[i][j + z] = value[z];
 	new_envp[i][j + z] = '\0';
 	new_envp[i + 1] = 0;
-	free_nv(name, value);
-	return (0);
+	return (free(name), free(value), 0);
 }
 
 void	add_export(t_data *data, t_cmd *cmd)

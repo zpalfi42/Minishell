@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:30:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 13:28:44 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/12 17:15:08 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,28 +90,37 @@ int	token_len_errno(t_data *data, int i)
 
 int	token_len(t_data *data, int i)
 {
+	int	j;
+
+	j = 0;
 	token_len_init(data);
-	while (data->line[i] != '\0')
+	while (data->line[j] != '\0')
 	{
-		while (data->line[i] == ' ' && data->line[i] != '\0')
-			i++;
-		while (data->line[i] != ' ' && data->line[i] != '\0')
+		if (i == j)
+			break ;
+		j++;
+	}
+	while ((data->line) && data->line[j] != '\0')
+	{
+		while (data->line[j] == ' ' && data->line[j] != '\0')
+			j++;
+		while (data->line[j] != ' ' && data->line[j] != '\0')
 		{
-			if (data->line[i] == '$')
-				i = len_env(data, i);
-			if (data->line[i] == 34 && data->dc > 1)
-				i = token_len_dc(data, i);
-			else if (data->line[i] == 39 && data->sc > 1)
-				i = token_len_sc(data, i);
+			if (data->line[j] == '$')
+				j = len_env(data, j);
+			if (data->line[j] == 34 && data->dc > 1)
+				j = token_len_dc(data, j);
+			else if (data->line[j] == 39 && data->sc > 1)
+				j = token_len_sc(data, j);
 			else
 			{
 				data->len++;
-				i++;
+				j++;
 			}
 		}
-		if (data->line[i] == ' ' || data->line[i] == '\0')
+		if (data->line[j] == ' ' || data->line[j] == '\0')
 			break ;
 	}
 	data->len++;
-	return (i + 1);
+	return (j + 1);
 }

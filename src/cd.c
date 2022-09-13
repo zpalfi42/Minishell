@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 14:31:17 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 15:51:36 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/12 13:58:55 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	pwd_or_oldpwd(int index, char **new_envp, char *pwd, int mode)
 	}
 }
 
-static void	change_pwd_value(int index, char **new_envp, char *pwd, int mode)
+void	change_pwd_value(int index, char **new_envp, char *pwd, int mode)
 {
 	int		i;
 	int		j;
@@ -53,7 +53,7 @@ static void	change_pwd_value(int index, char **new_envp, char *pwd, int mode)
 	new_envp[index][i] = '\0';
 }
 
-static int	find_j(t_data *data, int mode)
+int	find_j(t_data *data, int mode)
 {
 	int	j;
 
@@ -74,60 +74,41 @@ static int	find_j(t_data *data, int mode)
 	return (j);
 }
 
-void	change_pwd(t_data *data, char *pwd, int mode)
+void	do_cd_home(t_data *data, int mode)
 {
-	char	**new_envp;
-	int		i;
-	int		j;
-
-	j = find_j(data, mode);
-	i = 0;
-	while (data->envp[i] != 0)
-		i++;
-	new_envp = malloc(sizeof(char *) * (i + 1));
-	i = -1;
-	while (data->envp[++i] != 0)
+	if (chdir(data->home) != 0)
 	{
-		if (j == i)
-			change_pwd_value(i, new_envp, pwd, mode);
-		else
-		{
-			new_envp[i] = malloc(sizeof(char) * (ft_strlen(data->envp[i]) + 1));
-			ft_strlcpy(new_envp[i], data->envp[i],
-				ft_strlen(data->envp[i]) + 1);
-		}
-		free(data->envp[i]);
-	}
-	free(data->envp);
-	new_envp[i] = 0;
-	data->envp = new_envp;
+		perror("cd");
+		data->erno = errno;
+		if (mode == 1)
+			exit (errno);
+	}	
 }
 
 int	do_cd(t_data *data, t_cmd *cmd, int mode)
 {
 	char	*pwd;
 
-	pwd = cd_init(data);
 	if (cmd->tokens[1] != 0)
 		replace_home(data, cmd);
+	pwd = cd_init(data);
 	if (cmd->tokens[1] == 0)
-	{
-		if (chdir(data->home) != 0)
-		{
-			perror("cd");
-			data->erno = errno;
-		}
-	}
+		do_cd_home(data, mode);
 	else if (chdir(data->dir) != 0)
 	{
 		perror("cd");
 		data->erno = errno;
+		if (mode == 1)
+			exit (errno);
 	}
 	else
+	{
+		data->erno = 0;
 		free(data->dir);
-	getcwd(pwd, 199);
+	}
+	getcwd(pwd, 4096);
 	change_pwd(data, pwd, 0);
 	if (mode == 1)
-		exit (1);
+		exit (0);
 	return (1);
 }

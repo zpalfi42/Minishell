@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:50 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 15:06:03 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/12 16:59:48 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*export_value(t_data *data, char *env)
 	j = 0;
 	while (env[i + j] != '\0')
 		j++;
-	ret = malloc(sizeof(char) * j);
+	ret = malloc(sizeof(char) * j + 1);
 	if (!ret)
 		ft_error(data, "Failed malloc :(");
 	j = -1;
@@ -87,26 +87,6 @@ void	change(t_data *data, t_cmd *cmd, int index, char **new_envp)
 	free(new_value);
 }
 
-void	matrixcpy(t_data *data, char **src)
-{
-	int	i;
-
-	i = 0;
-	while (src[i] != 0)
-		i++;
-	data->envp = malloc(sizeof(char *) * (i + 1));
-	i = 0;
-	while (src[i] != 0)
-	{
-		data->envp[i] = malloc(sizeof(char) * (ft_strlen(src[i]) + 1));
-		ft_strlcpy(data->envp[i], src[i], ft_strlen(src[i]) + 1);
-		free(src[i]);
-		i++;
-	}
-	free(src);
-	data->envp[i] = 0;
-}
-
 void	change_value(t_data *data, t_cmd *cmd)
 {
 	char	**new_envp;
@@ -133,5 +113,5 @@ void	change_value(t_data *data, t_cmd *cmd)
 	}
 	free(data->envp);
 	new_envp[i] = 0;
-	matrixcpy(data, new_envp);
+	data->envp = new_envp;
 }

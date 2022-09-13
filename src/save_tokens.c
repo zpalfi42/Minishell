@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:31:14 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 13:28:42 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/12 17:10:46 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ int	malloc_tokens(t_data *data)
 			ft_error(data, "Failed tokens malloc :(");
 		data->word++;
 		i = token_len(data, i);
+		if (i == -1)
+			break ;
 	}
 	data->word = 0;
 	return (1);

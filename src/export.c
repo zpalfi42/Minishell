@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 16:37:32 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/12 13:50:34 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	valid_export(t_data *data, t_cmd *cmd)
 	int	i;
 	int	aux;
 
-	(void) data;
 	aux = 1;
 	i = 0;
 	if (((65 > cmd->tokens[data->i][0] || cmd->tokens[data->i][0] > 90)
@@ -94,8 +93,6 @@ void	rename_home(t_data *data, int mode)
 
 int	do_export(t_data *data, t_cmd *cmd, int mode, int fd)
 {
-	int	i;
-
 	data->i = 0;
 	if (cmd->tokens[1] == NULL)
 		print_export(data, fd);
@@ -105,18 +102,17 @@ int	do_export(t_data *data, t_cmd *cmd, int mode, int fd)
 		{
 			printf("\033[1;31mInvalid export %s!\n", cmd->tokens[data->i]);
 			data->erno = 1;
+			if (mode == 1)
+				exit (1);
 		}
 		else
 		{
-			i = export_exists(data, cmd);
-			if (i == -1)
-				change_value(data, cmd);
-			else if (i != -2)
-				add_export(data, cmd);
+			data->erno = 0;
+			do_export_else(data, cmd);
 		}
 	}
 	rename_home(data, 0);
 	if (mode == 1)
-		exit (1);
+		exit (0);
 	return (1);
 }

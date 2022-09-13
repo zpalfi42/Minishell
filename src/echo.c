@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:34:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 16:31:46 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/12 13:43:28 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ int	do_echo(t_data *data, t_cmd *cmd, int fd, int mode)
 		print_echo(cmd, i, n, fd);
 	}
 	if (mode == 1)
-		exit(1);
+		exit(0);
+	data->erno = 0;
 	return (1);
 }
