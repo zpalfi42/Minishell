@@ -6,11 +6,13 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 16:38:08 by ealonso-          #+#    #+#             */
-/*   Updated: 2022/09/12 11:15:46 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/14 13:13:47 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_status;
 
 int	do_exit(t_data *data, t_cmd *cmd, int mode)
 {
@@ -25,7 +27,7 @@ int	do_exit(t_data *data, t_cmd *cmd, int mode)
 			if (!ft_isdigit(cmd->tokens[1][i]))
 				aux = 1;
 		if (aux == 0)
-			data->erno = ft_atoi(cmd->tokens[1]);
+			g_status = ft_atoi(cmd->tokens[1]);
 	}
 	if (mode != 1)
 	{

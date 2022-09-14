@@ -6,11 +6,13 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 14:31:17 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/12 13:58:55 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/14 13:11:31 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_status;
 
 static int	pwd_or_oldpwd(int index, char **new_envp, char *pwd, int mode)
 {
@@ -79,7 +81,7 @@ void	do_cd_home(t_data *data, int mode)
 	if (chdir(data->home) != 0)
 	{
 		perror("cd");
-		data->erno = errno;
+		g_status = errno;
 		if (mode == 1)
 			exit (errno);
 	}	
@@ -97,13 +99,13 @@ int	do_cd(t_data *data, t_cmd *cmd, int mode)
 	else if (chdir(data->dir) != 0)
 	{
 		perror("cd");
-		data->erno = errno;
+		g_status = errno;
 		if (mode == 1)
 			exit (errno);
 	}
 	else
 	{
-		data->erno = 0;
+		g_status = 0;
 		free(data->dir);
 	}
 	getcwd(pwd, 4096);

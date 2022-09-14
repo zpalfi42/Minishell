@@ -6,11 +6,13 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:30:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/12 17:15:08 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/14 13:27:29 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_status;
 
 static int	token_len_dc(t_data *data, int i)
 {
@@ -79,27 +81,25 @@ int	token_len_env(t_data *data, int i, int j)
 	return (i + j);
 }
 
-int	token_len_errno(t_data *data, int i)
+int	prove_in_line(t_data *data, int i)
 {
-	char	*serrno;
+	int	j;
 
-	serrno = ft_itoa(data->erno);
-	data->len += ft_strlen(serrno);
-	return (i + 2);
+	j = -1;
+	while (data->line[++j] != '\0')
+	{
+		if (i == j)
+			break ;
+	}
+	token_len_init(data);
+	return (j);
 }
 
 int	token_len(t_data *data, int i)
 {
 	int	j;
 
-	j = 0;
-	token_len_init(data);
-	while (data->line[j] != '\0')
-	{
-		if (i == j)
-			break ;
-		j++;
-	}
+	j = prove_in_line(data, i);
 	while ((data->line) && data->line[j] != '\0')
 	{
 		while (data->line[j] == ' ' && data->line[j] != '\0')
@@ -121,6 +121,5 @@ int	token_len(t_data *data, int i)
 		if (data->line[j] == ' ' || data->line[j] == '\0')
 			break ;
 	}
-	data->len++;
-	return (j + 1);
+	return (data->len++, j + 1);
 }

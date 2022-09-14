@@ -6,11 +6,13 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:34:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/12 13:43:28 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/14 13:11:49 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_status;
 
 char	*modify_token(t_data *data, char *token)
 {
@@ -96,6 +98,6 @@ int	do_echo(t_data *data, t_cmd *cmd, int fd, int mode)
 	}
 	if (mode == 1)
 		exit(0);
-	data->erno = 0;
+	g_status = 0;
 	return (1);
 }

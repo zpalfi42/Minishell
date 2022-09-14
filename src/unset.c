@@ -6,11 +6,13 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:35:19 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/12 13:57:07 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/14 13:20:44 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_status;
 
 int	valid_name(char *name)
 {
@@ -86,7 +88,7 @@ int	do_unset(t_data *data, t_cmd *cmd, int mode)
 	if (valid_name(cmd->tokens[1]))
 	{
 		printf("\033[1;31m%s is not a valid name!\n", cmd->tokens[1]);
-		data->erno = 1;
+		g_status = 1;
 		if (mode == 1)
 			exit (1);
 	}
@@ -97,7 +99,7 @@ int	do_unset(t_data *data, t_cmd *cmd, int mode)
 		new_envp = malloc(sizeof(char *) * (i));
 		new_envp = assign_new(data, new_envp, j);
 		data->envp = new_envp;
-		data->erno = 0;
+		g_status = 0;
 	}
 	if (mode == 1)
 		exit (0);

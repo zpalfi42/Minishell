@@ -6,11 +6,13 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/12 13:50:34 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/14 13:14:04 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_status;
 
 void	print_export(t_data *data, int fd)
 {
@@ -101,13 +103,13 @@ int	do_export(t_data *data, t_cmd *cmd, int mode, int fd)
 		if (valid_export(data, cmd))
 		{
 			printf("\033[1;31mInvalid export %s!\n", cmd->tokens[data->i]);
-			data->erno = 1;
+			g_status = 1;
 			if (mode == 1)
 				exit (1);
 		}
 		else
 		{
-			data->erno = 0;
+			g_status = 0;
 			do_export_else(data, cmd);
 		}
 	}

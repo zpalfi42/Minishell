@@ -6,11 +6,13 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/21 14:56:34 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/12 16:59:31 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/14 13:30:12 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_status;
 
 char	*export_name(t_data *data, char *env)
 {
@@ -37,7 +39,7 @@ static int	cpy_old(t_data *data, char **new_envp)
 	i = -1;
 	while (data->envp[++i] != 0)
 	{
-		new_envp[i] = malloc(sizeof(char) * (ft_strlen(data->envp[i])));
+		new_envp[i] = malloc(sizeof(char) * (ft_strlen(data->envp[i]) + 1));
 		if (!new_envp[i])
 			return (-1);
 		ft_strlcpy(new_envp[i], data->envp[i], (ft_strlen(data->envp[i]) + 1));
@@ -56,7 +58,7 @@ void	do_export_else(t_data *data, t_cmd *cmd)
 		change_value(data, cmd);
 	else if (i != -2)
 		add_export(data, cmd);
-	data->erno = 0;
+	g_status = 0;
 }
 
 static int	assign_new(t_data *data, t_cmd *cmd, char **new_envp, int i)
@@ -71,7 +73,8 @@ static int	assign_new(t_data *data, t_cmd *cmd, char **new_envp, int i)
 	i = cpy_old(data, new_envp);
 	if (i == -1)
 		return (1);
-	new_envp[i] = malloc(sizeof(char) * (ft_strlen(name) + ft_strlen(value)));
+	new_envp[i] = malloc(sizeof(char)
+			* (ft_strlen(name) + ft_strlen(value) + 2));
 	if (!new_envp[i])
 		return (1);
 	j = -1;

@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:50 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/12 16:59:48 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/14 13:31:01 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	change(t_data *data, t_cmd *cmd, int index, char **new_envp)
 	new_value = export_value(data, cmd->tokens[data->i]);
 	new_name = export_name(data, data->envp[index]);
 	new_envp[index] = malloc(sizeof(char)
-			* (ft_strlen(new_name) + ft_strlen(new_value)));
+			* (ft_strlen(new_name) + ft_strlen(new_value) + 2));
 	i = -1;
 	j = -1;
 	while (new_name[++i])

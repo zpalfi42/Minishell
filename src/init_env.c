@@ -6,11 +6,13 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 16:32:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/12 12:38:31 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/14 13:15:19 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_status;
 
 int	oldpwd_save(t_data *data, int i)
 {
@@ -46,7 +48,7 @@ int	envp_init(t_data *data, char **envp)
 	if (!data->first_envp || !data->envp)
 		return (1);
 	i = 0;
-	data->erno = 0;
+	g_status = 0;
 	while (envp[i] != 0)
 	{
 		if (ft_strncmp(envp[i], "OLDPWD=", 7) == 0)

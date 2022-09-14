@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:31:14 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/12 17:10:46 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/14 13:23:59 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	malloc_tokens(t_data *data)
 	data->word = 0;
 	while (data->word < data->count)
 	{
-		data->tokens[data->word] = malloc(sizeof(char) * data->len);
+		data->tokens[data->word] = malloc(sizeof(char) * (data->len + 1));
 		if (!data->tokens[data->word])
 			ft_error(data, "Failed tokens malloc :(");
 		data->word++;

@@ -6,11 +6,13 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:39:27 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/12 10:56:38 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/14 13:16:34 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_status;
 
 int	is_valid_name(char c, int z)
 {
@@ -30,7 +32,7 @@ int	save_env_errno(t_data *data, int j)
 	int		i;
 
 	data->i += 2;
-	serrno = ft_itoa(data->erno);
+	serrno = ft_itoa(g_status);
 	i = 0;
 	while (serrno[i] != '\0')
 	{

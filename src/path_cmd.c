@@ -6,11 +6,13 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/27 17:06:53 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 13:28:37 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/14 13:15:16 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_status;
 
 void	do_path_cmd(t_data *data, t_cmd *cmd)
 {
@@ -19,7 +21,7 @@ void	do_path_cmd(t_data *data, t_cmd *cmd)
 	else
 	{
 		perror("Error");
-		data->erno = errno;
-		exit(data->erno);
+		g_status = errno;
+		exit(g_status);
 	}
 }
