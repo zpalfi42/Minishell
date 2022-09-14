@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 16:27:49 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/14 11:46:34 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/14 12:08:05 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ void	handler(int signum)
 void	handler_block(int signum)
 {
 	(void)signum;
-	g_status = 130;
-	exit(g_status);
+	exit(130);
 }
 
 int	sig_handler(void)

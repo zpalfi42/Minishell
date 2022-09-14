@@ -6,7 +6,7 @@
 #    By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 12:16:53 by zpalfi            #+#    #+#              #
-#    Updated: 2022/09/08 14:31:31 by zpalfi           ###   ########.fr        #
+#    Updated: 2022/09/14 12:21:50 by zpalfi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,6 +46,7 @@ SRC				=	cd.c \
 					export.c \
 					in_file.c \
 					lst_new.c \
+					heredoc.c \
 					out_file.c \
 					do_other.c \
 					init_env.c \

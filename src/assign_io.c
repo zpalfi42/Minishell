@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 16:48:17 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 13:31:27 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/14 13:03:32 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,43 @@
 
 int	out_redirect(t_files *files)
 {
-	int	fd;
+	int		fd;
+	t_files	*aux;
 
 	fd = 1;
+	if (files == NULL)
+		return (-1);
 	while (files != NULL)
 	{
-		if (files->type == 0)
+		aux = files->next;
+		if (files->type == 0 && files->filename != NULL)
 			fd = open(files->filename, O_RDWR | O_CREAT | O_TRUNC, 0777);
-		if (files->type == 1)
+		if (files->type == 1 && files->filename != NULL)
 			fd = open(files->filename, O_RDWR | O_APPEND | O_CREAT, 0777);
 		if (fd == -1)
 			perror(files->filename);
 		if (files->next != NULL)
 			close(fd);
-		files = files->next;
+		if (files->filename != NULL)
+			free(files->filename);
+		free(files);
+		files = aux;
 	}
 	return (fd);
 }
 
 int	in_redirect(t_files *files)
 {
-	int	fd;
+	int		fd;
+	t_files	*aux;
 
 	fd = 0;
+	if (files == NULL)
+		return (-1);
 	while (files != NULL)
 	{
-		if (files->filename != NULL)
+		aux = files->next;
+		if (files->filename != NULL && files->filename[0] != '\0')
 			fd = open(files->filename, O_RDONLY, 0777);
 		else
 			fd = files->end[0];
@@ -49,7 +60,10 @@ int	in_redirect(t_files *files)
 		}
 		if (files->next != NULL)
 			close(fd);
-		files = files->next;
+		if (files->filename != NULL)
+			free(files->filename);
+		free(files);
+		files = aux;
 	}
 	return (fd);
 }

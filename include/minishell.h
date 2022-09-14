@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/13 13:32:38 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/14 13:01:09 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ typedef struct s_data
 	int		*tokens_type;
 	int		nr;
 	int		np;
+	int		ast;
 
 	char	*line;
 	char	*cmd;
@@ -155,6 +156,7 @@ char	*cd_init(t_data *data);
 char	*export_name(t_data *data, char *env);
 char	*export_value(t_data *data, char *env);
 
+t_files	*files_heredoc(char *name, int i, t_files *n);
 t_files	*files_lst_new(char *name, int mode, char c, int token_type);
 
 t_cmd	*cmd_lst_new(t_data *data, char **tokens, int i, int j);
