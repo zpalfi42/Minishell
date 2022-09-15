@@ -3,16 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:34:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/15 11:44:37 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/15 14:55:35 by ealonso-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_status;
+
+//Add the rest of argumment when the 'replace_home_echo need'it.
 
 char	*modify_token(t_data *data, char *token)
 {
@@ -42,6 +44,8 @@ char	*modify_token(t_data *data, char *token)
 	return (new);
 }
 
+//Replace '~' for home, and attach the resto of the argumment if there is.
+
 void	replace_home_echo(t_data *data, t_cmd *cmd)
 {
 	int	i;
@@ -60,6 +64,8 @@ void	replace_home_echo(t_data *data, t_cmd *cmd)
 	}
 }
 
+//the last step for execute Echo function.
+
 void	print_echo(t_cmd *cmd, int i, int n, int fd)
 {
 	while (cmd->tokens[i] != 0)
@@ -76,6 +82,9 @@ void	print_echo(t_cmd *cmd, int i, int n, int fd)
 	if (!n)
 		ft_putstr_fd("\n", fd);
 }
+
+//This function call the others to print the arguments or home 
+//if the argument is '~'. 
 
 int	do_echo(t_data *data, t_cmd *cmd, int fd, int mode)
 {
