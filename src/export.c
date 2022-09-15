@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/15 12:40:13 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/15 15:23:57 by ealonso-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_status;
+
+//Just for print 'declare-x' in each lane of the envp, 
+//when use the command export without argumments.
 
 void	print_export(t_data *data, int fd)
 {
@@ -26,6 +29,9 @@ void	print_export(t_data *data, int fd)
 		i++;
 	}
 }
+
+//Look for the name of export already exist in the envp, 
+//for a replace the value, not create a new variable.
 
 int	export_exists(t_data *data, t_cmd *cmd)
 {
@@ -50,6 +56,9 @@ int	export_exists(t_data *data, t_cmd *cmd)
 	return (i);
 }
 
+//Control the first char in the export argument is alfabetical and is not '_'.
+//valid too the name (all we have before '=').
+
 int	valid_export(t_data *data, t_cmd *cmd)
 {
 	int	i;
@@ -70,6 +79,8 @@ int	valid_export(t_data *data, t_cmd *cmd)
 	}
 	return (aux);
 }
+
+//the function save the HOME value in data.
 
 void	save_home_data(t_data *data, int mode)
 {
@@ -92,6 +103,8 @@ void	save_home_data(t_data *data, int mode)
 		i++;
 	}
 }
+
+//do_export works sorting when we have argumments and not and control errors.
 
 int	do_export(t_data *data, t_cmd *cmd, int mode, int fd)
 {
