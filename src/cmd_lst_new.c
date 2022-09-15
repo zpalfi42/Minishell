@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lst_new.c                                          :+:      :+:    :+:   */
+/*   cmd_lst_new.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:14:31 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/15 12:28:30 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/15 13:04:49 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,67 +30,6 @@ int	in_out_parser(t_cmd *n, t_data *data, int z, int j)
 	if (n->first_2 == 1)
 		n->infiles = NULL;
 	return (1);
-}
-
-int	find_cmd_2(char **tokens, int i, int aux)
-{
-	if (tokens[i][0] == '<')
-	{
-		if (tokens[i][1] == '\0')
-			aux = 1;
-		else
-			aux = 0;
-	}
-	else if (tokens[i][0] == '>')
-	{
-		if (tokens[i][1] == '\0')
-			aux = 1;
-		else if (tokens[i][1] == '>')
-		{
-			if (tokens[i][2] == '\0')
-				aux = 1;
-			else
-				aux = 0;
-		}
-		else
-			aux = 0;
-	}
-	return (aux);
-}
-
-char	*find_cmd(t_cmd *n, char **tokens, int i, int j)
-{
-	int	aux;
-
-	aux = 0;
-	while (i < j)
-	{
-		if (tokens[i][0] != '<' && tokens[i][0] != '>')
-		{
-			if (aux == 1)
-				aux = 0;
-			else
-			{
-				n->aux = i;
-				return (tokens[i]);
-			}
-		}
-		aux = find_cmd_2(tokens, i, aux);
-		i++;
-	}
-	n->aux = i;
-	return (NULL);
-}
-
-void	cmd_control_redirections(char **tokens, t_cmd *n, int i, int j)
-{
-	if (tokens[i][0] == '<' || tokens[i][0] == '>')
-		n->cmd = find_cmd(n, tokens, i, j);
-	else
-	{
-		n->aux = i;
-		n->cmd = tokens[i];
-	}
 }
 
 int	redir_type(char **tokens, int i)
@@ -130,7 +69,7 @@ t_cmd	*cmd_lst_new(t_data *data, char **tokens, int i, int j)
 	n = (t_cmd *)malloc(sizeof(t_cmd));
 	if (!n)
 		return (NULL);
-	cmd_control_redirections(tokens, n, i, j);
+	find_cmd_after_redir(tokens, n, i, j);
 	n->arg = malloc(sizeof(char *) * (j - i));
 	data->z = i;
 	count_tokens_cmd(data, tokens, j);

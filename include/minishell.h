@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/15 11:35:33 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/15 13:05:07 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void	save_tokens_init(t_data *data);
 void	do_other(t_data *data, t_cmd *cmd);
 void	ft_error(t_data *data, char *error);
 void	exec(t_data *data, int in, int out);
-void	rename_home(t_data *data, int mode);
+void	save_home_data(t_data *data, int mode);
 void	add_export(t_data *data, t_cmd *cmd);
 void	do_path_cmd(t_data *data, t_cmd *cmd);
 void	change_value(t_data *data, t_cmd *cmd);
@@ -152,6 +152,7 @@ void	change_pwd(t_data *data, char *pwd, int mode);
 void	assign_io(t_data *data, int *in, int *out, int fd[2]);
 void	cmd_tokens_saver(t_cmd *n, t_data *data, int i, int j);
 void	exec_builtin(t_data *data, t_cmd *cmd, int fd, int mode);
+void	find_cmd_after_redir(char **tokens, t_cmd *n, int i, int j);
 void	change(t_data *data, t_cmd *cmd, int index, char **new_envp);
 void	change_pwd_value(int index, char **new_envp, char *pwd, int mode);
 

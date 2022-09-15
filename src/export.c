@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/15 12:03:02 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/15 12:40:13 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	valid_export(t_data *data, t_cmd *cmd)
 	return (aux);
 }
 
-void	rename_home(t_data *data, int mode)
+void	save_home_data(t_data *data, int mode)
 {
 	int		i;
 	char	*aux_name;
@@ -113,7 +113,7 @@ int	do_export(t_data *data, t_cmd *cmd, int mode, int fd)
 		else
 			do_export_else(data, cmd);
 	}
-	rename_home(data, 0);
+	save_home_data(data, 0);
 	if (mode == 1)
 		exit (0);
 	return (1);

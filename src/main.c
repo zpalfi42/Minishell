@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:15:54 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/13 15:20:26 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/15 12:40:23 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	minishell(t_data *data)
 
 void	routine(t_data *data)
 {
-	rename_home(data, 1);
+	save_home_data(data, 1);
 	while (42)
 	{
 		signal(SIGINT, handler);

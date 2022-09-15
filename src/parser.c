@@ -6,13 +6,13 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:51:08 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 13:28:36 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/15 12:42:30 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	countq(t_data *data)
+static void	count_quotes(t_data *data)
 {
 	int	i;
 
@@ -34,7 +34,7 @@ static void	countq(t_data *data)
 void	parser(t_data *data)
 {
 	data->i = 0;
-	countq(data);
+	count_quotes(data);
 	count_tokens(data);
 	save_tokens(data);
 }
