@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 15:59:29 by ealonso-          #+#    #+#             */
-/*   Updated: 2022/09/14 13:12:23 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/15 12:05:04 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@ int	do_env(t_data *data, t_cmd *cmd, int fd, int mode)
 	i = 0;
 	if (cmd->tokens[1] != 0)
 	{
-		printf("Error: %s\n", strerror(1));
+		ft_putstr_fd("env: ", 1);
+		ft_putstr_fd(cmd->tokens[1], 1);
+		ft_putstr_fd(": No such file or directory\n", 1);
 		g_status = 1;
 		if (mode == 1)
-			exit(data->erno);
+			exit(g_status);
 	}
 	else
 	{
@@ -36,6 +38,6 @@ int	do_env(t_data *data, t_cmd *cmd, int fd, int mode)
 		g_status = 0;
 	}
 	if (mode == 1)
-		exit (0);
+		exit (g_status);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 14:31:17 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/14 13:11:31 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/15 12:23:55 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	find_j(t_data *data, int mode)
 	return (j);
 }
 
-void	do_cd_home(t_data *data, int mode)
+void	cd_home(t_data *data, int mode)
 {
 	if (chdir(data->home) != 0)
 	{
@@ -87,27 +87,40 @@ void	do_cd_home(t_data *data, int mode)
 	}	
 }
 
+void	cd_failed(int mode)
+{
+	perror("cd");
+	g_status = errno;
+	if (mode == 1)
+		exit (g_status);
+}
+
+void	cd_worked(t_data *data)
+{
+	g_status = 0;
+	free(data->dir);
+}
+
 int	do_cd(t_data *data, t_cmd *cmd, int mode)
 {
 	char	*pwd;
+	int		i;
 
+	i = 0;
 	if (cmd->tokens[1] != 0)
-		replace_home(data, cmd);
+		i = replace_home(data, cmd);
 	pwd = cd_init(data);
-	if (cmd->tokens[1] == 0)
-		do_cd_home(data, mode);
-	else if (chdir(data->dir) != 0)
+	if (i == 0)
 	{
-		perror("cd");
-		g_status = errno;
-		if (mode == 1)
-			exit (errno);
+		if (cmd->tokens[1] == 0)
+			cd_home(data, mode);
+		else if (chdir(data->dir) != 0)
+			cd_failed(mode);
+		else
+			cd_worked(data);
 	}
 	else
-	{
-		g_status = 0;
-		free(data->dir);
-	}
+		cd_worked(data);
 	getcwd(pwd, 4096);
 	change_pwd(data, pwd, 0);
 	if (mode == 1)

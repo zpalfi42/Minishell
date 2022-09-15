@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:30:19 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/12 13:58:59 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/15 12:26:28 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,23 @@ void	replace_home_routine(t_data *data, t_cmd *cmd)
 	}
 }
 
-void	replace_home(t_data *data, t_cmd *cmd)
+int	cd_oldpwd(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->envp[++i])
+		if (ft_strncmp(data->envp[i], "OLDPWD=", 7) == 0)
+			break ;
+	data->dir = export_value(data, data->envp[i]);
+	if (data->dir[0] != '\0')
+		printf("%s\n", data->dir);
+	else
+		ft_putstr_fd("cd: OLDPWD not set\n", 1);
+	return (1);
+}
+
+int	replace_home(t_data *data, t_cmd *cmd)
 {
 	int	i;
 	int	j;
@@ -71,14 +87,7 @@ void	replace_home(t_data *data, t_cmd *cmd)
 	i = 0;
 	j = 0;
 	if (ft_strncmp(cmd->tokens[1], "-\0", 2) == 0)
-	{
-		while (data->envp[++i])
-			if (ft_strncmp(data->envp[i], "OLDPWD=", 7) == 0)
-				break ;
-		data->dir = export_value(data, data->envp[i]);
-		if (data->dir[0] != '\0')
-			printf("%s\n", data->dir);
-	}
+		return (cd_oldpwd(data));
 	else
 	{
 		while (data->home[i] != '\0')
@@ -90,6 +99,7 @@ void	replace_home(t_data *data, t_cmd *cmd)
 			ft_error(data, "Failed malloc :(");
 		replace_home_routine(data, cmd);
 	}
+	return (0);
 }
 
 char	*cd_init(t_data *data)
@@ -101,7 +111,7 @@ char	*cd_init(t_data *data)
 	if (!pwd)
 		ft_error(data, "Failed malloc :(");
 	oldpwd = malloc(sizeof(char) * 4097);
-	if (!pwd)
+	if (!oldpwd)
 		ft_error(data, "Failed malloc :(");
 	getcwd(oldpwd, 4096);
 	change_pwd(data, oldpwd, 1);

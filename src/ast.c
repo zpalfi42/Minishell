@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:55 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/14 13:52:49 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/15 12:34:46 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	ast_simple(t_data *data, int first)
 
 	if (first == 1 && data->cmd_lst->next == NULL)
 	{
-		n = data->cmd_lst->next;
+		n = data->cmd_lst;
 		if (first)
 			in = 0;
 		else

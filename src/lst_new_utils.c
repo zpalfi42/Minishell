@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:12:44 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 13:28:33 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/14 16:14:00 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,20 @@ void	cmd_tokens_saver(t_cmd *n, t_data *data, int i, int j)
 	z = 0;
 	n->tokens[z] = data->tokens[i];
 	n->tokens_type[z] = data->tokens_type[i];
-	while (data->tokens[++i] != 0 && i < j)
+	i++;
+	while (data->tokens[i] != 0 && i < j)
 	{
 		if ((data->tokens[i][0] == '<' || data->tokens[i][0] == '>')
 			&& data->tokens_type[i] == 0)
-			break ;
-		n->arg[z] = data->tokens[i];
-		n->tokens[z + 1] = data->tokens[i];
-		n->tokens_type[z + 1] = data->tokens_type[i];
-		z++;
+			i += redir_type(data->tokens, i);
+		else
+		{
+			n->arg[z] = data->tokens[i];
+			n->tokens[z + 1] = data->tokens[i];
+			n->tokens_type[z + 1] = data->tokens_type[i];
+			z++;
+			i++;
+		}
 	}
 	n->arg[z] = 0;
 	n->tokens[z + 1] = 0;

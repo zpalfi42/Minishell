@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 16:48:17 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/14 13:03:32 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/15 12:29:15 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ int	out_redirect(t_files *files)
 	t_files	*aux;
 
 	fd = 1;
-	if (files == NULL)
-		return (-1);
 	while (files != NULL)
 	{
 		aux = files->next;
@@ -28,7 +26,10 @@ int	out_redirect(t_files *files)
 		if (files->type == 1 && files->filename != NULL)
 			fd = open(files->filename, O_RDWR | O_APPEND | O_CREAT, 0777);
 		if (fd == -1)
+		{
 			perror(files->filename);
+			break ;
+		}
 		if (files->next != NULL)
 			close(fd);
 		if (files->filename != NULL)
@@ -45,8 +46,6 @@ int	in_redirect(t_files *files)
 	t_files	*aux;
 
 	fd = 0;
-	if (files == NULL)
-		return (-1);
 	while (files != NULL)
 	{
 		aux = files->next;
@@ -57,6 +56,7 @@ int	in_redirect(t_files *files)
 		if (fd == -1)
 		{
 			perror(files->filename);
+			break ;
 		}
 		if (files->next != NULL)
 			close(fd);
@@ -83,6 +83,6 @@ void	assign_io(t_data *data, int *in, int *out, int fd[2])
 		*out = 1;
 	if (data->cmd_lst->infiles != NULL)
 		*in = in_redirect(data->cmd_lst->infiles);
-	if (data->cmd_lst->outfiles != NULL)
+	if (data->cmd_lst->outfiles != NULL && *in != -1)
 		*out = out_redirect(data->cmd_lst->outfiles);
 }

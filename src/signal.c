@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 16:27:49 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/14 12:08:05 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/15 11:42:15 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,25 @@ void	handler(int signum)
 {
 	if (signum == SIGINT)
 	{
-		printf("\n");
-		rl_replace_line("", 1);
+		if (g_status == 666)
+		{
+			rl_replace_line("", 1);
+			g_status = 130;
+		}
+		else
+		{
+			printf("\n");
+			rl_replace_line("", 1);
+			rl_on_new_line();
+			rl_redisplay();
+		}
 	}
 	else if (signum == SIGQUIT)
+	{
 		rl_replace_line("", 1);
-	rl_on_new_line();
-	rl_redisplay();
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
 
 void	handler_block(int signum)

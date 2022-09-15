@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:02:48 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/13 16:29:14 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/15 12:20:27 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,40 @@ static char	*get_comand(char **mypaths, char *cmd)
 	return (NULL);
 }
 
+void	command_not_found(char *comand, char **paths, char *value)
+{
+	int	i;
+
+	if (!comand)
+	{
+		free(comand);
+		i = 0;
+		while (paths[i])
+		{
+			free(paths[i]);
+			i++;
+		}
+		free(paths);
+		free(value);
+		ft_putstr_fd("command not found\n", 1);
+		exit (1);
+	}
+}
+
+void	free_aux_params(char **paths, char *value)
+{
+	int	i;
+
+	i = 0;
+	while (paths[i])
+	{
+		free(paths[i]);
+		i++;
+	}
+	free(paths);
+	free(value);
+}
+
 static void	exec_other(t_data *data, t_cmd *cmd)
 {
 	char	**paths;
@@ -49,29 +83,11 @@ static void	exec_other(t_data *data, t_cmd *cmd)
 	}
 	paths = ft_split(value, ':');
 	comand = get_comand(paths, cmd->cmd);
-	if (!comand)
-	{
-		free(comand);
-		i = 0;
-		while (paths[i])
-		{
-			free(paths[i]);
-			i++;
-		}
-		free(paths);
-		free(value);
-		printf("\033[1;31mCommand not found :(\n");
-		exit (1);
-	}
-	i = 0;
-	while (paths[i])
-	{
-		free(paths[i]);
-		i++;
-	}
-	free(paths);
-	free(value);
-	execve(comand, cmd->tokens, data->envp);
+	command_not_found(comand, paths, value);
+	free_aux_params(paths, value);
+	if (execve(comand, cmd->tokens, data->envp) == -1)
+		exit (126);
+	exit (0);
 }
 
 void	do_other(t_data *data, t_cmd *cmd)

@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:39:27 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/14 13:16:34 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/14 14:08:21 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int	save_env_errno(t_data *data, int j)
 		i++;
 		j++;
 	}
+	free(serrno);
 	return (j);
 }
 

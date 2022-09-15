@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:14:31 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/13 15:20:25 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/15 12:28:30 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,35 @@ void	cmd_control_redirections(char **tokens, t_cmd *n, int i, int j)
 	}
 }
 
+int	redir_type(char **tokens, int i)
+{
+	if (tokens[i][1] == '\0')
+		return (2);
+	else if (tokens[i][1] == '<' || tokens[i][1] == '>')
+	{
+		if (tokens[i][2] == '\0')
+			return (2);
+		return (1);
+	}
+	else
+		return (1);
+}
+
+void	count_tokens_cmd(t_data *data, char **tokens, int j)
+{
+	int	aux;
+
+	aux = 0;
+	while (tokens[data->z + aux] != 0 && data->z < j)
+	{
+		if ((tokens[data->z + aux][0] == '<' || tokens[data->z + aux][0] == '>')
+			&& data->tokens_type[data->z + aux] == 0)
+			aux += redir_type(tokens, data->z + aux);
+		else
+			data->z++;
+	}	
+}
+
 t_cmd	*cmd_lst_new(t_data *data, char **tokens, int i, int j)
 {
 	t_cmd	*n;
@@ -103,11 +132,8 @@ t_cmd	*cmd_lst_new(t_data *data, char **tokens, int i, int j)
 		return (NULL);
 	cmd_control_redirections(tokens, n, i, j);
 	n->arg = malloc(sizeof(char *) * (j - i));
-	data->z = i - 1;
-	while (tokens[++data->z] != 0 && data->z < j)
-		if ((tokens[data->z][0] == '<' || tokens[data->z][0] == '>')
-			&& data->tokens_type[data->z] == 0)
-			break ;
+	data->z = i;
+	count_tokens_cmd(data, tokens, j);
 	n->tokens = malloc(sizeof(char *) * (data->z - i + 1));
 	n->tokens_type = malloc(sizeof(int) * (data->z - i + 1));
 	z = in_out_parser(n, data, i - 1, j);

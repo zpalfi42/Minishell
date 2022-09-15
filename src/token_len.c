@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:30:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/14 13:27:29 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/15 12:13:17 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static int	token_len_dc(t_data *data, int i)
 	data->dc--;
 	while (data->line[i] != 34 && data->line[i] != '\0')
 	{
-		if (data->line[i] == '$')
+		if (data->line[i] == '$' && data->line[i + 1] != '\0'
+			&& data->line[i + 1] != '"')
 			i = token_len_env(data, i, 0);
 		else
 		{
@@ -81,7 +82,7 @@ int	token_len_env(t_data *data, int i, int j)
 	return (i + j);
 }
 
-int	prove_in_line(t_data *data, int i)
+int	prove_in_line(t_data *data, int i, int mode)
 {
 	int	j;
 
@@ -91,7 +92,8 @@ int	prove_in_line(t_data *data, int i)
 		if (i == j)
 			break ;
 	}
-	token_len_init(data);
+	if (mode == 0)
+		token_len_init(data);
 	return (j);
 }
 
@@ -99,26 +101,26 @@ int	token_len(t_data *data, int i)
 {
 	int	j;
 
-	j = prove_in_line(data, i);
+	j = prove_in_line(data, i, 0);
 	while ((data->line) && data->line[j] != '\0')
 	{
 		while (data->line[j] == ' ' && data->line[j] != '\0')
 			j++;
-		while (data->line[j] != ' ' && data->line[j] != '\0')
+		while (data->line[j] != '\0' && data->line[j] != ' ')
 		{
-			if (data->line[j] == '$')
-				j = len_env(data, j);
-			if (data->line[j] == 34 && data->dc > 1)
-				j = token_len_dc(data, j);
+			if (data->line[j] != '\0' && data->line[j] == '$')
+				j = prove_in_line(data, len_env(data, j), 1);
+			if (data->line[j] != '\0' && data->line[j] == 34 && data->dc > 1)
+				j = prove_in_line(data, token_len_dc(data, j), 1);
 			else if (data->line[j] == 39 && data->sc > 1)
-				j = token_len_sc(data, j);
+				j = prove_in_line(data, token_len_sc(data, j), 1);
 			else
 			{
-				data->len++;
-				j++;
+				j += data_len_up(data);
 			}
 		}
-		if (data->line[j] == ' ' || data->line[j] == '\0')
+		j = prove_in_line(data, j, 1);
+		if (data->line[j] == '\0' || data->line[j] == ' ')
 			break ;
 	}
 	return (data->len++, j + 1);

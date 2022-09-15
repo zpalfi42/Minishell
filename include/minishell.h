@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/14 13:27:02 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/15 11:35:33 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_data
 	int		nr;
 	int		np;
 	int		ast;
+	int		j;
 
 	char	*line;
 	char	*cmd;
@@ -93,6 +94,7 @@ typedef struct s_data
 
 int		sig_handler(void);
 int		pipe_parser(t_data *data);
+int		data_len_up(t_data *data);
 int		malloc_tokens(t_data *data);
 int		ft_strcmp(char *s, char *d);
 int		is_valid_name(char c, int z);
@@ -100,6 +102,7 @@ int		len_env(t_data *data, int i);
 int		save_env(t_data *data, int j);
 int		token_len(t_data *data, int i);
 int		find_j(t_data *data, int mode);
+int		redir_type(char **tokens, int i);
 int		first_envp(t_data *data, char *s);
 int		save_env_errno(t_data *data, int j);
 int		this_envp(t_data *data, t_cmd *cmd);
@@ -108,6 +111,7 @@ int		is_builtin(t_data *data, t_cmd *cmd);
 int		envp_init(t_data *data, char **envp);
 int		cmd_add_back(t_cmd	**lst, t_cmd *new);
 int		valid_export(t_data *data, t_cmd *cmd);
+int		replace_home(t_data *data, t_cmd *cmd);
 int		export_exists(t_data *data, t_cmd *cmd);
 int		do_cd(t_data *data, t_cmd *cmd, int mode);
 int		token_len_env(t_data *data, int i, int j);
@@ -141,7 +145,6 @@ void	rename_home(t_data *data, int mode);
 void	add_export(t_data *data, t_cmd *cmd);
 void	do_path_cmd(t_data *data, t_cmd *cmd);
 void	change_value(t_data *data, t_cmd *cmd);
-void	replace_home(t_data *data, t_cmd *cmd);
 void	redirect_io(int in, int out, int mode);
 void	do_export_else(t_data *data, t_cmd *cmd);
 void	exec_simple(t_data *data, int in, int out);

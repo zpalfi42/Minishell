@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/14 13:14:04 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/15 12:03:02 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,20 +98,20 @@ int	do_export(t_data *data, t_cmd *cmd, int mode, int fd)
 	data->i = 0;
 	if (cmd->tokens[1] == NULL)
 		print_export(data, fd);
+	g_status = 0;
 	while (cmd->tokens[++data->i] != 0)
 	{
 		if (valid_export(data, cmd))
 		{
-			printf("\033[1;31mInvalid export %s!\n", cmd->tokens[data->i]);
+			ft_putstr_fd("export: ", 1);
+			ft_putstr_fd(cmd->tokens[data->i], 1);
+			ft_putstr_fd(": not a valid identifier", 1);
 			g_status = 1;
 			if (mode == 1)
 				exit (1);
 		}
 		else
-		{
-			g_status = 0;
 			do_export_else(data, cmd);
-		}
 	}
 	rename_home(data, 0);
 	if (mode == 1)
