@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+         #
+#    By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 12:16:53 by zpalfi            #+#    #+#              #
-#    Updated: 2022/09/15 13:04:24 by zpalfi           ###   ########.fr        #
+#    Updated: 2022/09/15 14:06:58 by ealonso-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,6 +53,7 @@ SRC				=	cd.c \
 					cd_utils.c \
 					token_len.c \
 					assign_io.c \
+					cd_utils_2.c\
 					pipe_parser.c \
 					save_tokens.c \
 					cmd_lst_new.c \
