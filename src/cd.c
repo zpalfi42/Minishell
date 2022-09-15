@@ -6,36 +6,13 @@
 /*   By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 14:31:17 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/15 14:01:34 by ealonso-         ###   ########.fr       */
+/*   Updated: 2022/09/15 14:16:28 by ealonso-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_status;
-
-int	replace_home(t_data *data, t_cmd *cmd)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	if (ft_strncmp(cmd->tokens[1], "-\0", 2) == 0)
-		return (cd_oldpwd(data));
-	else
-	{
-		while (data->home[i] != '\0')
-			i++;
-		while (cmd->tokens[1][j] != '\0')
-			j++;
-		data->dir = malloc(sizeof(char) * (i + j + 1));
-		if (!data->dir)
-			ft_error(data, "Failed malloc :(");
-		replace_home_routine(data, cmd);
-	}
-	return (0);
-}
 
 //we crreate here mallocs for old and actual pwd with 4097 size 
 //(maximal for a directory with '\0')
@@ -73,6 +50,12 @@ void	cd_failed(int mode)
 	g_status = errno;
 	if (mode == 1)
 		exit (g_status);
+}
+
+void	cd_worked(t_data *data)
+{
+	g_status = 0;
+	free(data->dir);
 }
 
 // in this function we comprove if there is an argumment after the command 

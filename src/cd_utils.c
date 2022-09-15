@@ -6,7 +6,7 @@
 /*   By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:30:19 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/15 14:01:31 by ealonso-         ###   ########.fr       */
+/*   Updated: 2022/09/15 14:16:46 by ealonso-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,30 @@
 
 extern int	g_status;
 
-void	cd_worked(t_data *data)
-{
-	g_status = 0;
-	free(data->dir);
-}
-
 // That functi'on refresh the new pwd in envp.
+
+int	replace_home(t_data *data, t_cmd *cmd)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	if (ft_strncmp(cmd->tokens[1], "-\0", 2) == 0)
+		return (cd_oldpwd(data));
+	else
+	{
+		while (data->home[i] != '\0')
+			i++;
+		while (cmd->tokens[1][j] != '\0')
+			j++;
+		data->dir = malloc(sizeof(char) * (i + j + 1));
+		if (!data->dir)
+			ft_error(data, "Failed malloc :(");
+		replace_home_routine(data, cmd);
+	}
+	return (0);
+}
 
 void	change_pwd(t_data *data, char *pwd, int mode)
 {
