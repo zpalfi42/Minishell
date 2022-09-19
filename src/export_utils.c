@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 15:29:50 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/14 13:31:01 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/15 15:58:42 by ealonso-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+//Takes a velue after '=' of line introduced after command.
 
 char	*export_value(t_data *data, char *env)
 {
@@ -34,7 +36,9 @@ char	*export_value(t_data *data, char *env)
 	return (ret);
 }
 
-int	this_envp(t_data *data, t_cmd *cmd)
+//this function, search the enviorment variable that we will replace.
+
+int	pos_in_envp(t_data *data, t_cmd *cmd)
 {
 	char	*name;
 	char	*env_name;
@@ -59,6 +63,8 @@ int	this_envp(t_data *data, t_cmd *cmd)
 	free(name);
 	return (i);
 }
+
+//Second part to change_value function.
 
 void	change(t_data *data, t_cmd *cmd, int index, char **new_envp)
 {
@@ -87,13 +93,16 @@ void	change(t_data *data, t_cmd *cmd, int index, char **new_envp)
 	free(new_value);
 }
 
+//This function do a new nvp and change the value of 
+//enviorment variable when already exist.
+
 void	change_value(t_data *data, t_cmd *cmd)
 {
 	char	**new_envp;
 	int		i;
 	int		j;
 
-	j = this_envp(data, cmd);
+	j = pos_in_envp(data, cmd);
 	i = 0;
 	while (data->envp[i] != 0)
 		i++;

@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/15 14:08:51 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/19 11:49:25 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct s_data
 }	t_data;
 
 int		sig_handler(void);
+int		cd_oldpwd(t_data *data);
 int		pipe_parser(t_data *data);
 int		data_len_up(t_data *data);
 int		malloc_tokens(t_data *data);
@@ -131,6 +132,7 @@ void	handler(int signum);
 void	parser(t_data *data);
 void	free_all(t_data *data);
 void	print_miniconcha(void);
+void	cd_worked(t_data *data);
 void	free_exit(t_data *data);
 void	del_one_env(t_data *data);
 void	save_tokens(t_data *data);
@@ -150,6 +152,7 @@ void	do_export_else(t_data *data, t_cmd *cmd);
 void	do_dir(t_data *data, t_cmd *cmd, int mode);
 void	exec_simple(t_data *data, int in, int out);
 void	change_pwd(t_data *data, char *pwd, int mode);
+void	replace_home_routine(t_data *data, t_cmd *cmd);
 void	assign_io(t_data *data, int *in, int *out, int fd[2]);
 void	cmd_tokens_saver(t_cmd *n, t_data *data, int i, int j);
 void	exec_builtin(t_data *data, t_cmd *cmd, int fd, int mode);

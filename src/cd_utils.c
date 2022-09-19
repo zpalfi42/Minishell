@@ -6,11 +6,38 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:30:19 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/15 13:32:26 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/19 11:49:07 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_status;
+
+// That functi'on refresh the new pwd in envp.
+
+int	replace_home(t_data *data, t_cmd *cmd)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
+	if (ft_strncmp(cmd->tokens[1], "-\0", 2) == 0)
+		return (cd_oldpwd(data));
+	else
+	{
+		while (data->home[i] != '\0')
+			i++;
+		while (cmd->tokens[1][j] != '\0')
+			j++;
+		data->dir = malloc(sizeof(char) * (i + j + 1));
+		if (!data->dir)
+			ft_error(data, "Failed malloc :(");
+		replace_home_routine(data, cmd);
+	}
+	return (0);
+}
 
 void	change_pwd(t_data *data, char *pwd, int mode)
 {
@@ -41,6 +68,9 @@ void	change_pwd(t_data *data, char *pwd, int mode)
 	data->envp = new_envp;
 }
 
+//this function play when the argument after command 'cd' is '~', 
+//placing home as actual directory.
+
 void	replace_home_routine(t_data *data, t_cmd *cmd)
 {
 	int	i;
@@ -61,6 +91,7 @@ void	replace_home_routine(t_data *data, t_cmd *cmd)
 		else
 			data->dir[j++] = cmd->tokens[1][i++];
 	}
+	data->dir[j] = '\0';
 }
 
 int	cd_oldpwd(t_data *data)
@@ -77,43 +108,4 @@ int	cd_oldpwd(t_data *data)
 	else
 		ft_putstr_fd("cd: OLDPWD not set\n", 1);
 	return (1);
-}
-
-int	replace_home(t_data *data, t_cmd *cmd)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	if (ft_strncmp(cmd->tokens[1], "-\0", 2) == 0)
-		return (cd_oldpwd(data));
-	else
-	{
-		while (data->home[i] != '\0')
-			i++;
-		while (cmd->tokens[1][j] != '\0')
-			j++;
-		data->dir = malloc(sizeof(char) * (i + j + 1));
-		if (!data->dir)
-			ft_error(data, "Failed malloc :(");
-		replace_home_routine(data, cmd);
-	}
-	return (0);
-}
-
-char	*cd_init(t_data *data)
-{
-	char	*pwd;
-	char	*oldpwd;
-
-	pwd = malloc(sizeof(char) * 4097);
-	if (!pwd)
-		ft_error(data, "Failed malloc :(");
-	oldpwd = malloc(sizeof(char) * 4097);
-	if (!oldpwd)
-		ft_error(data, "Failed malloc :(");
-	getcwd(oldpwd, 4096);
-	change_pwd(data, oldpwd, 1);
-	return (pwd);
 }

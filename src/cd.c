@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/13 14:31:17 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/15 13:32:31 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/19 11:48:53 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,66 +14,23 @@
 
 extern int	g_status;
 
-static int	pwd_or_oldpwd(int index, char **new_envp, char *pwd, int mode)
+//we crreate here mallocs for old and actual pwd with 4097 size 
+//(maximal for a directory with '\0')
+
+char	*cd_init(t_data *data)
 {
-	if (mode == 0)
-	{
-		new_envp[index] = malloc(sizeof(char) * (5 + ft_strlen(pwd)));
-		new_envp[index][0] = 'P';
-		new_envp[index][1] = 'W';
-		new_envp[index][2] = 'D';
-		new_envp[index][3] = '=';
-		return (4);
-	}
-	else
-	{
-		new_envp[index] = malloc(sizeof(char) * (8 + ft_strlen(pwd)));
-		new_envp[index][0] = 'O';
-		new_envp[index][1] = 'L';
-		new_envp[index][2] = 'D';
-		new_envp[index][3] = 'P';
-		new_envp[index][4] = 'W';
-		new_envp[index][5] = 'D';
-		new_envp[index][6] = '=';
-		return (7);
-	}
-}
+	char	*pwd;
+	char	*oldpwd;
 
-void	change_pwd_value(int index, char **new_envp, char *pwd, int mode)
-{
-	int		i;
-	int		j;
-
-	i = pwd_or_oldpwd(index, new_envp, pwd, mode);
-	j = -1;
-	while (pwd[++j] != '\0')
-	{
-		new_envp[index][i] = pwd[j];
-		i++;
-	}
-	free(pwd);
-	new_envp[index][i] = '\0';
-}
-
-int	find_j(t_data *data, int mode)
-{
-	int	j;
-
-	j = -1;
-	while (data->envp[++j])
-	{
-		if (mode == 0)
-		{
-			if (ft_strncmp(data->envp[j], "PWD=", 4) == 0)
-				break ;
-		}
-		else
-		{
-			if (ft_strncmp(data->envp[j], "OLDPWD=", 7) == 0)
-				break ;
-		}
-	}
-	return (j);
+	pwd = malloc(sizeof(char) * 4097);
+	if (!pwd)
+		ft_error(data, "Failed malloc :(");
+	oldpwd = malloc(sizeof(char) * 4097);
+	if (!oldpwd)
+		ft_error(data, "Failed malloc :(");
+	getcwd(oldpwd, 4096);
+	change_pwd(data, oldpwd, 1);
+	return (pwd);
 }
 
 void	cd_home(t_data *data, int mode)
@@ -100,6 +57,10 @@ void	cd_worked(t_data *data)
 	g_status = 0;
 	free(data->dir);
 }
+
+// in this function we comprove if there is an argumment after the command 
+//to replace home or new directory.
+// We control too if there are errors and call functions to refresh new pwd.
 
 int	do_cd(t_data *data, t_cmd *cmd, int mode)
 {
