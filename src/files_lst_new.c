@@ -6,11 +6,16 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 16:33:12 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/19 13:09:26 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/19 16:52:45 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+* files_normal() saves the filename info inside the t_files struct if
+* the file is not a heredoc.
+*/
 
 t_files	*files_normal(char *name, int i, t_files *n)
 {
@@ -28,6 +33,11 @@ t_files	*files_normal(char *name, int i, t_files *n)
 	return (n);
 }
 
+/*
+* is_redir() checks if name is only a redirection and returns NULL,
+* else returns name.
+*/
+
 char	*is_redir(char *name)
 {
 	if ((ft_strnstr(name, ">", ft_strlen(name)) != NULL
@@ -39,6 +49,12 @@ char	*is_redir(char *name)
 	}
 	return (name);
 }
+
+/*
+*files_lst_new() creates and returns a t_files struct with all the information
+* of the file that is beeing saved. If a heredoc is needed it calls
+* files_heredoc(), else it calls files_normal.
+*/
 
 t_files	*files_lst_new(char *name, int mode, char c, int token_type)
 {

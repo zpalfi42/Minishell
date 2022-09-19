@@ -6,16 +6,18 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:14:31 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/19 13:43:56 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/19 16:49:39 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// in_out_parser() parse all the redirections we have in our data->tokens
-// and saves the information of the redirection in a files structure.
-// If it is a output redirection it saves it in *outfiles, if it is a input
-// redirection it save it in *infiles.
+/*
+* in_out_parser() parse all the redirections we have in our data->tokens
+* and saves the information of the redirection in a files structure.
+* If it is a output redirection it saves it in *outfiles, if it is a input
+* redirection it save it in *infiles.
+*/
 
 int	in_out_parser(t_cmd *n, t_data *data, int z, int j)
 {
@@ -37,9 +39,11 @@ int	in_out_parser(t_cmd *n, t_data *data, int z, int j)
 	return (1);
 }
 
-// Helps cmd_tokens_saver && _counter to know if they have to skip 1 or 2 tokens
-// 1 if the filename is in the same token as the redirection,
-// 2 if the filename and the redirection are in different tokens.
+/*
+* Helps cmd_tokens_saver && _counter to know if they have to skip 1 or 2 tokens
+* 1 if the filename is in the same token as the redirection,
+* 2 if the filename and the redirection are in different tokens.
+*/
 
 int	redir_type(char **tokens, int i)
 {
@@ -63,8 +67,10 @@ int	redir_type(char **tokens, int i)
 		return (1);
 }
 
-// cmd_tokens_saver() save all the non-redirection tokens (included the command)
-// and their token_type. It also save the arguments (tokens without the command)
+/*
+* cmd_tokens_saver() save all the non-redirection tokens (included the command)
+* and their token_type. It also save the arguments (tokens without the command)
+*/
 
 void	cmd_tokens_saver(t_cmd *n, t_data *data, int i, int j)
 {
@@ -93,7 +99,9 @@ void	cmd_tokens_saver(t_cmd *n, t_data *data, int i, int j)
 	n->tokens_type[z + 1] = -1;
 }
 
-// cmd_tokens_counter() count the non-redirection tokens.
+/*
+* cmd_tokens_counter() count the non-redirection tokens.
+*/
 
 void	cmd_tokens_counter(t_data *data, char **tokens, int j)
 {
@@ -110,9 +118,11 @@ void	cmd_tokens_counter(t_data *data, char **tokens, int j)
 	}	
 }
 
-// cmd_lst_new() creates a new cmd structure to add in the cmd list. In this
-// structure we save the tokens, tokens_type, the arguments after the command
-// and all the redirections in 2 files structures (infiles && outfiles).
+/*
+* cmd_lst_new() creates a new cmd structure to add in the cmd list. In this
+* structure we save the tokens, tokens_type, the arguments after the command
+* and all the redirections in 2 files structures (infiles && outfiles).
+*/
 
 t_cmd	*cmd_lst_new(t_data *data, char **tokens, int i, int j)
 {

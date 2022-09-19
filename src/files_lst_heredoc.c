@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   heredoc.c                                          :+:      :+:    :+:   */
+/*   files_lst_heredoc.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/14 12:21:03 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/14 12:23:01 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/19 16:52:23 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_status;
+
+/*
+* get_limiter returns the limiter sent.
+*/
 
 static char	*get_limiter(char *name, int i)
 {
@@ -33,6 +37,10 @@ static char	*get_limiter(char *name, int i)
 	return (aux);
 }
 
+/*
+* finish_attr() closes and frees some variables used.
+*/
+
 static void	finish_attr(struct termios *attr_out, struct termios *attr_in,
 			t_files *n, char *aux)
 {
@@ -46,6 +54,10 @@ static void	finish_attr(struct termios *attr_out, struct termios *attr_in,
 	n->next = NULL;
 }
 
+/*
+* g_status_get() gets the g_status from the exited fork.
+*/
+
 static void	g_status_get(int fd[2], t_files *n)
 {
 	g_status = WEXITSTATUS(g_status);
@@ -53,6 +65,11 @@ static void	g_status_get(int fd[2], t_files *n)
 		dup2(fd[0], n->end[0]);
 	close(fd[0]);
 }
+
+/*
+* read_heredoc() reads from the terminal line until the limiter
+* character is sent or it receives a Ctrl+C or Ctrl+D.
+*/
 
 t_files	*read_heredoc(char *aux, int fd[2])
 {
@@ -75,6 +92,12 @@ t_files	*read_heredoc(char *aux, int fd[2])
 	close(fd[1]);
 	exit(0);
 }
+
+/*
+* files_heredoc() opens a new fork where it receive line by line from
+* the terminal the information. It calls read_heredoc to open the
+* readline function.
+*/
 
 t_files	*files_heredoc(char *name, int i, t_files *n)
 {

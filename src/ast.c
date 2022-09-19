@@ -6,11 +6,15 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:55 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/19 13:09:05 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/19 16:48:17 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+* exec_builtin() executes one of our builtins.
+*/
 
 void	exec_builtin(t_data *data, t_cmd *cmd, int fd, int mode)
 {
@@ -31,6 +35,10 @@ void	exec_builtin(t_data *data, t_cmd *cmd, int fd, int mode)
 	else if (data->aux == 8)
 		do_dir(data, cmd, mode);
 }
+
+/*
+* is_builitn() checks if the comand provided is some of our builtins or not.
+*/
 
 int	is_builtin(t_data *data, t_cmd *cmd)
 {
@@ -54,6 +62,10 @@ int	is_builtin(t_data *data, t_cmd *cmd)
 	return (127);
 }
 
+/*
+* redirect_io() move the stdin and stdout to the in and the out provided.
+*/
+
 void	redirect_io(int in, int out, int mode)
 {
 	if (in != 0)
@@ -71,6 +83,13 @@ void	redirect_io(int in, int out, int mode)
 		close(out);
 	}
 }
+
+/*
+* ast_simple() only executes something if only one cmd is sent. First
+* assigns the input and output with assign_io(). then
+* calls exec_simple() to execute the command, and finally it closes
+* out and returns 1.
+*/
 
 int	ast_simple(t_data *data, int first)
 {
@@ -98,6 +117,14 @@ int	ast_simple(t_data *data, int first)
 	}
 	return (0);
 }
+
+/*
+* ast() is the main executor. If there is only one command
+* it calls ast_simple(). Else while there are no more commands
+* it first assign the with assign_io(). then
+* calls exec() to execute the command, and finally it closes in
+* and out and goes to the next cmd.
+*/
 
 void	ast(t_data *data)
 {

@@ -6,13 +6,15 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/20 16:54:43 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/15 13:45:48 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/19 16:55:03 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// it does the same as output_simple_file but with another args.
+/*
+* it does the same as output_simple_file but with another args.
+*/
 
 static int	double_simple_out(t_cmd *n, char **tokens, int z, t_data *data)
 {
@@ -39,9 +41,11 @@ static int	double_simple_out(t_cmd *n, char **tokens, int z, t_data *data)
 	return (z);
 }
 
-// double_output_file() first sees if ">>"" and filename are in the same token,
-// if thei are not in the same token it calls double_simple_out().
-// else it does the same as output_simple_file() but with another args.
+/*
+* double_output_file() first sees if ">>"" and filename are in the same token,
+* if thei are not in the same token it calls double_simple_out().
+* else it does the same as output_simple_file() but with another args.
+*/
 
 static int	double_output_file(t_cmd *n, char **tokens, int z, t_data *data)
 {
@@ -66,9 +70,11 @@ static int	double_output_file(t_cmd *n, char **tokens, int z, t_data *data)
 	return (z);
 }
 
-// output_simple_file() if it is the first outut redirection of the cmd struct
-// it creates the structure and saves all the info with files_lst_new(). If
-// it is not he first one it adds it back with files_add_back().
+/*
+* output_simple_file() if it is the first outut redirection of the cmd struct
+* it creates the structure and saves all the info with files_lst_new(). If
+* it is not he first one it adds it back with files_add_back().
+*/
 
 static int	output_simple_file(t_cmd *n, char **tokens, int z, t_data *data)
 {
@@ -94,11 +100,13 @@ static int	output_simple_file(t_cmd *n, char **tokens, int z, t_data *data)
 	return (z);
 }
 
-// output_file() saves || creates a t_files struct and saves all the information
-// of the redirection sent. 
-// If the redirection is alone it calls output_simple_file().
-// If it is a double output redirection it calls double_output_file().
-// And if the redirection is with the filename it does de else{}
+/*
+* output_file() saves || creates a t_files struct and saves all the information
+* of the redirection sent. 
+* If the redirection is alone it calls output_simple_file().
+* If it is a double output redirection it calls double_output_file().
+* And if the redirection is with the filename it does de else{}
+*/
 
 int	output_file(t_cmd *n, char **tokens, int z, t_data *data)
 {

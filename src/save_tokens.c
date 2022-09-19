@@ -6,11 +6,16 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:31:14 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/15 11:13:54 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/19 16:56:50 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+* malloc_tokens() with help of token_len() mallocs the right amount of space
+* needed for every token.
+*/
 
 int	malloc_tokens(t_data *data)
 {
@@ -32,6 +37,11 @@ int	malloc_tokens(t_data *data)
 	return (1);
 }
 
+/*
+* save_tokens_dc() saves the tokens that are between dquotes. If a $ is
+* found, it expands to the enviorment variable it refers too.
+*/
+
 static int	save_tokens_dc(t_data *data, int j)
 {
 	data->i++;
@@ -42,22 +52,26 @@ static int	save_tokens_dc(t_data *data, int j)
 			data->sc_2--;
 		if (data->line[data->i] == '$' && data->line[data->i + 1] != '\0'
 			&& data->line[data->i + 1] != ' ' && data->line[data->i + 1] != '"')
-			j = save_env(data, j);
-		else
 		{
-			data->tokens[data->word][j] = data->line[data->i];
-			data->i++;
-			j++;
+			if (data->line[data->i + 1] == '?')
+				j = expand_errno(data, j);
+			else
+				j = expand_env_var(data, j);
 		}
+		else
+			data->tokens[data->word][j++] = data->line[data->i++];
 	}
 	if (data->line[data->i] == 34)
 	{
 		data->dc_2--;
 		data->i++;
 	}
-	data->tokens_type[data->word] = 2;
-	return (j);
+	return (data->tokens_type[data->word] = 2, j);
 }
+
+/*
+* save_tokens_sc() saves the tokens that are between squotes.
+*/
 
 static int	save_tokens_sc(t_data *data, int j)
 {
@@ -80,6 +94,11 @@ static int	save_tokens_sc(t_data *data, int j)
 	return (j);
 }
 
+/*
+* save_tokens_normal() ves the tokens that are between spaces not quotes.
+* if a $ is found, it will expand to the enviroment variable it refers too.
+*/
+
 static int	save_tokens_normal(t_data *data, int j)
 {
 	if (data->line[data->i] == 34)
@@ -90,9 +109,9 @@ static int	save_tokens_normal(t_data *data, int j)
 		&& data->line[data->i + 1] != ' ')
 	{
 		if (data->line[data->i + 1] == '?')
-			j = save_env_errno(data, j);
+			j = expand_errno(data, j);
 		else
-			j = save_env(data, j);
+			j = expand_env_var(data, j);
 	}
 	else
 	{
@@ -103,6 +122,12 @@ static int	save_tokens_normal(t_data *data, int j)
 	data->tokens_type[data->word] = 0;
 	return (j);
 }
+
+/*
+* save_tokens() parses data->line saving all the tokens that data->line
+* contains. If a dquote is found save_tokens_dc() is called, if a squote
+* is found instead save_tokens_sc() is called, else save_tokens_normal called.
+*/
 
 void	save_tokens(t_data *data)
 {

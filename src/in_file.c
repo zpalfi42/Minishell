@@ -6,13 +6,15 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:11:58 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/15 13:45:46 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/19 16:54:15 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// it does the same as input_simple_file but with another args.
+/*
+* it does the same as input_simple_file but with another args.
+*/
 
 static int	double_simple_in(t_cmd *n, char **tokens, int z, t_data *data)
 {
@@ -38,9 +40,11 @@ static int	double_simple_in(t_cmd *n, char **tokens, int z, t_data *data)
 	return (z);
 }
 
-// double_input_file() first sees if ">>"" and filename are in the same token,
-// if thei are not in the same token it calls double_simple_in().
-// else it does the same as input_simple_file() but with another args.
+/*
+* double_input_file() first sees if ">>"" and filename are in the same token,
+* if thei are not in the same token it calls double_simple_in().
+* else it does the same as input_simple_file() but with another args.
+*/
 
 static int	double_input_file(t_cmd *n, char **tokens, int z, t_data *data)
 {
@@ -64,9 +68,11 @@ static int	double_input_file(t_cmd *n, char **tokens, int z, t_data *data)
 	return (z);
 }
 
-// input_simple_file() if it is the first input redirection of the cmd struct
-// it creates the structure and saves all the info with files_lst_new(). If
-// it is not he first one it adds it back with files_add_back().
+/*
+* input_simple_file() if it is the first input redirection of the cmd struct
+* it creates the structure and saves all the info with files_lst_new(). If
+* it is not he first one it adds it back with files_add_back().
+*/
 
 static int	simple_input_file(t_cmd *n, char **tokens, int z, t_data *data)
 {
@@ -91,11 +97,13 @@ static int	simple_input_file(t_cmd *n, char **tokens, int z, t_data *data)
 	return (z);
 }
 
-// input_file() saves || creates a t_files struct and saves all the information
-// of the redirection sent. 
-// If the redirection is alone it calls input_simple_file().
-// If it is a double input redirection it calls double_input_file().
-// And if the redirection is with the filename it does de else{}
+/*
+* input_file() saves || creates a t_files struct and saves all the information
+* of the redirection sent. 
+* If the redirection is alone it calls input_simple_file().
+* If it is a double input redirection it calls double_input_file().
+* And if the redirection is with the filename it does de else{}
+*/
 
 int	input_file(t_cmd *n, char **tokens, int z, t_data *data)
 {

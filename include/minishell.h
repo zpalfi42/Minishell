@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/19 11:49:25 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/19 14:24:05 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,12 +100,12 @@ int		malloc_tokens(t_data *data);
 int		ft_strcmp(char *s, char *d);
 int		is_valid_name(char c, int z);
 int		len_env(t_data *data, int i);
-int		save_env(t_data *data, int j);
+int		expand_env_var(t_data *data, int j);
 int		token_len(t_data *data, int i);
 int		find_j(t_data *data, int mode);
 int		redir_type(char **tokens, int i);
 int		first_envp(t_data *data, char *s);
-int		save_env_errno(t_data *data, int j);
+int		expand_errno(t_data *data, int j);
 int		this_envp(t_data *data, t_cmd *cmd);
 int		token_len_errno(t_data *data, int i);
 int		is_builtin(t_data *data, t_cmd *cmd);

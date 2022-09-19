@@ -6,11 +6,16 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 13:12:44 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/14 16:14:00 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/19 16:54:28 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+* cmd_tokens_saver() saves all the tokens and tokens_type
+* inside the t_cmd *n struct.
+*/
 
 void	cmd_tokens_saver(t_cmd *n, t_data *data, int i, int j)
 {

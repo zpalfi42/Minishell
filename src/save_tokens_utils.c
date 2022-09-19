@@ -6,13 +6,17 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/14 13:39:27 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/14 14:08:21 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/19 16:57:29 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_status;
+
+/*
+* is_valid_name() checks if the character c is valid for a env variable.
+*/
 
 int	is_valid_name(char c, int z)
 {
@@ -26,25 +30,13 @@ int	is_valid_name(char c, int z)
 	return (0);
 }
 
-int	save_env_errno(t_data *data, int j)
-{
-	char	*serrno;
-	int		i;
+/*
+* save_env_var() parses all the envp until it finds the name that is searching.
+* When it founds it, he saves the value inside of data->tokens and returns the 
+* number of characters saved.
+*/
 
-	data->i += 2;
-	serrno = ft_itoa(g_status);
-	i = 0;
-	while (serrno[i] != '\0')
-	{
-		data->tokens[data->word][j] = serrno[i];
-		i++;
-		j++;
-	}
-	free(serrno);
-	return (j);
-}
-
-int	save_env_2(t_data *data, int j, char *name)
+static int	save_env_var(t_data *data, int j, char *name)
 {
 	int		z;
 	int		i;
@@ -71,7 +63,11 @@ int	save_env_2(t_data *data, int j, char *name)
 	return (j);
 }
 
-void	save_env_name(t_data *data, char *name)
+/*
+* get_env_var_name() saves all characters after $ inside the char *name.
+*/
+
+static void	get_env_var_name(t_data *data, char *name)
 {
 	int	z;
 
@@ -92,7 +88,12 @@ void	save_env_name(t_data *data, char *name)
 	name[z] = '\0';
 }
 
-int	save_env(t_data *data, int j)
+/*
+* expand_env_va() with help of get_env_var_name() saves the name of the
+* enviroment variable, and then calls save_env_var().
+*/
+
+int	expand_env_var(t_data *data, int j)
 {
 	int		z;
 	char	*name;
@@ -111,8 +112,31 @@ int	save_env(t_data *data, int j)
 	name = malloc(sizeof(char) * z);
 	if (!name)
 		ft_error(data, "Failed malloc :(");
-	save_env_name(data, name);
-	j = save_env_2(data, j, name);
+	get_env_var_name(data, name);
+	j = save_env_var(data, j, name);
 	free(name);
+	return (j);
+}
+
+/*
+* When a $? is found expand_errno is called. It saves inside serrno
+* the int transformed in char *.
+*/
+
+int	expand_errno(t_data *data, int j)
+{
+	char	*serrno;
+	int		i;
+
+	data->i += 2;
+	serrno = ft_itoa(g_status);
+	i = 0;
+	while (serrno[i] != '\0')
+	{
+		data->tokens[data->word][j] = serrno[i];
+		i++;
+		j++;
+	}
+	free(serrno);
 	return (j);
 }

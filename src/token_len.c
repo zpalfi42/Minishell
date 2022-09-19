@@ -6,13 +6,17 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:30:15 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/15 12:13:17 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/19 16:58:18 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_status;
+
+/*
+* token_len_dc() returns the number of characters before the other dquote.
+*/
 
 static int	token_len_dc(t_data *data, int i)
 {
@@ -37,6 +41,10 @@ static int	token_len_dc(t_data *data, int i)
 	return (i);
 }
 
+/*
+* token_len_sc() returns the number of characters before the other squote.
+*/
+
 static int	token_len_sc(t_data *data, int i)
 {
 	i++;
@@ -53,6 +61,11 @@ static int	token_len_sc(t_data *data, int i)
 	}
 	return (i);
 }
+
+/*
+* token_len_env() searches for the env variable in envp and count how
+* many character the value is and returns it.
+*/
 
 int	token_len_env(t_data *data, int i, int j)
 {
@@ -82,6 +95,10 @@ int	token_len_env(t_data *data, int i, int j)
 	return (i + j);
 }
 
+/*
+* prove_in_line() checks if i is inside line.
+*/
+
 int	prove_in_line(t_data *data, int i, int mode)
 {
 	int	j;
@@ -96,6 +113,13 @@ int	prove_in_line(t_data *data, int i, int mode)
 		token_len_init(data);
 	return (j);
 }
+
+/*
+* token_len() parses data->line from i until the token finishes, then
+* returns the large of the tokens to do the right malloc. If a $ is found
+* len_env() is called, if a dquote found token_len_dc() called, else if
+* squote is found token_len_sc() called, else data_len_up() called.
+*/
 
 int	token_len(t_data *data, int i)
 {

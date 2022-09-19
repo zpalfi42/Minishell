@@ -6,11 +6,15 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 16:32:18 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 13:28:25 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/19 16:50:00 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+* count_tokens_dc() parses data->line until it finds another dquote.
+*/
 
 static int	count_tokens_dc(t_data *data, int i)
 {
@@ -26,6 +30,10 @@ static int	count_tokens_dc(t_data *data, int i)
 	return (i);
 }
 
+/*
+* count_tokens_sc() parses data->line until it finds another squote.
+*/
+
 static int	count_tokens_sc(t_data *data, int i)
 {
 	i++;
@@ -39,6 +47,12 @@ static int	count_tokens_sc(t_data *data, int i)
 	}
 	return (i);
 }
+
+/*
+* count_tokens() parses data->line and count all the tokens that are in it.
+* When it finds a dquote it calls count_tokens_dc(), and if it finds a squote
+* count_tokens_sc() is called.
+*/
 
 void	count_tokens(t_data *data)
 {

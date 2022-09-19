@@ -6,7 +6,7 @@
 #    By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 12:16:53 by zpalfi            #+#    #+#              #
-#    Updated: 2022/09/19 12:50:55 by ealonso-         ###   ########.fr        #
+#    Updated: 2022/09/19 15:37:32 by zpalfi           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ SRC				=	cd.c \
 					signal.c \
 					export.c \
 					in_file.c \
-					heredoc.c \
+					files_lst_heredoc.c \
 					do_dir.c \
 					out_file.c \
 					do_other.c \
@@ -62,12 +62,13 @@ SRC				=	cd.c \
 					cmd_add_back.c \
 					count_tokens.c \
 					files_lst_new.c \
+					exec_simple.c \
 					files_add_back.c \
 					export_utils_2.c \
 					token_len_utils.c \
 					print_miniconcha.c \
+					save_tokens_init.c \
 					save_tokens_utils.c \
-					save_tokens_utils_2.c \
 					find_cmd_after_redir.c \
 
 OBJ				= $(addprefix $(OBJS_DIR)/,$(SRC:.c=.o))
