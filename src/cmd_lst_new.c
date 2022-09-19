@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 17:14:31 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/15 13:28:52 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/19 13:19:24 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,19 @@ int	in_out_parser(t_cmd *n, t_data *data, int z, int j)
 int	redir_type(char **tokens, int i)
 {
 	if (tokens[i][1] == '\0')
+	{			
+		if (tokens[i + 1] == 0)
+			return (1);
 		return (2);
+	}
 	else if (tokens[i][1] == '<' || tokens[i][1] == '>')
 	{
 		if (tokens[i][2] == '\0')
+		{
+			if (tokens[i + 1] == 0)
+				return (1);
 			return (2);
+		}
 		return (1);
 	}
 	else

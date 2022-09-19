@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:30:19 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/19 11:49:07 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/19 13:23:58 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int	g_status;
 
-// That functi'on refresh the new pwd in envp.
+// That function refresh the new pwd in envp.
 
 int	replace_home(t_data *data, t_cmd *cmd)
 {
@@ -104,8 +104,10 @@ int	cd_oldpwd(t_data *data)
 			break ;
 	data->dir = export_value(data, data->envp[i]);
 	if (data->dir[0] != '\0')
+	{
 		printf("%s\n", data->dir);
+	}
 	else
 		ft_putstr_fd("cd: OLDPWD not set\n", 1);
-	return (1);
+	return (0);
 }

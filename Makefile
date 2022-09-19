@@ -6,7 +6,7 @@
 #    By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/14 12:16:53 by zpalfi            #+#    #+#              #
-#    Updated: 2022/09/19 11:50:07 by zpalfi           ###   ########.fr        #
+#    Updated: 2022/09/19 12:50:55 by ealonso-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,15 +79,15 @@ CFLAGS		= -Wall -Wextra -Werror -g $(INC) -I ~/.brew/opt/readline/include
 
 #--------------- RULES ---------------#
 
-objs/%.o:src/%.c
+objs/%.o: src/%.c ./include/minishell.h
 	@mkdir -p $(dir $@)
-	@$(CC) -c $(CFLAGS) -o $@ $^
+	@$(CC) -c $(CFLAGS) -o $@ $<
 	@echo "Compiling $^"
 
 all:	$(NAME)
 
 $(NAME): $(OBJ) $(LIBS) ./include/minishell.h
-	@$(CC) $(OBJ) -lreadline -L ~/.brew/opt/readline/lib $(LIBS) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) -lreadline -L ~/.brew/opt/readline/lib $(LIBS) -o $(NAME)
 	@echo "Built $(NAME)"
 
 $(LIBS_DIR)/Libft/libft.a:

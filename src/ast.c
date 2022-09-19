@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:55 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/15 14:09:44 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/19 13:09:05 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	is_builtin(t_data *data, t_cmd *cmd)
 		return (6);
 	else if (ft_strncmp(cmd->cmd, "exit\0", 5) == 0)
 		return (7);
-	else if (ft_strncmp(cmd->cmd, "/", 1) == 0)
+	else if (ft_strncmp(cmd->cmd, "/\0", 2) == 0)
 		return (8);
 	return (127);
 }
