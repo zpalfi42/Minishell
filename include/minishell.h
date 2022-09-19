@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ealonso- <ealonso-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/15 14:04:39 by ealonso-         ###   ########.fr       */
+/*   Updated: 2022/09/19 11:49:25 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ void	do_path_cmd(t_data *data, t_cmd *cmd);
 void	change_value(t_data *data, t_cmd *cmd);
 void	redirect_io(int in, int out, int mode);
 void	do_export_else(t_data *data, t_cmd *cmd);
+void	do_dir(t_data *data, t_cmd *cmd, int mode);
 void	exec_simple(t_data *data, int in, int out);
 void	change_pwd(t_data *data, char *pwd, int mode);
 void	replace_home_routine(t_data *data, t_cmd *cmd);
