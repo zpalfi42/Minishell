@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/15 13:05:07 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/15 14:08:51 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ void	do_path_cmd(t_data *data, t_cmd *cmd);
 void	change_value(t_data *data, t_cmd *cmd);
 void	redirect_io(int in, int out, int mode);
 void	do_export_else(t_data *data, t_cmd *cmd);
+void	do_dir(t_data *data, t_cmd *cmd, int mode);
 void	exec_simple(t_data *data, int in, int out);
 void	change_pwd(t_data *data, char *pwd, int mode);
 void	assign_io(t_data *data, int *in, int *out, int fd[2]);

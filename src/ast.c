@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:53:55 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/15 12:34:46 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/15 14:09:44 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	exec_builtin(t_data *data, t_cmd *cmd, int fd, int mode)
 		do_env(data, cmd, fd, mode);
 	else if (data->aux == 7)
 		do_exit(data, cmd, mode);
+	else if (data->aux == 8)
+		do_dir(data, cmd, mode);
 }
 
 int	is_builtin(t_data *data, t_cmd *cmd)
@@ -47,6 +49,8 @@ int	is_builtin(t_data *data, t_cmd *cmd)
 		return (6);
 	else if (ft_strncmp(cmd->cmd, "exit\0", 5) == 0)
 		return (7);
+	else if (ft_strncmp(cmd->cmd, "/", 1) == 0)
+		return (8);
 	return (127);
 }
 
