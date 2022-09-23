@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:49:04 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/08 13:28:27 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/23 12:05:52 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_error(t_data *data, char *error)
 {
-	free_all(data);
+	free_all(data, 0);
 	printf("\033[1;31m%s\n", error);
 	exit(1);
 }

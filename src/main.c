@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/30 15:15:54 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/15 12:40:23 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/23 12:16:41 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,18 @@ int	g_status;
 
 void	minishell(t_data *data)
 {
+	int	i;
+
 	parser(data);
-	if (pipe_parser(data) == -1)
-		free_all(data);
+	i = pipe_parser(data);
+	if (i == -1)
+		free_all(data, 1);
+	else if (i == -2)
+		free_all(data, 0);
 	else
 	{
 		ast(data);
-		free_all(data);
+		free_all(data, 0);
 	}
 }
 

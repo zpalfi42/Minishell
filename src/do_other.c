@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/20 16:02:48 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/15 12:20:27 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/23 12:21:47 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	command_not_found(char *comand, char **paths, char *value)
 		free(paths);
 		free(value);
 		ft_putstr_fd("command not found\n", 1);
-		exit (1);
+		exit (127);
 	}
 }
 

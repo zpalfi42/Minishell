@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/07 17:49:44 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/14 12:26:18 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/23 12:06:30 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,15 @@ void	free_cmd(t_cmd **cmd)
 	}
 }
 
-void	free_all(t_data *data)
+void	free_all(t_data *data, int mode)
 {
 	int		i;
 
 	i = 0;
 	if (data->line != 0)
 	{
-		free_cmd(&data->cmd_lst);
+		if (mode == 0)
+			free_cmd(&data->cmd_lst);
 		while (data->tokens[i] != 0)
 		{
 			free(data->tokens[i]);
@@ -49,7 +50,7 @@ void	free_exit(t_data *data)
 {
 	int	i;
 
-	free_all(data);
+	free_all(data, 0);
 	i = 0;
 	while (data->envp[i] != 0)
 	{

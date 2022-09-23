@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/14 13:10:05 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/19 14:24:05 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/23 12:03:26 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,7 @@ int		output_file(t_cmd *n, char **tokens, int z, t_data *data);
 void	ast(t_data *data);
 void	handler(int signum);
 void	parser(t_data *data);
-void	free_all(t_data *data);
+void	free_all(t_data *data, int mode);
 void	print_miniconcha(void);
 void	cd_worked(t_data *data);
 void	free_exit(t_data *data);

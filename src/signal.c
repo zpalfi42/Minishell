@@ -6,7 +6,7 @@
 /*   By: zpalfi <zpalfi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/01 16:27:49 by zpalfi            #+#    #+#             */
-/*   Updated: 2022/09/19 16:58:20 by zpalfi           ###   ########.fr       */
+/*   Updated: 2022/09/23 11:55:26 by zpalfi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	handler(int signum)
 			rl_replace_line("", 1);
 			rl_on_new_line();
 			rl_redisplay();
+			g_status = 1;
 		}
 	}
 	else if (signum == SIGQUIT)
